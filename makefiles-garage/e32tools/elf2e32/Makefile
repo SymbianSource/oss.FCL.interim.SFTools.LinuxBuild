@@ -59,7 +59,7 @@ $(exe): $(objs)
 clean: remove_fixes
 	rm -f $(objs) $(exe)
 
-fixes: $(fixbackups)
+fixes:: $(fixbackups)
 
 source/pl_elfexecutable.h.original:
 	cp $(basename $@) $@ && \
@@ -84,5 +84,5 @@ source/parametermanager.cpp.original:
 
 
 remove_fixes: 
-	for file in $(fixbackups); do if [ -f $$file ]; then mv -f $$file $${file%original}; fi; done
+	for file in $(fixbackups); do if [ -f $$file ]; then mv -f $$file $${file%\.original}; fi; done
 

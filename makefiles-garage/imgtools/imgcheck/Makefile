@@ -53,14 +53,16 @@ $(srcs): fixes
 $(prereqs): $(global_prereqs)
 	$(MAKE) -C $(EPOCROOT)/build $@
 
-$(exe): $(objs) $(prereqs)
+$(objs): $(prereqs)
+
+$(exe): $(objs)
 	$(CC) -o $@ $(objs) $(LDFLAGS)
 
 clean: remove_fixes
 	rm -f $(objs) $(exe)
 	for file in $(subdirs); do $(MAKE) -C $$file clean; done
 
-fixes: $(fixbackups)
+fixes:: $(fixbackups)
 	
 inc/exceptionimplementation.h.original:
 	cp $(basename $@) $@ && \
@@ -81,5 +83,5 @@ src/xmlwriter.cpp.original:
 		-e 's|ofstream xslDestHandle|Ofstream xslDestHandle|g' -i $(basename $@)
 
 remove_fixes: 
-	for file in $(fixbackups); do if [ -f $$file ]; then mv -f $$file $${file%original}; fi; done
+	for file in $(fixbackups); do if [ -f $$file ]; then mv -f $$file $${file%\.original}; fi; done
 

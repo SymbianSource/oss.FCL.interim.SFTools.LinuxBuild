@@ -40,10 +40,12 @@ bases = $(basename $(srcs))
 
 objs = $(addsuffix .o,$(bases))
 
+$(objs):  $(prereqs)
+
 $(prereqs): $(global_prereqs)
 	$(MAKE) -C $(EPOCROOT)/build $@
  
-$(exe): $(objs) $(prereqs)
+$(exe): $(objs)
 	$(CC) -o $@ $(objs) $(LDFLAGS)
 
 clean:

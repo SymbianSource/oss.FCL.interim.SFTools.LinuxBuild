@@ -42,8 +42,10 @@ objs = $(addsuffix .o,$(bases))
 
 $(prereqs): $(global_prereqs)
 	$(MAKE) -C $(EPOCROOT)/build $@
+
+$(objs): $(prereqs)
  
-$(exe): $(objs) $(prereqs)
+$(exe): $(objs)
 	$(CC) -o $@ $(objs) $(LDFLAGS)
 
 clean:

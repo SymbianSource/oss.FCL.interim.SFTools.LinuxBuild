@@ -69,11 +69,14 @@ bases = $(basename $(srcs))
 
 objs = $(addsuffix .o,$(bases))
 
-$(exe): $(objs) $(prereqs)
-	$(CC) -o $@ $(objs) $(LDFLAGS)
-
 $(prereqs): $(global_prereqs)
 	$(MAKE) -C $(EPOCROOT)/build $@
+
+$(objs): $(prereqs)
+
+$(exe): $(objs) 
+	$(CC) -o $@ $(objs) $(LDFLAGS)
+
 
 clean:
 	rm -f $(objs) $(exe)

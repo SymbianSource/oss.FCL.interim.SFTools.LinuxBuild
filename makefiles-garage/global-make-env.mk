@@ -50,7 +50,7 @@ $(preinclude): $(linux_gcc_defs_inc)
 "#include <climits>\n"\
 "#include <exception>\n"\
 "#include <new>\n"\
-"#endif\n" >> $@
+"#endif\n" > $@
 	$(MAKE)
 
 $(linux_gcc_patch_inc_path):
@@ -65,7 +65,7 @@ $(linux_gcc_ver_inc_path) : $(linux_gcc_patch_inc_path)
 $(linux_gcc_defs_inc): $(linux_gcc_ver_inc_path)
 	printf "#ifndef HACK_DEFS_H\n"\
 "#define HACK_DEFS_H\n"\
-"#define DIMPORT_C\n"\
+"#define IMPORT_C\n"\
 "#define __NO_THROW\n"\
 "#define NONSHARABLE_CLASS(x) class x\n"\
 "#undef _FOFF\n"\
@@ -74,7 +74,7 @@ $(linux_gcc_defs_inc): $(linux_gcc_ver_inc_path)
 "#undef __ASSERT_COMPILE\n"\
 "#define __ASSERT_COMPILE(x)\n"\
 "#define TAny void\n"\
-"#endif\n" >> $@ 
+"#endif\n" > $@ 
   
 endif
 # End: make the global preinclude.h file  
@@ -82,21 +82,48 @@ endif
 endif
 # End: included only once
 
-ifdef query
-# Running one of the query targets
+ifdef call_in
+# Running one of the call_in targets
 
-hacks:
+_list_fixes:
 	@if [ "$(fixfiles)" != "" ]; then \
-		echo $(targ): hacks for:-; \
+		echo $(targ): fixups for:-; \
 		for file in $(fixfiles); do echo "  $$file"; done; \
 	fi
 
-prereqs:
+_list_prereqs:
 	@if [ "$(prereqs)" != "" ]; then \
 		echo $(targ): needs:-; \
 		for prereq in $(prereqs); do echo "  $$prereq"; done; \
 	fi
+
+_what:
+	@if [ "$(exe)" != "" ]; then \
+		targfile=`pwd`/$(exe); \
+	elif [ "$(lib)" != "" ]; then  \
+		targfile=`pwd`/$(lib); \
+	fi; \
+	if [ "$$targfile" != "" ]; then \
+		printf "Target $(targ) builds $$targfile"; \
+		if [ ! -f $$targfile ]; then printf " (*** Missing ***)"; fi; \
+		printf "\n"; \
+	fi
+
+_missing:
+	@if [ "$(exe)" != "" ]; then \
+		targfile=`pwd`/$(exe); \
+	elif [ "$(lib)" != "" ]; then  \
+		targfile=`pwd`/$(lib); \
+	fi; \
+	if [ "$$targfile" != "" ]; then \
+		if [ ! -f $$targfile ]; then printf "Target $(targ) is missing $$targfile\n"; fi; \
+	fi
+
+	
+fixes::
 	
 endif
-# End: Running one of the query targets
+# End: Running one of the call_in targets
+
+
  

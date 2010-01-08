@@ -50,9 +50,14 @@ r_coreimage.cpp r_coreimagereader.cpp \
 ../../imglib/compress/byte_pair.cpp \
 ../../imglib/compress/pagedcompress.cpp
 
-.PHONY: all clean $(prereqs)
+fixfiles = rombuild.cpp r_global.cpp r_global.h
+fixbackups = $(addsuffix .original,$(fixfiles)) 
+
+.PHONY: all clean $(prereqs) fixes remove_fixes
 
 all: $(exe)
+
+$(srcs): fixes
 
 bases = $(basename $(srcs))
 
@@ -60,10 +65,39 @@ objs = $(addsuffix .o,$(bases))
 
 $(prereqs): $(global_prereqs)
 	$(MAKE) -C $(EPOCROOT)/build $@
+
+$(objs): $(prereqs)
  
-$(exe): $(objs) $(prereqs)
+$(exe): $(objs) 
 	$(CC) -o $@ $(objs) $(LDFLAGS)
 
-clean:
+clean: remove_fixes
 	rm -f $(objs) $(exe)
+
+fixes:: $(fixbackups)
+
+rombuild.cpp.original:
+	cp $(basename $@) $@ && \
+	sed -e 's|^TInt gCPUNum = 0;||g' \
+		-e 's|TInt gThreadNum = 0;||g' \
+		-e 's|char\* g_pCharCPUNum = NULL;||g' \
+		-e 's|TBool gGenDepGraph = EFalse;||g' \
+		-e 's|char\* gDepInfoFile = NULL;||g' -i $(basename $@)
+
+r_global.cpp.original:
+	cp $(basename $@) $@ && \
+	printf "TInt gCPUNum = 0;\nTInt gThreadNum = 0;\nchar* g_pCharCPUNum = NULL;\nTBool gGenDepGraph = EFalse;\nchar* gDepInfoFile = NULL;\n" >> $(basename $@)
+
+r_global.h.original:
+	cp $(basename $@) $@ && \
+	sed '/^extern TInt gPageIndexTableSize/a\
+extern TInt gCPUNum;\
+extern TInt gThreadNum;\
+extern char* g_pCharCPUNum;\
+extern TBool gGenDepGraph;\
+extern char* gDepInfoFile;'  -i $(basename $@)
+
+
+remove_fixes: 
+	for file in $(fixbackups); do if [ -f $$file ]; then mv -f $$file $${file%\.original}; fi; done
 

@@ -81,7 +81,7 @@ $(lib): $(objs)
 clean: remove_fixes
 	rm -f $(objs) $(lib)
 
-fixes: $(fixbackups)
+fixes:: $(fixbackups)
 
 inc/typedefs.h.original:
 	cp $(basename $@) $@ && \
@@ -91,5 +91,5 @@ inc/typedefs.h.original:
 		-e 's|typedef ifstream|typedef std::ifstream|g' -i $(basename $@)
 
 remove_fixes: 
-	for file in $(fixbackups); do if [ -f $$file ]; then mv -f $$file $${file%original}; fi; done
+	for file in $(fixbackups); do if [ -f $$file ]; then mv -f $$file $${file%\.original}; fi; done
 
