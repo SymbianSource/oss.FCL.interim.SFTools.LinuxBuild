@@ -1,0 +1,6 @@
+# Build dependencies for this package
+# No comments after this.
+imgtools.imgcheck imgtools.imglib
+imgtools.romtools imgtools.imglib
+imgtools.romtools imgtools.sisutils
+

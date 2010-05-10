@@ -1,0 +1,2230 @@
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/bintools/checklib/library/library.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/bintools/checklib/library/library.cpp
+27a28
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/bintools/checklib/main.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/bintools/checklib/main.cpp
+24a25
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/bintools/checklib/object/coff_object.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/bintools/checklib/object/coff_object.cpp
+23a24
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/bintools/checklib/object/elf_object.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/bintools/checklib/object/elf_object.cpp
+24a25
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/bintools/rcomp/src/localise.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/bintools/rcomp/src/localise.cpp
+30c30
+< #include <stdio.h>   
+---
+> #include <cstdio>
+32a33,34
+> #include <cstring>
+> #include <cstdlib>
+1789a1792,1797
+> #ifdef __LINUX__
+> 	char LocalisationOutputFileName[sizeof("/tmp/rcomp_temp_XXXXXX")];
+> 	strcpy(LocalisationOutputFileName,"/tmp/rcomp_temp_XXXXXX");
+> 	int fd = mkstemp(LocalisationOutputFileName); close(fd);
+> #endif
+> #ifdef WIN32
+1791a1800,1801
+> #endif
+> 
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/bintools/rcomp/src/rcomp.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/bintools/rcomp/src/rcomp.cpp
+93,94c93,94
+< #include "resource.h"
+< #include "parser.h"
+---
+> #include "RESOURCE.H"
+> #include "Parser.h"
+103,110c103,110
+< #include "datatype.h"
+< #include "mem.h"
+< #include "rcbinstr.h"
+< #include "rcscan.h"
+< #include "errorhan.h"
+< #include "fileacc.h"
+< #include "version.h"
+< #include "ctable.h"
+---
+> #include "DATATYPE.H"
+> #include "MEM.H"
+> #include "RCBINSTR.H"
+> #include "RCSCAN.H"
+> #include "ERRORHAN.H"
+> #include "FILEACC.H"
+> #include "VERSION.H"
+> #include "CTABLE.H"
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/bintools/rcomp/src/rcompl.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/bintools/rcomp/src/rcompl.cpp
+665,666c665,666
+< #include "structst.h"
+< #include "parser.h"
+---
+> #include "STRUCTST.H"
+> #include "Parser.h"
+699c699
+< #include "fileline.h"
+---
+> #include "FILELINE.H"
+737c737
+< #include "errorhan.h"
+---
+> #include "ERRORHAN.H"
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/bintools/rcomp/src/RCOMP.LEX /home/imk/symbian/epocroot-pdk-3.0.h/build/bintools/rcomp/src/RCOMP.LEX
+23,25c23,25
+< #include "structst.h"
+< #include "parser.h"
+< #include "localise.h"
+---
+> #include "STRUCTST.H"
+> #include "PARSER.H"
+> #include "LOCALISE.H"
+95c95
+< #include "errorhan.h"
+---
+> #include "ERRORHAN.H"
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/bintools/rcomp/src/RCOMP.YACC /home/imk/symbian/epocroot-pdk-3.0.h/build/bintools/rcomp/src/RCOMP.YACC
+38,39c38,39
+< #include "resource.h"
+< #include "parser.h"
+---
+> #include "RESOURCE.H"
+> #include "PARSER.H"
+48,55c48,55
+< #include "datatype.h"
+< #include "mem.h"
+< #include "rcbinstr.h"
+< #include "rcscan.h"
+< #include "errorhan.h"
+< #include "fileacc.h"
+< #include "version.h"
+< #include "ctable.h"
+---
+> #include "DATATYPE.H"
+> #include "MEM.H"
+> #include "RCBINSTR.H"
+> #include "RSCAN.H"
+> #include "ERRORHAN.H"
+> #include "FILEACC.H"
+> #include "VERSION.H"
+> #include "CTABLE.H"
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/buildtoolguides/romtoolsguide/group/bld.inf /home/imk/symbian/epocroot-pdk-3.0.h/build/buildtoolguides/romtoolsguide/group/bld.inf
+3c3
+< ../com.nokia.rombuild_0.1.jar /plugins/com.nokia.rombuild_0.1.jar
+\ No newline at end of file
+---
+> ../com.nokia.rombuild_0.1.jar ../../plugins/com.nokia.rombuild_0.1.jar 
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/buildtoolguides/sbsv2guide/group/bld.inf /home/imk/symbian/epocroot-pdk-3.0.h/build/buildtoolguides/sbsv2guide/group/bld.inf
+3c3
+< ../com.nokia.sysbuild_0.1.jar /plugins/com.nokia.sysbuild_0.1.jar
+\ No newline at end of file
+---
+> ../com.nokia.sysbuild_0.1.jar ../../plugins/com.nokia.sysbuild_0.1.jar
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/e32lib/e32image/deflate/deflate.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/e32lib/e32image/deflate/deflate.cpp
+90c90
+< 	return new(HMem::Alloc(0,_FOFF(HDeflateHash,iOffset[Min(aLinks,KDeflateMaxDistance)]))) HDeflateHash;
+---
+> 	return new(HMem::Alloc(0,_FOFF(HDeflateHash,iOffset[0]) + (sizeof(TOffset) * Min(aLinks,KDeflateMaxDistance)))) HDeflateHash;
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/e32lib/group/seclib.mmp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/e32lib/group/seclib.mmp
+47a48
+> systeminclude    /epoc32/include/platform
+49a51,52
+> option 	GCC -w
+> 
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/group/elf2e32.mmp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/group/elf2e32.mmp
+30a31
+> systeminclude    /epoc32/include/platform
+31a33
+> userinclude ../../../bintools/elftools/inc
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/deffile.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/deffile.cpp
+21c21,22
+< #include <stdio.h>
+---
+> #include <cstdio>
+> #include <cstring>
+23c24,25
+< #include <stdlib.h>
+---
+> #include <cstdlib>
+> 
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/deflatecompress.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/deflatecompress.cpp
+129c129,130
+< 	return new(new char[_FOFF(HDeflateHash,iOffset[Min(aLinks,KDeflateMaxDistance)])]) HDeflateHash;
+---
+> 	return new(new char[_FOFF(HDeflateHash,iOffset[0]) + 
+> 		(sizeof(TOffset) * Min(aLinks,KDeflateMaxDistance))]) HDeflateHash;
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/e32exporttable.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/e32exporttable.cpp
+20a21
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/e32imagefile.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/e32imagefile.cpp
+23a24
+> #include <cstdio>
+43,44d43
+< #else
+<     #include <time.h>
+46,47c45,46
+< #include <time.h>
+< #include <stdio.h>
+---
+> #include <ctime>
+> 
+368c367
+< 	memcpy(iImportSection, aImportSection.begin(), aImportSectionSize);
+---
+> 	memcpy(iImportSection, &*aImportSection.begin(), aImportSectionSize);
+1925c1924
+< 	memcpy(aInfo+aPos, iSymAddrTab.begin(), iSymAddrTab.size()*sizeof(uint32));
+---
+> 	memcpy(aInfo+aPos, &*iSymAddrTab.begin(), iSymAddrTab.size()*sizeof(uint32));
+1936c1935
+< 		memcpy( ((void*)(aInfo+aPos)), ((void*)Iter), aOffLen);
+---
+> 		memcpy( ((void*)(aInfo+aPos)), &*Iter, aOffLen);
+1942c1941
+< 	memcpy(aInfo+aPos, iSymbolNames.begin(), iSymbolNames.size());
+---
+> 	memcpy(aInfo+aPos, &*iSymbolNames.begin(), iSymbolNames.size());
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/elffilesupplied.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/elffilesupplied.cpp
+28c28,36
+< #include<hash_set>
+---
+> #if __GNUC__ < 4
+>     #include <ext/hash_set>
+>     #define SET_TYPE __gnu_cxx::hash_set
+>     #define HASH_FUN __gnu_cxx::hash
+> #else    
+>     #include <unordered_set>
+>     #define SET_TYPE std::unordered_set
+>     #define HASH_FUN std::hash
+> #endif
+641c649
+<   static hash_set<const char*, hash<const char*>, eqstr> aSymbolSet;
+---
+>   static SET_TYPE<const char*, HASH_FUN<const char*>, eqstr> aSymbolSet;
+652c660
+<   hash_set<const char*, hash<const char*>, eqstr>::const_iterator it
+---
+>   SET_TYPE<const char*, HASH_FUN<const char*>, eqstr>::const_iterator it
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/errorhandler.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/errorhandler.cpp
+29c29,31
+< #include <stdio.h>
+---
+> #include <cstdio>
+> #include <cstring>
+> 
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/huffman.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/huffman.cpp
+24a25
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/h_utl.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/h_utl.cpp
+20,21c20,22
+< #include <stdlib.h>
+< #include <stdio.h>
+---
+> #include <cstdlib>
+> #include <cstdio>
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/inflate.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/inflate.cpp
+25a26,27
+> #include <cstring>
+> 
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/messageimplementation.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/messageimplementation.cpp
+26c26,27
+< #include <stdio.h>
+---
+> #include <cstring>
+> 
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/parametermanager.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/parametermanager.cpp
+2250c2250
+< 			memcpy(symbol, p, len);
+---
+> 			memcpy(symbol, &*p, len);
+2390c2390
+< 			ParseCapability1(b, e, aCapabilities, invert);
+---
+> 			ParseCapability1(&*b, &*e, aCapabilities, invert);
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/pl_elfexecutable.h /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/pl_elfexecutable.h
+25c25,31
+< #include <hash_map>
+---
+> #if __GNUC__ < 4
+>     #include <ext/hash_map>
+>     #define MAP_TYPE __gnu_cxx::hash_map
+> #else
+>     #include <unordered_map>
+>     #define MAP_TYPE std::unordered_map
+> #endif    
+31c37
+< using std::hash_map;
+---
+> using MAP_TYPE;
+125c131
+< 	hash_map<PLUINT32, DllSymbol*>	iSymbolTable; //The representation
+---
+> 	MAP_TYPE<PLUINT32, DllSymbol*>	iSymbolTable; //The representation
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/pl_elfexports.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/pl_elfexports.cpp
+22a23
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/pl_elfimports.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/pl_elfimports.cpp
+21a22
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/pl_elfproducer.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/pl_elfproducer.cpp
+24a25
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/e32tools/elf2e32/source/pl_symbol.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/e32tools/elf2e32/source/pl_symbol.cpp
+20a21
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imgcheck/group/bld.inf /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imgcheck/group/bld.inf
+23a24
+> #ifndef TOOLS2_LINUX
+25a27
+> #endif
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imgcheck/group/imgcheck.mmp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imgcheck/group/imgcheck.mmp
+27a28
+> #ifndef TOOLS2_LINUX
+28a30
+> #endif
+30a33
+> #ifndef TOOLS2_LINUX
+31a35
+> #endif 
+35d38
+< STATICLIBRARY imgutils xml2 wsock32 stlport.5.1 patchdataprocessor
+37,38c40,45
+< STATICLIBRARY   boost_thread-mgw34-mt-1_39_linux
+< OPTION    GCC -pthread -O2 -Wno-uninitialized
+---
+> STATICLIBRARY imgutils patchdataprocessor
+> #else
+> STATICLIBRARY imgutils xml2 wsock32 patchdataprocessor
+> #endif
+> #ifdef TOOLS2_LINUX
+> OPTION    GCC -pthread -O2 -Wno-uninitialized -isystem /usr/include/libxml2 -lxml2 -lboost_thread-mt
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imgcheck/inc/cmdlinehandler.h /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imgcheck/inc/cmdlinehandler.h
+123c123
+< typedef enum Suppress
+---
+> enum Suppress
+139c139
+< typedef enum NumberOfValue
+---
+> enum NumberOfValue
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imgcheck/inc/common.h /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imgcheck/inc/common.h
+89c89
+< typedef enum ReturnType
+---
+> enum ReturnType
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imgcheck/inc/exceptionimplementation.h /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imgcheck/inc/exceptionimplementation.h
+94c94
+< 	char* iMessage;
+---
+> 	char const * iMessage;
+113c113
+< 	ofstream iLogStream;
+---
+> 	Ofstream iLogStream;
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imgcheck/inc/xmlwriter.h /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imgcheck/inc/xmlwriter.h
+27c27,32
+< #include "libxml/xmlwriter.h"
+---
+> #if defined(__LINUX__)
+> 	#include <libxml/xmlwriter.h>
+> #endif
+> #if defined(WIN32)
+> 	#include "libxml/xmlwriter.h"
+> #endif
+110c115
+< 	ofstream iXmlFile;
+---
+> 	Ofstream iXmlFile;
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imgcheck/libimgutils/inc/typedefs.h /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imgcheck/libimgutils/inc/typedefs.h
+31,32c31,32
+< #include <fstream.h>
+< #include <iostream.h>
+---
+> #include <fstream>
+> #include <iostream>
+56c56
+< typedef ios Ios;
+---
+> typedef std::ios Ios;
+58,59c58,59
+< typedef ofstream Ofstream;
+< typedef ifstream Ifstream;
+---
+> typedef std::ofstream Ofstream;
+> typedef std::ifstream Ifstream;
+98c98
+< typedef enum EImageType
+---
+> enum EImageType
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imgcheck/libimgutils/src/dirreader.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imgcheck/libimgutils/src/dirreader.cpp
+122c122
+< 	getcwd(cwd,MAXPATHLEN);
+---
+> 	char *cp = getcwd(cwd,MAXPATHLEN); (void)cp;
+124c124
+< 	chdir(cwd);
+---
+> 	int i = chdir(cwd); (void)i;
+141a142
+> #ifndef __LINUX__
+143a145,146
+> #endif
+>  
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imgcheck/libimgutils/src/romreader.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imgcheck/libimgutils/src/romreader.cpp
+56c56
+< 	iRomImageRootDirEntry = new RomImageDirEntry("");
+---
+> 	iRomImageRootDirEntry = new RomImageDirEntry(const_cast<char *>(""));
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imgcheck/src/cmdlinehandler.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imgcheck/src/cmdlinehandler.cpp
+27a28
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imgcheck/src/cmdlinewriter.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imgcheck/src/cmdlinewriter.cpp
+26a27
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imgcheck/src/exceptionimplementation.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imgcheck/src/exceptionimplementation.cpp
+190c190
+< 		cout << aMsg.c_str() << endl;
+---
+> 		std::cout << aMsg.c_str() << std::endl;
+210c210
+< 		cout << aMsg.c_str() << endl;
+---
+> 		std::cout << aMsg.c_str() << std::endl;
+214c214
+< 		cerr << aMsg.c_str() << endl;
+---
+> 		std::cerr << aMsg.c_str() << std::endl;
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imgcheck/src/sidchecker.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imgcheck/src/sidchecker.cpp
+252,253c252,253
+< 	if((iAllExecutables 
+< 		|| (exeAtt->iAttStatus == KDuplicate)) && !exeAtt->iAttStatus.empty() 
+---
+> 	if(((iAllExecutables 
+> 		|| (exeAtt->iAttStatus == KDuplicate)) && !exeAtt->iAttStatus.empty())
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imgcheck/src/xmlwriter.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imgcheck/src/xmlwriter.cpp
+26a27
+> #include <cstring>
+29c30
+< 	#include "/epoc32/gcc_mingw/include/windows.h"	
+---
+>     #include <windows.h>	
+102c103
+< 	ifstream xslSourceHandle;
+---
+> 	Ifstream xslSourceHandle;
+119c120
+< 	ofstream xslDestHandle(xslDestPath.c_str(), Ios::binary | Ios::out);
+---
+> 	Ofstream xslDestHandle(xslDestPath.c_str(), Ios::binary | Ios::out);
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/boostlibrary/boost/thread/pthread/thread_data.hpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/boostlibrary/boost/thread/pthread/thread_data.hpp
+11c11
+< #include <boost/enable_shared_from_this.hpp>
+---
+> #include <boost/smart_ptr/enable_shared_from_this.hpp>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/e32image/deflate/deflate.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/e32image/deflate/deflate.cpp
+22a23
+> #define OFFSETOF(c,f) (((TInt)&(((c *)0x1000)->f))-0x1000)
+92c93,94
+< 	return new(HMem::Alloc(0,_FOFF(HDeflateHash,iOffset[Min(aLinks,KDeflateMaxDistance)]))) HDeflateHash;
+---
+> 	return new(new char[OFFSETOF(HDeflateHash,iOffset[0]) + 
+> 		(sizeof(TOffset) * Min(aLinks,KDeflateMaxDistance))]) HDeflateHash;
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/e32image/deflate/panic.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/e32image/deflate/panic.cpp
+24c24
+< char* HuffmanError[]=	{
+---
+> char const * HuffmanError[]=	{
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/e32uid/uidcrc.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/e32uid/uidcrc.cpp
+58c58
+< 		char* endptr = "failed";
+---
+> 		char * endptr;
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/filesystem/source/cluster.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/filesystem/source/cluster.cpp
+146c146,148
+<     	throw ErrorHandler(IMAGESIZETOOBIG,"Occupied number of clusters count exceeded than available clusters",__FILE__,__LINE__);
+---
+>     	throw ErrorHandler(IMAGESIZETOOBIG,
+> 			const_cast<char *>("Occupied number of clusters count exceeded than available clusters"),
+> 			const_cast<char *>(__FILE__),__LINE__);
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/filesystem/source/dirregion.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/filesystem/source/dirregion.cpp
+52c52,54
+< 		throw ErrorHandler(CLUSTERERROR,"Instance creation error", __FILE__, __LINE__);
+---
+> 		throw ErrorHandler(CLUSTERERROR,
+> 		const_cast<char *>("Instance creation error"),
+> 		const_cast<char *>( __FILE__), __LINE__);
+120c122,123
+< 		throw ErrorHandler(FILEWRITEERROR, __FILE__, __LINE__);
+---
+> 		throw ErrorHandler(FILEWRITEERROR, const_cast<char *>(__FILE__), __LINE__);
+> 
+178c181
+< 		throw ErrorHandler(EMPTYFILENAME, __FILE__, __LINE__);
+---
+> 		throw ErrorHandler(EMPTYFILENAME, const_cast<char *>(__FILE__), __LINE__);
+250c253
+< 		throw ErrorHandler(EMPTYFILENAME, __FILE__, __LINE__);
+---
+> 		throw ErrorHandler(EMPTYFILENAME, const_cast<char *>(__FILE__), __LINE__);
+317c320,321
+< 		throw ErrorHandler(FILEOPENERROR,(char*)aEntry->GetFilePath().c_str(),__FILE__,__LINE__);
+---
+> 		throw ErrorHandler(FILEOPENERROR,const_cast<char *>(aEntry->GetFilePath().c_str()),
+> 			const_cast<char *>(__FILE__),__LINE__);
+327c331,332
+< 			throw ErrorHandler(MEMORYALLOCATIONERROR, __FILE__, __LINE__);
+---
+> 			throw ErrorHandler(MEMORYALLOCATIONERROR,
+> 				const_cast<char *>(__FILE__), __LINE__);
+335c340,341
+< 			throw ErrorHandler(FILEREADERROR,(char*)aEntry->GetFilePath().c_str(), __FILE__, __LINE__);
+---
+> 			throw ErrorHandler(FILEREADERROR,const_cast<char *>(aEntry->GetFilePath().c_str()),
+> 				const_cast<char *>(__FILE__), __LINE__);
+547c553
+< 			throw ErrorHandler(NOENTRIESFOUND, __FILE__, __LINE__);
+---
+> 			throw ErrorHandler(NOENTRIESFOUND, const_cast<char *>(__FILE__), __LINE__);
+552c558
+< 		throw ErrorHandler(ROOTNOTFOUND, __FILE__, __LINE__);
+---
+> 		throw ErrorHandler(ROOTNOTFOUND, const_cast<char *>(__FILE__), __LINE__);
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/filesystem/source/errorhandler.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/filesystem/source/errorhandler.cpp
+24a25
+> #include <cstring>
+26,27c27,28
+< char *errMssgPrefix="FileSystem : Error:";
+< char *Gspace=" ";
+---
+> char const *errMssgPrefix="FileSystem : Error:";
+> char const *Gspace=" ";
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/filesystem/source/fat16bootsector.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/filesystem/source/fat16bootsector.cpp
+23a24
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/filesystem/source/fat16filesystem.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/filesystem/source/fat16filesystem.cpp
+24c24
+< 
+---
+> #include <cstring>
+79c79
+< 	memcpy(&iData[pos],JmpBoot,3);
+---
+> 	memmove(&iData[pos],JmpBoot,3);
+81c81
+< 	memcpy(&iData[pos],OEMName,8);
+---
+> 	memmove(&iData[pos],OEMName,8);
+83c83
+< 	memcpy(&iData[pos],&BytesPerSector,2);
+---
+> 	memmove(&iData[pos],&BytesPerSector,2);
+85c85
+< 	memcpy(&iData[pos],&SectorsPerCluster,1);
+---
+> 	memmove(&iData[pos],&SectorsPerCluster,1);
+87c87
+< 	memcpy(&iData[pos],&ReservedSectors,2);
+---
+> 	memmove(&iData[pos],&ReservedSectors,2);
+89c89
+< 	memcpy(&iData[pos],&NumFats,1);
+---
+> 	memmove(&iData[pos],&NumFats,1);
+91c91
+< 	memcpy(&iData[pos],&RootDirEntries,2);
+---
+> 	memmove(&iData[pos],&RootDirEntries,2);
+93c93
+< 	memcpy(&iData[pos],&LowSectors,2);
+---
+> 	memmove(&iData[pos],&LowSectors,2);
+95c95
+< 	memcpy(&iData[pos],&Media,1);
+---
+> 	memmove(&iData[pos],&Media,1);
+97c97
+< 	memcpy(&iData[pos],&FatSectors,2);
+---
+> 	memmove(&iData[pos],&FatSectors,2);
+99c99
+< 	memcpy(&iData[pos],&SectorPerTrack,2);
+---
+> 	memmove(&iData[pos],&SectorPerTrack,2);
+101c101
+< 	memcpy(&iData[pos],&NumberOfHeads,2);
+---
+> 	memmove(&iData[pos],&NumberOfHeads,2);
+103c103
+< 	memcpy(&iData[pos],&HiddenSectors,4);
+---
+> 	memmove(&iData[pos],&HiddenSectors,4);
+105c105
+< 	memcpy(&iData[pos],&HighSectorsCount,4);
+---
+> 	memmove(&iData[pos],&HighSectorsCount,4);
+107c107
+< 	memcpy(&iData[pos],&BootSectorDriveNumber,1);		
+---
+> 	memmove(&iData[pos],&BootSectorDriveNumber,1);		
+109c109
+< 	memcpy(&iData[pos],&ReservedByte,1);
+---
+> 	memmove(&iData[pos],&ReservedByte,1);
+111c111
+< 	memcpy(&iData[pos],&BootSignature,1);
+---
+> 	memmove(&iData[pos],&BootSignature,1);
+113c113
+< 	memcpy(&iData[pos],&VolumeId,4);
+---
+> 	memmove(&iData[pos],&VolumeId,4);
+115c115
+< 	memcpy(&iData[pos],VolumeLab,11);
+---
+> 	memmove(&iData[pos],VolumeLab,11);
+117c117
+< 	memcpy(&iData[pos],FileSysType,8);
+---
+> 	memmove(&iData[pos],FileSysType,8);
+136c136
+< 	MessageHandler::ReportMessage (INFORMATION,BOOTSECTORCREATEMSG, "FAT16");
+---
+> 	MessageHandler::ReportMessage (INFORMATION,BOOTSECTORCREATEMSG, const_cast<char *>("FAT16"));
+148c148
+< 	MessageHandler::ReportMessage (INFORMATION,BOOTSECTORWRITEMSG,"FAT16");
+---
+> 	MessageHandler::ReportMessage (INFORMATION,BOOTSECTORWRITEMSG,const_cast<char *>("FAT16"));
+198,199c198,199
+< 	MessageHandler::ReportMessage (INFORMATION,FATTABLEWRITEMSG,
+< 								   "FAT16");
+---
+> 
+> 	MessageHandler::ReportMessage (INFORMATION,FATTABLEWRITEMSG,const_cast<char *>("FAT16"));
+261c261,263
+< 		throw ErrorHandler(BOOTSECTORERROR,"Low Partition Size",__FILE__,__LINE__);
+---
+> 		throw ErrorHandler(BOOTSECTORERROR,
+> 			const_cast<char *>("Low Partition Size"),
+> 			const_cast<char *>(__FILE__),__LINE__);
+265c267,269
+< 		throw ErrorHandler(BOOTSECTORERROR,"High Partition Size",__FILE__,__LINE__);
+---
+> 		throw ErrorHandler(BOOTSECTORERROR,
+> 			const_cast<char *>("High Partition Size"),
+> 			const_cast<char *>(__FILE__),__LINE__);
+316c320
+< 		throw ErrorHandler(UNKNOWNERROR, __FILE__, __LINE__);
+---
+> 		throw ErrorHandler(UNKNOWNERROR, const_cast<char *>(__FILE__), __LINE__);
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/filesystem/source/fat32bootsector.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/filesystem/source/fat32bootsector.cpp
+23a24
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/filesystem/source/fat32filesystem.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/filesystem/source/fat32filesystem.cpp
+23a24
+> #include <cstring>
+93c94
+< 	memcpy(&iData[pos],JmpBoot,3);
+---
+> 	memmove(&iData[pos],JmpBoot,3);
+95c96
+< 	memcpy(&iData[pos],OEMName,8);
+---
+> 	memmove(&iData[pos],OEMName,8);
+97c98
+< 	memcpy(&iData[pos],&BytesPerSector,2);
+---
+> 	memmove(&iData[pos],&BytesPerSector,2);
+99c100
+< 	memcpy(&iData[pos],&SectorsPerCluster,1);
+---
+> 	memmove(&iData[pos],&SectorsPerCluster,1);
+101c102
+< 	memcpy(&iData[pos],&ReservedSectors,2);
+---
+> 	memmove(&iData[pos],&ReservedSectors,2);
+103c104
+< 	memcpy(&iData[pos],&NumFats,1);
+---
+> 	memmove(&iData[pos],&NumFats,1);
+105c106
+< 	memcpy(&iData[pos],&RootDirEntries,2);
+---
+> 	memmove(&iData[pos],&RootDirEntries,2);
+107c108
+< 	memcpy(&iData[pos],&LowSectors,2);
+---
+> 	memmove(&iData[pos],&LowSectors,2);
+109c110
+< 	memcpy(&iData[pos],&Media,1);
+---
+> 	memmove(&iData[pos],&Media,1);
+111c112
+< 	memcpy(&iData[pos],&FatSectors,2);
+---
+> 	memmove(&iData[pos],&FatSectors,2);
+113c114
+< 	memcpy(&iData[pos],&SectorPerTrack,2);
+---
+> 	memmove(&iData[pos],&SectorPerTrack,2);
+115c116
+< 	memcpy(&iData[pos],&NumberOfHeads,2);
+---
+> 	memmove(&iData[pos],&NumberOfHeads,2);
+117c118
+< 	memcpy(&iData[pos],&HiddenSectors,4);
+---
+> 	memmove(&iData[pos],&HiddenSectors,4);
+119c120
+< 	memcpy(&iData[pos],&HighSectorsCount,4);
+---
+> 	memmove(&iData[pos],&HighSectorsCount,4);
+121c122
+< 	memcpy(&iData[pos],&FatSectors32,4);
+---
+> 	memmove(&iData[pos],&FatSectors32,4);
+123c124
+< 	memcpy(&iData[pos],&ExtFlags,2);
+---
+> 	memmove(&iData[pos],&ExtFlags,2);
+125c126
+< 	memcpy(&iData[pos],&FileSystemVersion,2);
+---
+> 	memmove(&iData[pos],&FileSystemVersion,2);
+127c128
+< 	memcpy(&iData[pos],&RootCluster,4);
+---
+> 	memmove(&iData[pos],&RootCluster,4);
+129c130
+< 	memcpy(&iData[pos],&FSInfo,2);
+---
+> 	memmove(&iData[pos],&FSInfo,2);
+131c132
+< 	memcpy(&iData[pos],&BackUpBootSector,2);
+---
+> 	memmove(&iData[pos],&BackUpBootSector,2);
+133c134
+< 	memcpy(&iData[pos],FutureReserved,12);
+---
+> 	memmove(&iData[pos],FutureReserved,12);
+135c136
+< 	memcpy(&iData[pos],&BootSectorDriveNumber,1);
+---
+> 	memmove(&iData[pos],&BootSectorDriveNumber,1);
+137c138
+< 	memcpy(&iData[pos],&ReservedByte,1);
+---
+> 	memmove(&iData[pos],&ReservedByte,1);
+139c140
+< 	memcpy(&iData[pos],&BootSignature,1);
+---
+> 	memmove(&iData[pos],&BootSignature,1);
+141c142
+< 	memcpy(&iData[pos],&VolumeId,4);
+---
+> 	memmove(&iData[pos],&VolumeId,4);
+143c144
+< 	memcpy(&iData[pos],VolumeLab,11);
+---
+> 	memmove(&iData[pos],VolumeLab,11);
+145c146
+< 	memcpy(&iData[pos],FileSystemType,8);
+---
+> 	memmove(&iData[pos],FileSystemType,8);
+162c163
+< 	MessageHandler::ReportMessage (INFORMATION,BOOTSECTORCREATEMSG, "FAT32");
+---
+> 	MessageHandler::ReportMessage (INFORMATION,BOOTSECTORCREATEMSG, const_cast<char *>("FAT32"));
+175c176
+< 	MessageHandler::ReportMessage (INFORMATION,BOOTSECTORWRITEMSG, "FAT32");
+---
+> 	MessageHandler::ReportMessage (INFORMATION,BOOTSECTORWRITEMSG, const_cast<char *>("FAT32"));
+231,232c232,234
+< 	MessageHandler::ReportMessage (INFORMATION,FATTABLEWRITEMSG,
+< 								   "FAT32");
+---
+> 
+> 	MessageHandler::ReportMessage (INFORMATION,FATTABLEWRITEMSG,const_cast<char *>("FAT32"));
+> 
+257c259
+< 	memcpy(&FSinfoData[counter], &iFSInfo.FSI_LeadSign,4);
+---
+> 	memmove(&FSinfoData[counter], &iFSInfo.FSI_LeadSign,4);
+259c261
+< 	memcpy(&FSinfoData[counter], &iFSInfo.FSI_Reserved,480);
+---
+> 	memmove(&FSinfoData[counter], &iFSInfo.FSI_Reserved,480);
+261c263
+< 	memcpy(&FSinfoData[counter], &iFSInfo.FSI_StrucSig,4);
+---
+> 	memmove(&FSinfoData[counter], &iFSInfo.FSI_StrucSig,4);
+263c265
+< 	memcpy(&FSinfoData[counter], &iFSInfo.FSI_Free_Count,4);
+---
+> 	memmove(&FSinfoData[counter], &iFSInfo.FSI_Free_Count,4);
+265c267
+< 	memcpy(&FSinfoData[counter], &iFSInfo.FSI_Nxt_Free,4);
+---
+> 	memmove(&FSinfoData[counter], &iFSInfo.FSI_Nxt_Free,4);
+267c269
+< 	memcpy(&FSinfoData[counter], &iFSInfo.FSI_Reserved2,12);
+---
+> 	memmove(&FSinfoData[counter], &iFSInfo.FSI_Reserved2,12);
+269c271
+< 	memcpy(&FSinfoData[counter], &iFSInfo.FSI_TrailSig,4);
+---
+> 	memmove(&FSinfoData[counter], &iFSInfo.FSI_TrailSig,4);
+370c372,374
+< 		throw ErrorHandler(BOOTSECTORERROR,"Low Partition Size",__FILE__, __LINE__);
+---
+> 		throw ErrorHandler(BOOTSECTORERROR,
+> 			const_cast<char *>("Low Partition Size"),
+> 			const_cast<char *>(__FILE__), __LINE__);
+374c378,380
+< 		throw ErrorHandler(BOOTSECTORERROR,"high Partition Size",__FILE__, __LINE__);
+---
+> 		throw ErrorHandler(BOOTSECTORERROR,
+> 			const_cast<char *>("high Partition Size"),
+> 			const_cast<char *>(__FILE__), __LINE__);
+427c433
+< 		throw ErrorHandler(UNKNOWNERROR, __FILE__, __LINE__);
+---
+> 		throw ErrorHandler(UNKNOWNERROR, const_cast<char *>(__FILE__), __LINE__);
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/filesystem/source/fatbasebootsector.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/filesystem/source/fatbasebootsector.cpp
+24a25
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/filesystem/source/filesysteminterface.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/filesystem/source/filesysteminterface.cpp
+65c65,67
+< 			throw ErrorHandler(FILEOPENERROR,aImageFileName,__FILE__, __LINE__);
+---
+> 			throw ErrorHandler(FILEOPENERROR,
+> 				const_cast<char *>(aImageFileName),
+> 				const_cast<char *>(__FILE__), __LINE__);
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/filesystem/source/longname.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/filesystem/source/longname.cpp
+23a24
+> #include <cstring>
+51c52
+< 		throw ErrorHandler(EMPTYFILENAME, __FILE__, __LINE__);
+---
+> 		throw ErrorHandler(EMPTYFILENAME, const_cast<char *>(__FILE__), __LINE__);
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/filesystem/source/messageimplementation.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/filesystem/source/messageimplementation.cpp
+25a26
+> #include <cstring>
+31,34c32,36
+< char *errorMssgPrefix="FileSystem : Error:";
+< char *warnMssgPrefix="FileSystem : Warning:";
+< char *infoMssgPrefix="FileSystem : Information:";
+< char *Space=" ";
+---
+> char const *errorMssgPrefix="FileSystem : Error:";
+> char const *warnMssgPrefix="FileSystem : Warning:";
+> char const *infoMssgPrefix="FileSystem : Information:";
+> char const *Space=" ";
+> 
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/host/h_utl.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/host/h_utl.cpp
+180c180
+< 	memset(&aVersion, sizeof(TVersion), 0);	
+---
+> 	memset(&aVersion, 0, sizeof(TVersion));
+195c195
+< 	char* pMinor = strchr(str, '.');
+---
+> 	char const * pMinor = strchr(str, '.');
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/inc/h_utl.h /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/inc/h_utl.h
+68,70d67
+< // to fix the linux problem: memcpy does not work with overlapped areas.
+< #define memcpy memmove
+< 
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/imglib/parameterfileprocessor/source/parameterfileprocessor.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/imglib/parameterfileprocessor/source/parameterfileprocessor.cpp
+23a24
+> #include <cstring>
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/group/BLD.INF /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/group/BLD.INF
+17a18
+> #include <productvariant.hrh>
+24c25
+< ../maksym/fixupsym.bat              /epoc32/tools/fixupsym.bat
+---
+> ../maksym/fixupsym.bat              EPOCROOT_EXPORT_PATH(epoc32/tools/fixupsym.bat)
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/group/readimage.mmp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/group/readimage.mmp
+47a48
+> #ifndef TOOLS2_LINUX
+48a50
+> #endif
+55,56c57
+< STATICLIBRARY   boost_thread-mgw34-mt-1_39_linux
+< OPTION    GCC -pthread -O2 -Wno-uninitialized
+---
+> OPTION    GCC -pthread -O2 -Wno-uninitialized -lboost_thread-mt
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/readimage/inc/common.h /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/readimage/inc/common.h
+49c49
+< typedef enum EImageType
+---
+> enum EImageType
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/readimage/inc/image_reader.h /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/readimage/inc/image_reader.h
+30c30,42
+< #include <direct.h>
+---
+> #if defined(WIN32)
+> 	#include <direct.h>
+> 	#define GETCWD	_getcwd
+> 	#define CHDIR	_chdir
+> 	#define MKDIR(dir)	_mkdir(dir)
+> #elif defined(__LINUX__)
+> 	#include <sys/stat.h>
+> 	#include <unistd.h>
+> 	#define GETCWD	getcwd
+> 	#define CHDIR	chdir
+> 	#define MKDIR(dir)	mkdir((dir),S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)
+> #endif
+> 
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/readimage/inc/rofs_image_reader.h /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/readimage/inc/rofs_image_reader.h
+68c68
+< 	void SetSeek(streampos aOff, ios::seek_dir aStartPos=ios::beg);
+---
+> 	void SetSeek(streampos aOff, std::ios_base::seekdir aStartPos);
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/readimage/src/e32_image_reader.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/readimage/src/e32_image_reader.cpp
+77,97c77,97
+< 	DumpInHex("Size", aE32Image.iSize ) << endl;
+< 	DumpInHex("Uids",aE32Image.iOrigHdr->iUid1);
+< 	DumpInHex(" ",aE32Image.iOrigHdr->iUid2, aContinue);
+< 	DumpInHex(" ",aE32Image.iOrigHdr->iUid3, aContinue);
+< 	DumpInHex(" ",aE32Image.iOrigHdr->iUidChecksum, aContinue) << endl;
+< 
+< 	
+< 	DumpInHex("Entry point", aE32Image.iOrigHdr->iEntryPoint ) << endl;
+< 	DumpInHex("Code start addr" ,aE32Image.iOrigHdr->iCodeBase)<< endl;
+< 	DumpInHex("Data start addr" ,aE32Image.iOrigHdr->iDataBase) << endl;
+< 	DumpInHex("Text size" ,aE32Image.iOrigHdr->iTextSize) << endl;
+< 	DumpInHex("Code size" ,aE32Image.iOrigHdr->iCodeSize) << endl;
+< 	DumpInHex("Data size" ,aE32Image.iOrigHdr->iDataSize) << endl;
+< 	DumpInHex("Bss size" ,aE32Image.iOrigHdr->iBssSize) << endl;
+< 	DumpInHex("Total data size" ,(aE32Image.iOrigHdr->iBssSize + aE32Image.iOrigHdr->iDataSize)) << endl;
+< 	DumpInHex("Heap min" ,aE32Image.iOrigHdr->iHeapSizeMin) << endl;
+< 	DumpInHex("Heap max" ,aE32Image.iOrigHdr->iHeapSizeMax) << endl;
+< 	DumpInHex("Stack size" ,aE32Image.iOrigHdr->iStackSize) << endl;
+< 	DumpInHex("Export directory" ,aE32Image.iOrigHdr->iExportDirOffset) << endl;
+< 	DumpInHex("Export dir count" ,aE32Image.iOrigHdr->iExportDirCount) << endl;
+< 	DumpInHex("Flags" ,aE32Image.iOrigHdr->iFlags) << endl;
+---
+> 	DumpInHex(const_cast<char *>("Size"), aE32Image.iSize ) << endl;
+> 	DumpInHex(const_cast<char *>("Uids"),aE32Image.iOrigHdr->iUid1);
+> 	DumpInHex(const_cast<char *>(" "),aE32Image.iOrigHdr->iUid2, aContinue);
+> 	DumpInHex(const_cast<char *>(" "),aE32Image.iOrigHdr->iUid3, aContinue);
+> 	DumpInHex(const_cast<char *>(" "),aE32Image.iOrigHdr->iUidChecksum, aContinue) << endl;
+> 
+> 	
+> 	DumpInHex(const_cast<char *>("Entry point"), aE32Image.iOrigHdr->iEntryPoint ) << endl;
+> 	DumpInHex(const_cast<char *>("Code start addr") ,aE32Image.iOrigHdr->iCodeBase)<< endl;
+> 	DumpInHex(const_cast<char *>("Data start addr") ,aE32Image.iOrigHdr->iDataBase) << endl;
+> 	DumpInHex(const_cast<char *>("Text size") ,aE32Image.iOrigHdr->iTextSize) << endl;
+> 	DumpInHex(const_cast<char *>("Code size") ,aE32Image.iOrigHdr->iCodeSize) << endl;
+> 	DumpInHex(const_cast<char *>("Data size") ,aE32Image.iOrigHdr->iDataSize) << endl;
+> 	DumpInHex(const_cast<char *>("Bss size") ,aE32Image.iOrigHdr->iBssSize) << endl;
+> 	DumpInHex(const_cast<char *>("Total data size") ,(aE32Image.iOrigHdr->iBssSize + aE32Image.iOrigHdr->iDataSize)) << endl;
+> 	DumpInHex(const_cast<char *>("Heap min") ,aE32Image.iOrigHdr->iHeapSizeMin) << endl;
+> 	DumpInHex(const_cast<char *>("Heap max") ,aE32Image.iOrigHdr->iHeapSizeMax) << endl;
+> 	DumpInHex(const_cast<char *>("Stack size") ,aE32Image.iOrigHdr->iStackSize) << endl;
+> 	DumpInHex(const_cast<char *>("Export directory") ,aE32Image.iOrigHdr->iExportDirOffset) << endl;
+> 	DumpInHex(const_cast<char *>("Export dir count") ,aE32Image.iOrigHdr->iExportDirCount) << endl;
+> 	DumpInHex(const_cast<char *>("Flags") ,aE32Image.iOrigHdr->iFlags) << endl;
+108,111c108,111
+< 		DumpInHex("Secure ID", v->iS.iSecureId) << endl;
+< 		DumpInHex("Vendor ID", v->iS.iVendorId) << endl;
+< 		DumpInHex("Capability", v->iS.iCaps[1]);
+< 		DumpInHex(" ", v->iS.iCaps[0], aContinue) << endl;
+---
+> 		DumpInHex(const_cast<char *>("Secure ID"), v->iS.iSecureId) << endl;
+> 		DumpInHex(const_cast<char *>("Vendor ID"), v->iS.iVendorId) << endl;
+> 		DumpInHex(const_cast<char *>("Capability"), v->iS.iCaps[1]);
+> 		DumpInHex(const_cast<char *>(" "), v->iS.iCaps[0], aContinue) << endl;
+122c122
+< 	DumpInHex("Compression", aE32Image.iOrigHdr->iCompressionType) << endl;
+---
+> 	DumpInHex(const_cast<char *>("Compression"), aE32Image.iOrigHdr->iCompressionType) << endl;
+127,128c127,129
+< 		DumpInHex("Exception Descriptor", v->iExceptionDescriptor) << endl;
+< 		DumpInHex("Code offset", v->iCodeOffset) << endl;
+---
+> 		DumpInHex(const_cast<char *>("Exception Descriptor"), v->iExceptionDescriptor) << endl;
+> 		DumpInHex(const_cast<char *>("Code offset"), v->iCodeOffset) << endl;
+> 
+132c133
+< 	DumpInHex("Dll ref table size", aE32Image.iOrigHdr->iDllRefTableCount) << endl << endl << endl;
+---
+> 	DumpInHex(const_cast<char *>("Dll ref table size"), aE32Image.iOrigHdr->iDllRefTableCount) << endl << endl << endl;
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/readimage/src/image_handler.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/readimage/src/image_handler.cpp
+395c395,396
+< 			throw SisUtilsException("Usage Error", "No SIS file passed");
+---
+> 			throw SisUtilsException(const_cast<char *>("Usage Error"),
+> 				const_cast<char *>("No SIS file passed"));
+412c413,414
+< 			throw SisUtilsException("Error:", "Cannot create Sis2Iby object");
+---
+> 			throw SisUtilsException(const_cast<char *>("Error:"),
+> 				const_cast<char *>("Cannot create Sis2Iby object"));
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/readimage/src/image_reader.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/readimage/src/image_reader.cpp
+176c176
+< 	if( _getcwd(currWorkingDir,_MAX_BUFFER_SIZE_) == NULL )
+---
+> 	if( GETCWD(currWorkingDir,_MAX_BUFFER_SIZE_) == NULL )
+194c194
+< 			if( _chdir(changeToDrive.c_str()) )
+---
+> 			if( CHDIR(changeToDrive.c_str()) )
+203c203
+< 			_mkdir(cPtr);
+---
+> 			MKDIR(cPtr);
+205c205
+< 			_chdir(cPtr);
+---
+> 			int r = CHDIR(cPtr); (void)r;
+210c210
+< 			if (cPtr = strtok(NULL,aDelimiter))
+---
+> 			if ((cPtr = strtok(NULL,aDelimiter)) != NULL)
+213c213
+< 				_mkdir(cPtr);
+---
+> 				MKDIR(cPtr);
+215c215
+< 				_chdir(cPtr);
+---
+> 				int r = CHDIR(cPtr); (void)r;
+219c219
+< 		_chdir(currWorkingDir);
+---
+> 		int r = CHDIR(currWorkingDir); (void)r;
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/readimage/src/rofs_image_reader.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/readimage/src/rofs_image_reader.cpp
+45c45
+< void RofsImageReader::SetSeek(streampos aOff, ios::seek_dir aStartPos)
+---
+> void RofsImageReader::SetSeek(streampos aOff, std::ios_base::seekdir aStartPos)
+293c293
+< 			GetCompleteNodePath(aNode,iPath,"/");
+---
+> 			GetCompleteNodePath(aNode,iPath,const_cast<char *>("/"));
+420c420,421
+< 		GetCompleteNodePath( aNode, path, "\\\\" );
+---
+> 		GetCompleteNodePath( aNode, path, const_cast<char *>("\\\\") );
+> 
+499c500
+< 		GetCompleteNodePath( aNode, path, "\\" );
+---
+> 		GetCompleteNodePath( aNode, path, const_cast<char *>("\\") );
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/readimage/src/rom_image_reader.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/readimage/src/rom_image_reader.cpp
+22a23,28
+> #if defined(WIN32)
+> 	#define ALLOCA _alloca
+> #elif defined(__LINUX__)
+> 	#include <alloca.h>
+> 	#define ALLOCA alloca
+> #endif
+89,90c95,96
+< 	DumpInHex("Timestamp", (iRomHdr->iTime >> 32)) ;
+< 	DumpInHex(" ", (iRomHdr->iTime &0xffffffff), aContinue) << endl;
+---
+> 	DumpInHex(const_cast<char *>("Timestamp"), (iRomHdr->iTime >> 32)) ;
+> 	DumpInHex(const_cast<char *>(" "), (iRomHdr->iTime &0xffffffff), aContinue) << endl;
+92c98
+< 	DumpInHex("RomBase", iRomHdr->iRomBase) << endl;
+---
+> 	DumpInHex(const_cast<char *>("RomBase"), iRomHdr->iRomBase) << endl;
+94,120c100,126
+< 	DumpInHex("RomSize", iRomHdr->iRomSize) << endl;
+< 	DumpInHex("KernelDataAddress", iRomHdr->iKernDataAddress) << endl;
+< 	DumpInHex("KernelLimit", iRomHdr->iKernelLimit) << endl;
+< 	DumpInHex("PrimaryFile", iRomHdr->iPrimaryFile) << endl;
+< 	DumpInHex("SecondaryFile", iRomHdr->iSecondaryFile) << endl;
+< 	DumpInHex("CheckSum", iRomHdr->iCheckSum) << endl;
+< 	DumpInHex("Hardware", iRomHdr->iHardware) << endl;
+< 
+< 	DumpInHex("Language", (TUint)(iRomHdr->iLanguage >> 32));
+< 	DumpInHex(" ", ((TUint)(iRomHdr->iLanguage & 0xffffffff)), aContinue) <<endl;
+< 
+< 	DumpInHex("KernelConfigFlags", iRomHdr->iKernelConfigFlags) << endl;
+< 	DumpInHex("RomExceptionSearchTable", iRomHdr->iRomExceptionSearchTable) << endl;
+< 	DumpInHex("RomHeaderSize", iRomHdr->iRomHeaderSize) << endl;
+< 	DumpInHex("RomSectionHeader", iRomHdr->iRomSectionHeader) << endl;
+< 	DumpInHex("TotalSvDataSize", iRomHdr->iTotalSvDataSize) << endl;
+< 	DumpInHex("VariantFile", iRomHdr->iVariantFile) << endl;
+< 	DumpInHex("ExtensionFile", iRomHdr->iExtensionFile) << endl;
+< 	DumpInHex("RelocInfo", iRomHdr->iRelocInfo) << endl;
+< 	DumpInHex("OldTraceMask", iRomHdr->iOldTraceMask) << endl;
+< 	DumpInHex("UserDataAddress", iRomHdr->iUserDataAddress) << endl;
+< 	DumpInHex("TotalUserDataSize", iRomHdr->iTotalUserDataSize) << endl;
+< 	DumpInHex("DebugPort", iRomHdr->iDebugPort) << endl;
+< 	
+< 	DumpInHex("Version", iRomHdr->iVersion.iMajor, false, 2);
+< 	DumpInHex(".", iRomHdr->iVersion.iMinor, aContinue, 2);
+< 	DumpInHex("(" ,iRomHdr->iVersion.iBuild, aContinue, 2);
+---
+> 	DumpInHex(const_cast<char *>("RomSize"), iRomHdr->iRomSize) << endl;
+> 	DumpInHex(const_cast<char *>("KernelDataAddress"), iRomHdr->iKernDataAddress) << endl;
+> 	DumpInHex(const_cast<char *>("KernelLimit"), iRomHdr->iKernelLimit) << endl;
+> 	DumpInHex(const_cast<char *>("PrimaryFile"), iRomHdr->iPrimaryFile) << endl;
+> 	DumpInHex(const_cast<char *>("SecondaryFile"), iRomHdr->iSecondaryFile) << endl;
+> 	DumpInHex(const_cast<char *>("CheckSum"), iRomHdr->iCheckSum) << endl;
+> 	DumpInHex(const_cast<char *>("Hardware"), iRomHdr->iHardware) << endl;
+> 
+> 	DumpInHex(const_cast<char *>("Language"), (TUint)(iRomHdr->iLanguage >> 32));
+> 	DumpInHex(const_cast<char *>(" "), ((TUint)(iRomHdr->iLanguage & 0xffffffff)), aContinue) <<endl;
+> 
+> 	DumpInHex(const_cast<char *>("KernelConfigFlags"), iRomHdr->iKernelConfigFlags) << endl;
+> 	DumpInHex(const_cast<char *>("RomExceptionSearchTable"), iRomHdr->iRomExceptionSearchTable) << endl;
+> 	DumpInHex(const_cast<char *>("RomHeaderSize"), iRomHdr->iRomHeaderSize) << endl;
+> 	DumpInHex(const_cast<char *>("RomSectionHeader"), iRomHdr->iRomSectionHeader) << endl;
+> 	DumpInHex(const_cast<char *>("TotalSvDataSize"), iRomHdr->iTotalSvDataSize) << endl;
+> 	DumpInHex(const_cast<char *>("VariantFile"), iRomHdr->iVariantFile) << endl;
+> 	DumpInHex(const_cast<char *>("ExtensionFile"), iRomHdr->iExtensionFile) << endl;
+> 	DumpInHex(const_cast<char *>("RelocInfo"), iRomHdr->iRelocInfo) << endl;
+> 	DumpInHex(const_cast<char *>("OldTraceMask"), iRomHdr->iOldTraceMask) << endl;
+> 	DumpInHex(const_cast<char *>("UserDataAddress"), iRomHdr->iUserDataAddress) << endl;
+> 	DumpInHex(const_cast<char *>("TotalUserDataSize"), iRomHdr->iTotalUserDataSize) << endl;
+> 	DumpInHex(const_cast<char *>("DebugPort"), iRomHdr->iDebugPort) << endl;
+> 	
+> 	DumpInHex(const_cast<char *>("Version"), iRomHdr->iVersion.iMajor, false, 2);
+> 	DumpInHex(const_cast<char *>("."), iRomHdr->iVersion.iMinor, aContinue, 2);
+> 	DumpInHex(const_cast<char *>("(") ,iRomHdr->iVersion.iBuild, aContinue, 2);
+123,126c129,132
+< 	DumpInHex("CompressionType", iRomHdr->iCompressionType) << endl;
+< 	DumpInHex("CompressedSize", iRomHdr->iCompressedSize) << endl;
+< 	DumpInHex("UncompressedSize", iRomHdr->iUncompressedSize) << endl;
+< 	DumpInHex("HcrFileAddress", iRomHdr->iHcrFileAddress) << endl;
+---
+> 	DumpInHex(const_cast<char *>("CompressionType"), iRomHdr->iCompressionType) << endl;
+> 	DumpInHex(const_cast<char *>("CompressedSize"), iRomHdr->iCompressedSize) << endl;
+> 	DumpInHex(const_cast<char *>("UncompressedSize"), iRomHdr->iUncompressedSize) << endl;
+> 	DumpInHex(const_cast<char *>("HcrFileAddress"), iRomHdr->iHcrFileAddress) << endl;
+128,129c134,137
+< 	DumpInHex("DisabledCapabilities", iRomHdr->iDisabledCapabilities[0]);
+< 	DumpInHex(" ", iRomHdr->iDisabledCapabilities[1], aContinue) << endl;
+---
+> 	DumpInHex(const_cast<char *>("DisabledCapabilities"), iRomHdr->iDisabledCapabilities[0]);
+> 	DumpInHex(const_cast<char *>(" "), iRomHdr->iDisabledCapabilities[1], aContinue) << endl;
+> 
+> 	DumpInHex(const_cast<char *>("TraceMask"), iRomHdr->iTraceMask[0]);
+131d138
+< 	DumpInHex("TraceMask", iRomHdr->iTraceMask[0]);
+137c144
+< 			DumpInHex(" ", iRomHdr->iTraceMask[aPos++], aContinue);
+---
+> 			DumpInHex(const_cast<char *>(" "), iRomHdr->iTraceMask[aPos++], aContinue);
+141c148
+< 			DumpInHex(" ", iRomHdr->iTraceMask[aPos++], aContinue, 1);
+---
+> 			DumpInHex(const_cast<char *>(" "), iRomHdr->iTraceMask[aPos++], aContinue, 1);
+154,155c161,162
+< 	DumpInHex("Timestamp", (iExtRomHdr->iTime >> 32)) ;
+< 	DumpInHex(" ", (iExtRomHdr->iTime &0xffffffff), aContinue) << endl;
+---
+> 	DumpInHex(const_cast<char *>("Timestamp"), (iExtRomHdr->iTime >> 32)) ;
+> 	DumpInHex(const_cast<char *>(" "), (iExtRomHdr->iTime &0xffffffff), aContinue) << endl;
+157c164
+< 	DumpInHex("RomBase", iExtRomHdr->iRomBase) << endl;
+---
+> 	DumpInHex(const_cast<char *>("RomBase"), iExtRomHdr->iRomBase) << endl;
+159,160c166,167
+< 	DumpInHex("RomSize", iExtRomHdr->iRomSize) << endl;
+< 	DumpInHex("CheckSum", iExtRomHdr->iCheckSum) << endl;
+---
+> 	DumpInHex(const_cast<char *>("RomSize"), iExtRomHdr->iRomSize) << endl;
+> 	DumpInHex(const_cast<char *>("CheckSum"), iExtRomHdr->iCheckSum) << endl;
+162,164c169,171
+< 	DumpInHex("Version", iExtRomHdr->iVersion.iMajor, false, 2);
+< 	DumpInHex(".", iExtRomHdr->iVersion.iMinor, aContinue, 2);
+< 	DumpInHex("(" ,iExtRomHdr->iVersion.iBuild, aContinue, 2);
+---
+> 	DumpInHex(const_cast<char *>("Version"), iExtRomHdr->iVersion.iMajor, false, 2);
+> 	DumpInHex(const_cast<char *>("."), iExtRomHdr->iVersion.iMinor, aContinue, 2);
+> 	DumpInHex(const_cast<char *>("(") ,iExtRomHdr->iVersion.iBuild, aContinue, 2);
+167,169c174,176
+< 	DumpInHex("CompressionType", iExtRomHdr->iCompressionType) << endl;
+< 	DumpInHex("CompressedSize", iExtRomHdr->iCompressedSize) << endl;
+< 	DumpInHex("UncompressedSize", iExtRomHdr->iUncompressedSize) << endl;
+---
+> 	DumpInHex(const_cast<char *>("CompressionType"), iExtRomHdr->iCompressionType) << endl;
+> 	DumpInHex(const_cast<char *>("CompressedSize"), iExtRomHdr->iCompressedSize) << endl;
+> 	DumpInHex(const_cast<char *>("UncompressedSize"), iExtRomHdr->iUncompressedSize) << endl;
+498c505
+< 	char* temp = (char*)_alloca((aLen << 1) + 1) ;
+---
+> 	char* temp = (char*)ALLOCA((aLen << 1) + 1) ;
+579,580c586,587
+< 	DumpInHex("Load Address", aEntry->iTRomEntryPtr->iAddressLin) << endl;
+< 	DumpInHex("Size", aEntry->iTRomEntryPtr->iSize) << endl;
+---
+> 	DumpInHex(const_cast<char *>("Load Address"), aEntry->iTRomEntryPtr->iAddressLin) << endl;
+> 	DumpInHex(const_cast<char *>("Size"), aEntry->iTRomEntryPtr->iSize) << endl;
+587,603c594,610
+< 	DumpInHex("Uids", aRomImgEntry->iUid1);
+< 	DumpInHex(" ", aRomImgEntry->iUid2, aContinue);
+< 	DumpInHex(" ", aRomImgEntry->iUid3, aContinue);
+< 	DumpInHex(" ", aRomImgEntry->iUidChecksum, aContinue) << endl;
+< 
+< 	DumpInHex("Entry point", aRomImgEntry->iEntryPoint) << endl;
+< 	DumpInHex("Code start addr", aRomImgEntry->iCodeAddress) << endl;
+< 	DumpInHex("Data start addr", aRomImgEntry->iDataAddress) << endl;
+< 	DumpInHex("DataBssLinearBase", aRomImgEntry->iDataBssLinearBase) << endl;
+< 	DumpInHex("Text size", aRomImgEntry->iTextSize) << endl;
+< 	DumpInHex("Code size", aRomImgEntry->iCodeSize) << endl;
+< 	DumpInHex("Data size", aRomImgEntry->iDataSize) << endl;
+< 	DumpInHex("Bss size", (aRomImgEntry->iBssSize)) << endl;
+< 	DumpInHex("Total data size", aRomImgEntry->iTotalDataSize) << endl;
+< 	DumpInHex("Heap min", aRomImgEntry->iHeapSizeMin) << endl;
+< 	DumpInHex("Heap max", aRomImgEntry->iHeapSizeMax) << endl;
+< 	DumpInHex("Stack size", aRomImgEntry->iStackSize) << endl;
+---
+> 	DumpInHex(const_cast<char *>("Uids"), aRomImgEntry->iUid1);
+> 	DumpInHex(const_cast<char *>(" "), aRomImgEntry->iUid2, aContinue);
+> 	DumpInHex(const_cast<char *>(" "), aRomImgEntry->iUid3, aContinue);
+> 	DumpInHex(const_cast<char *>(" "), aRomImgEntry->iUidChecksum, aContinue) << endl;
+> 
+> 	DumpInHex(const_cast<char *>("Entry point"), aRomImgEntry->iEntryPoint) << endl;
+> 	DumpInHex(const_cast<char *>("Code start addr"), aRomImgEntry->iCodeAddress) << endl;
+> 	DumpInHex(const_cast<char *>("Data start addr"), aRomImgEntry->iDataAddress) << endl;
+> 	DumpInHex(const_cast<char *>("DataBssLinearBase"), aRomImgEntry->iDataBssLinearBase) << endl;
+> 	DumpInHex(const_cast<char *>("Text size"), aRomImgEntry->iTextSize) << endl;
+> 	DumpInHex(const_cast<char *>("Code size"), aRomImgEntry->iCodeSize) << endl;
+> 	DumpInHex(const_cast<char *>("Data size"), aRomImgEntry->iDataSize) << endl;
+> 	DumpInHex(const_cast<char *>("Bss size"), (aRomImgEntry->iBssSize)) << endl;
+> 	DumpInHex(const_cast<char *>("Total data size"), aRomImgEntry->iTotalDataSize) << endl;
+> 	DumpInHex(const_cast<char *>("Heap min"), aRomImgEntry->iHeapSizeMin) << endl;
+> 	DumpInHex(const_cast<char *>("Heap max"), aRomImgEntry->iHeapSizeMax) << endl;
+> 	DumpInHex(const_cast<char *>("Stack size"), aRomImgEntry->iStackSize) << endl;
+611c618
+< 		DumpInHex("Dll ref table", aVirtualAddr) << endl;
+---
+> 		DumpInHex(const_cast<char *>("Dll ref table"), aVirtualAddr) << endl;
+614,619c621,626
+< 	DumpInHex("Export directory", aRomImgEntry->iExportDir) << endl;
+< 	DumpInHex("Export dir count", aRomImgEntry->iExportDirCount) << endl;
+< 	DumpInHex("Hardware variant", aRomImgEntry->iHardwareVariant) << endl;
+< 	DumpInHex("Flags", aRomImgEntry->iFlags) << endl;
+< 	DumpInHex("Secure ID", aRomImgEntry->iS.iSecureId) << endl;
+< 	DumpInHex("Vendor ID", aRomImgEntry->iS.iVendorId) << endl;
+---
+> 	DumpInHex(const_cast<char *>("Export directory"), aRomImgEntry->iExportDir) << endl;
+> 	DumpInHex(const_cast<char *>("Export dir count"), aRomImgEntry->iExportDirCount) << endl;
+> 	DumpInHex(const_cast<char *>("Hardware variant"), aRomImgEntry->iHardwareVariant) << endl;
+> 	DumpInHex(const_cast<char *>("Flags"), aRomImgEntry->iFlags) << endl;
+> 	DumpInHex(const_cast<char *>("Secure ID"), aRomImgEntry->iS.iSecureId) << endl;
+> 	DumpInHex(const_cast<char *>("Vendor ID"), aRomImgEntry->iS.iVendorId) << endl;
+621,622c628,629
+< 	DumpInHex("Capability", aRomImgEntry->iS.iCaps[1]);
+< 	DumpInHex(" ", aRomImgEntry->iS.iCaps[0], aContinue) << endl;
+---
+> 	DumpInHex(const_cast<char *>("Capability"), aRomImgEntry->iS.iCaps[1]);
+> 	DumpInHex(const_cast<char *>(" "), aRomImgEntry->iS.iCaps[0], aContinue) << endl;
+633c640
+< 	DumpInHex("Exception Descriptor", aRomImgEntry->iExceptionDescriptor) << endl;
+---
+> 	DumpInHex(const_cast<char *>("Exception Descriptor"), aRomImgEntry->iExceptionDescriptor) << endl;
+637c644
+< 		DumpInHex("Dll ref table size", aRefTbl->iNumberOfEntries*8) << endl;
+---
+> 		DumpInHex(const_cast<char *>("Dll ref table size"), aRefTbl->iNumberOfEntries*8) << endl;
+639c646
+< 		DumpInHex("Dll ref table size", 0) << endl;
+---
+> 		DumpInHex(const_cast<char *>("Dll ref table size"), 0) << endl;
+698,699c705,706
+< 	DumpInHex( "", aRomImgEntry->iHardwareVariant, true) << "] ";
+< 	DumpInHex( " DataSize=", (aRomImgEntry->iBssSize + aRomImgEntry->iDataSize), true) << endl;
+---
+> 	DumpInHex( const_cast<char *>(""), aRomImgEntry->iHardwareVariant, true) << "] ";
+> 	DumpInHex( const_cast<char *>(" DataSize="), (aRomImgEntry->iBssSize + aRomImgEntry->iDataSize), true) << endl;
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/rofsbuild/r_build.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/rofsbuild/r_build.cpp
+32c32
+< 	#include <strstream>
+---
+> 	#include <sstream>
+1221,1231c1221
+< 					char * buffer = new char [size];
+< 					// need to check if the compressed file will fit in the image
+<    					#if defined(__LINUX__)
+<  					ostrstream os((char*)aDest, aMaxSize, (ios::openmode)(ios::out+ios::binary));
+< 					#elif defined(__TOOLS2__) && defined (_STLP_THREADS)
+<   					ostrstream os((char*)buffer, size,(ios::out+ios::binary));
+<   					#elif defined( __TOOLS2__)
+<    					ostrstream os((char*)buffer, size,(ios::out+ios::binary));
+< 					#else
+< 					ostrstream os( (char*)buffer, size, (ios::out+ios::binary));
+< 					#endif
+---
+> 					ostringstream os(ios_base::out|ios_base::binary);
+1233c1223
+< 					TUint compressedSize = os.pcount();
+---
+> 					TUint compressedSize = os.str().size();
+1236d1225
+< 					delete[] buffer;
+1245,1251c1234
+<   			#if defined(__TOOLS2__) && defined (_STLP_THREADS)
+<   			ostrstream os((char*)aDest, aMaxSize,(ios::out+ios::binary));
+<   			#elif __TOOLS2__
+< 			ostrstream os((char*)aDest, aMaxSize, (std::_Ios_Openmode)(ios::out+ios::binary));
+< 			#else
+< 			ostrstream os((char*)aDest, aMaxSize, (ios::out+ios::binary));
+< 			#endif
+---
+>   			ostringstream os(ios_base::out|ios_base::binary);
+1253c1236
+< 			size = os.pcount();
+---
+> 			size = os.str().size();
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/rofsbuild/r_coreimage.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/rofsbuild/r_coreimage.cpp
+102c102
+< 	TInt result = ImageError(itemsRead,  K_ID_SIZE, "Read Identifier");
+---
+> 	TInt result = ImageError(itemsRead,  K_ID_SIZE, const_cast<char *>("Read Identifier"));
+120c120
+< 	TInt result = ImageError(itemsRead, 1, "Read Core Header");
+---
+> 	TInt result = ImageError(itemsRead, 1, const_cast<char *>("Read Core Header"));
+140c140
+< 	TInt result = ImageError(itemsRead, 1, "Read Extension Header");
+---
+> 	TInt result = ImageError(itemsRead, 1, const_cast<char *>("Read Extension Header"));
+202c202
+< 	if (ImageError(itemsRead, 1, "Read Dir") == KErrNone)
+---
+> 	if (ImageError(itemsRead, 1, const_cast<char *>("Read Dir")) == KErrNone)
+236c236
+< 	int result = ImageError(itemsRead, 1, "Read Entry Size");
+---
+> 	int result = ImageError(itemsRead, 1, const_cast<char *>("Read Entry Size"));
+242c242
+< 		result = ImageError(itemsRead, 1, "Rest of Entry");
+---
+> 		result = ImageError(itemsRead, 1, const_cast<char *>("Rest of Entry"));
+273c273
+< 	return ImageError(itemsRead, aLength, "Rof Entry Name");
+---
+> 	return ImageError(itemsRead, aLength, const_cast<char *>("Rof Entry Name"));
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/rofsbuild/r_driveimage.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/rofsbuild/r_driveimage.cpp
+257c257
+< 	while(dirEntry = readdir(dirHandler))
+---
+> 	while((dirEntry = readdir(dirHandler)) != NULL)
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/rofsbuild/r_driveutl.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/rofsbuild/r_driveutl.cpp
+85c85
+< TAny GetLocalTime(TAny)
+---
+> TAny GetLocalTime()
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/rofsbuild/r_driveutl.h /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/rofsbuild/r_driveutl.h
+27c27
+< TAny GetLocalTime(TAny);
+---
+> TAny GetLocalTime();
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/rofsbuild/r_obey.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/rofsbuild/r_obey.cpp
+286c286
+< 	fgets((char*)iLine,imaxLength+1,iObeyFile);
+---
+> 	char *cp = fgets((char*)iLine,imaxLength+1,iObeyFile); (void)cp;
+649,655c649
+<   			  #if defined(__TOOLS2__) && defined (_STLP_THREADS)
+<   			  istringstream val(iReader.Word(1),(ios_base::in+ios_base::out));	  
+<   			  #elif __TOOLS2__
+<   			  istringstream val(iReader.Word(1),(std::_Ios_Openmode)(ios_base::in+ios_base::out));
+< 			  #else
+< 			  istrstream val(iReader.Word(1),strlen(iReader.Word(1)));
+< 			  #endif
+---
+> 			istringstream val(iReader.Word(1),ios_base::in|ios_base::out);	  
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/rofsbuild/rofsbuild.mmp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/rofsbuild/rofsbuild.mmp
+45a46
+> #ifndef TOOLS2_LINUX
+46a48
+> #endif
+53,54c55
+< STATICLIBRARY   boost_thread-mgw34-mt-1_39_linux
+< OPTION    GCC -pthread -O2 -Wno-uninitialized
+---
+> OPTION    GCC -pthread -O2 -Wno-uninitialized -lboost_thread-mt
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/rofsbuild/r_rofs.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/rofsbuild/r_rofs.cpp
+587,589c587,590
+< 			*(TUint32 *) (&coffhead[0x18]) = ALIGN4K(iSizeUsed);
+< 			*(TUint32 *) (&coffhead[0x40]) = ALIGN4K(iSizeUsed);
+< 
+---
+> 			TUint32 * p0x18 = reinterpret_cast<TUint32 *>(&coffhead[0x18]);
+> 			*p0x18 = ALIGN4K(iSizeUsed);
+> 			TUint32 * p0x40 = reinterpret_cast<TUint32 *>(&coffhead[0x40]);
+> 			*p0x40 = ALIGN4K(iSizeUsed);
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/rombuild/r_obey.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/rombuild/r_obey.cpp
+304c304
+< 	fgets((char*)iLine,imaxLength+1,iObeyFile);
+---
+> 	char * cp = fgets((char*)iLine,imaxLength+1,iObeyFile); (void)cp;
+2976,2982c2976
+< #if defined(__TOOLS2__) && defined (_STLP_THREADS)
+< 			istringstream val(iReader.Word(1),(ios_base::in+ios_base::out));	  
+< #elif __TOOLS2__
+< 			istringstream val(iReader.Word(1),(std::_Ios_Openmode)(ios_base::in+ios_base::out));
+< #else
+< 			istrstream val(iReader.Word(1),strlen(iReader.Word(1)));
+< #endif
+---
+> 			istringstream val(iReader.Word(1),ios_base::in|ios_base::out);
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/rombuild/rombuild.mmp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/rombuild/rombuild.mmp
+43a44
+> #ifndef TOOLS2_LINUX
+44a46
+> #endif
+53,54c55
+< STATICLIBRARY   boost_thread-mgw34-mt-1_39_linux
+< OPTION    GCC -O2 -Wno-uninitialized -pthread
+---
+> OPTION    GCC -pthread -O2 -Wno-uninitialized -lboost_thread-mt
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/romtools/rombuild/r_rom.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/romtools/rombuild/r_rom.cpp
+1838c1838
+< 			if (!e->IsDll() && (nx>1 || nx==1 && l[-1]!=rf))
+---
+> 			if (!e->IsDll() && (nx>1 || (nx==1 && l[-1]!=rf)))
+2201,2202c2201,2205
+< 			*(TUint32 *) (&coffhead[0x18]) = ALIGN4K(iSizeUsed);
+< 			*(TUint32 *) (&coffhead[0x40]) = ALIGN4K(iSizeUsed);
+---
+> 			TUint32 * p0x18 = reinterpret_cast<TUint32 *>(&coffhead[0x18]);
+> 			*p0x18 = ALIGN4K(iSizeUsed);
+> 			TUint32 * p0x40 = reinterpret_cast<TUint32 *>(&coffhead[0x40]);
+> 			*p0x40 = ALIGN4K(iSizeUsed);
+> 
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/sisutils/inc/pkgfileparser.h /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/sisutils/inc/pkgfileparser.h
+35a36,39
+> int CompareTwoString(wchar_t const * string ,wchar_t const * option);
+> int CompareNString(wchar_t const * string ,wchar_t const * option, int len);
+> 
+> 
+150c154
+< 	HANDLE iPkgHandle;
+---
+> 	FILE * iPkgHandle;
+165c169
+< 	WORD ParseEscapeChars();
+---
+> 	unsigned short ParseEscapeChars();
+200,201c204,205
+< 	friend int CompareTwoString(wchar_t* string ,wchar_t* option);
+< 	friend int CompareNString(wchar_t* string ,wchar_t* option, int len);
+---
+>     friend int CompareTwoString(wchar_t const * string ,wchar_t const * option);
+>     friend int CompareNString(wchar_t const * string ,wchar_t const * option, int len);
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/sisutils/inc/pkglanguage.h /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/sisutils/inc/pkglanguage.h
+29c29
+< 	wchar_t*		iName;
+---
+> 	wchar_t const *		iName;
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/sisutils/inc/sisutils.h /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/sisutils/inc/sisutils.h
+42a43,45
+> #ifdef __LINUX__
+> #define PATHSEPARATOR  "/"
+> #endif
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/sisutils/src/pkgfileparser.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/sisutils/src/pkgfileparser.cpp
+20a21,22
+> #include <vector>
+> #include <wchar.h>
+26,27c28,29
+< 	WCHAR pszOpt[MAXTOKENLEN];
+< 	DWORD dwOpt;
+---
+> 	wchar_t pszOpt[MAXTOKENLEN];
+> 	unsigned dwOpt;
+48a51,54
+> std::wstring string2wstring (const String& aNarrow);
+> String wstring2string (const std::wstring& aWide);
+> 
+> 
+71c77
+< 	if(iPkgHandle != INVALID_HANDLE_VALUE)
+---
+> 	if(iPkgHandle)
+73c79
+< 		::CloseHandle(iPkgHandle);
+---
+> 		std::fclose(iPkgHandle);
+87c93,99
+< 	iPkgHandle = ::CreateFileW(string2wstring(iPkgFile).data(),GENERIC_READ,0,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
+---
+> #ifdef WIN32
+> 	iPkgHandle = _wfopen(string2wstring(iPkgFile).c_str(),L"r");
+> #else
+> 	// *nix fopen doesn't care about the filename encoding, as long as its NULL-terminated.
+> 	iPkgHandle = std::fopen(iPkgFile.c_str(),"r");
+> #endif
+> 	return iPkgHandle ? 1 : 0;
+89d100
+< 	return (iPkgHandle != INVALID_HANDLE_VALUE) ? 1 : 0;
+167c178
+< 		throw SisUtilsException((char*)iPkgFile.data(), "Could not open file");
+---
+> 		throw SisUtilsException((char*)iPkgFile.data(), const_cast<char *>("Could not open file"));
+212c223
+< 			ParserError("Unexpected token");
+---
+> 			ParserError(const_cast<char *>("Unexpected token"));
+276c287
+< 	for (WORD wNumLangs = 0; wNumLangs < iLangList.size(); wNumLangs++)
+---
+> 	for (unsigned short wNumLangs = 0; wNumLangs < iLangList.size(); wNumLangs++)
+667c678
+< 				if(!CompareNString(m_tokenValue.pszString,L"option",6))
+---
+>                 if(!CompareNString(m_tokenValue.pszString,const_cast<wchar_t *>(L"option"),6))
+690c701
+< 		ParserError("ErrBadCondFormat");
+---
+> 		ParserError(const_cast<char *>("ErrBadCondFormat"));
+774c785
+< 	WORD wNumLangs;
+---
+> 	unsigned short wNumLangs;
+841c852
+< 	for (WORD wNumLangs = 0; wNumLangs < iLangList.size(); wNumLangs++)
+---
+> 	for (unsigned short wNumLangs = 0; wNumLangs < iLangList.size(); wNumLangs++)
+993,1000c1004,1005
+< #ifdef WIN32
+< 	DWORD dwBytesRead;
+< 	if (!::ReadFile(iPkgHandle, (LPVOID)&m_pkgChar, sizeof(WCHAR), &dwBytesRead, NULL) ||
+< 		dwBytesRead!=sizeof(wchar_t))
+< 		m_pkgChar='\0';
+< #else
+< #error "TODO: Implement this function under other OS than Windows"
+< #endif
+---
+> 	wint_t wch = std::fgetwc(iPkgHandle);
+> 	m_pkgChar = (wch == WEOF) ? 0 : wch;
+1015c1020
+< 		ParserError("Unexpected Token");
+---
+> 		ParserError(const_cast<char *>("Unexpected Token"));
+1108c1113
+< 	DWORD wCount = 0;
+---
+> 	unsigned wCount = 0;
+1111c1116
+< 	DWORD escapeChars = 0;
+---
+> 	unsigned escapeChars = 0;
+1123c1128
+< 					ParserError("Bad String");
+---
+> 					ParserError(const_cast<char *>("Bad String"));
+1127c1132
+< 				ParserError("Bad String");
+---
+> 				ParserError(const_cast<char *>("Bad String"));
+1156c1161
+< WORD PkgParser::ParseEscapeChars()
+---
+> unsigned short PkgParser::ParseEscapeChars()
+1158,1160c1163,1165
+< 	WORD found=0;
+< 	WCHAR temp[MAX_STRING];
+< #ifdef WIN32
+---
+> 	unsigned short found=0;
+> 	wchar_t temp[MAX_STRING];
+> 
+1164c1169,1170
+< 		DWORD fileOffset=::SetFilePointer(iPkgHandle, 0L, NULL, FILE_CURRENT);
+---
+> 		std::fpos_t foff;
+> 		std::fgetpos(iPkgHandle,&foff);
+1173c1179
+< 				::SetFilePointer(iPkgHandle, fileOffset, NULL, FILE_BEGIN);
+---
+> 				std::fsetpos(iPkgHandle,&foff);
+1180c1186
+< 			::SetFilePointer(iPkgHandle, fileOffset, NULL, FILE_BEGIN);
+---
+> 			std::fsetpos(iPkgHandle,&foff);
+1183c1189
+< 		DWORD num=m_tokenValue.dwNumber;
+---
+> 		unsigned num=m_tokenValue.dwNumber;
+1185,1186c1191,1192
+< 		if (num>=0x80 && num<=0x9F) ParserError("Invalid Escape");
+< 		DWORD len=wcslen(temp);
+---
+> 		if (num>=0x80 && num<=0x9F) ParserError(const_cast<char *>("Invalid Escape"));
+> 		unsigned len=wcslen(temp);
+1190c1196
+< 			m_tokenValue.pszString[len]=(WCHAR)num;
+---
+> 			m_tokenValue.pszString[len]=(wchar_t)num;
+1196,1198d1201
+< #else
+< #error "TODO: Implement this function under other OS than Windows"
+< #endif 
+1210c1213
+< 	WORD wCount = 0;
+---
+> 	unsigned short wCount = 0;
+1235,1236c1238,1240
+< 		WCHAR oldChar = m_pkgChar;
+< 		DWORD fileOffset=::SetFilePointer(iPkgHandle, 0L, NULL, FILE_CURRENT);
+---
+> 		wchar_t oldChar = m_pkgChar;
+> 		std::fpos_t foff;
+> 		std::fgetpos(iPkgHandle,&foff);
+1240c1244
+< 		::SetFilePointer(iPkgHandle,fileOffset,NULL,FILE_BEGIN);
+---
+> 		std::fsetpos(iPkgHandle,&foff);
+1254,1255c1258,1259
+< 	WCHAR temp[MAX_STRING];
+< 	LPWSTR end;
+---
+> 	wchar_t temp[MAX_STRING];
+> 	wchar_t * end;
+1257,1258c1261,1262
+< 	DWORD dwBytesRead;
+< 	DWORD fileOffset=::SetFilePointer(iPkgHandle, 0L, NULL, FILE_CURRENT);
+---
+> 	std::fpos_t foff;
+> 	std::fgetpos(iPkgHandle,&foff);
+1261,1265c1265,1272
+< 	if (!::ReadFile(iPkgHandle, &temp[1], (MAX_STRING-2)*sizeof(WCHAR), &dwBytesRead, NULL) ||
+< 		dwBytesRead==0)
+< 		ParserError("Read failed");
+< 	temp[1+dwBytesRead/sizeof(WCHAR)]='\0';
+< 	hexString = (!CompareNString(temp, L"0x", 2) || !CompareNString(&temp[1], L"0x", 2));
+---
+> 	unsigned wchRead = fread(&temp[1],sizeof(wchar_t),MAX_STRING - 2,iPkgHandle);
+> 	if (!wchRead)
+> 	{ 
+> 		ParserError(const_cast<char *>("Read failed"));
+> 	}
+> 	temp[1+wchRead] = 0;
+> 	hexString = (!CompareNString(temp, const_cast<wchar_t *>(L"0x"), 2) ||
+> 		!CompareNString(&temp[1], const_cast<wchar_t *>(L"0x"), 2));
+1269,1270c1276,1281
+< 	if (end==temp) ParserError("Read failed"); 
+< 	::SetFilePointer(iPkgHandle, fileOffset+(end-temp-1)*sizeof(WCHAR), NULL, FILE_BEGIN);
+---
+> 	if (end==temp)
+> 	{
+> 		ParserError(const_cast<char *>("Read failed"));
+> 	}
+> 	std::fsetpos(iPkgHandle,&foff);
+> 	std::fseek(iPkgHandle,(end-temp-1) * sizeof(wchar_t),SEEK_CUR);		
+1347c1358
+< 	throw SisUtilsException("PakageFile-Parser Error", (char*)(str.str()).data());
+---
+> 	throw SisUtilsException(const_cast<char *>("PackageFile-Parser Error"), (char*)(str.str()).data());
+1360,1365c1371,1373
+< 	int max = ::WideCharToMultiByte(CP_OEMCP,0,aWide.c_str(),aWide.length(),0,0,0,0);
+< 	String reply;
+< 	if (max > 0 )
+< 	{
+< 		char* buffer = new char [max];
+< 		try
+---
+> 	std::vector<char> buffer((aWide.length() * sizeof(wchar_t)) + 1, '\0');
+> 	size_t nchars = wcstombs(&buffer[0],aWide.c_str(),buffer.size());
+> 	if (nchars == (size_t)-1)
+1367,1374c1375,1376
+< 			::WideCharToMultiByte(CP_OEMCP,0,aWide.c_str(),aWide.length(),buffer,max,0,0);
+< 			reply = String (buffer, max);
+< 		}
+< 		catch (...)
+< 		{
+< 			throw SisUtilsException("ParserError", "wstring to string conversion failed");
+< 		}
+< 		delete [] buffer;
+---
+> 		throw SisUtilsException(const_cast<char *>("ParserError"),
+> 			const_cast<char *>("wstring to string conversion failed"));
+1375a1378
+> 	String reply(&buffer[0]);
+1389,1391c1392,1394
+< 	int max = ::MultiByteToWideChar(CP_OEMCP,0,aNarrow.c_str(),aNarrow.length(),0,0);
+< 	std::wstring reply;
+< 	if (max > 0 )
+---
+> 	std::vector<char> buffer(mblen(aNarrow.c_str(),aNarrow.length()) + 2, '\0');
+> 	size_t nchars = mbstowcs((wchar_t *)&buffer[0],aNarrow.c_str(),buffer.size());
+> 	if (nchars == (size_t)-1)
+1393,1403c1396,1397
+< 		wchar_t* buffer = new wchar_t [max];
+< 		try
+< 		{
+< 			::MultiByteToWideChar(CP_OEMCP,0,aNarrow.c_str(),aNarrow.length(),buffer,max);
+< 			reply = std::wstring (buffer, max);
+< 		}
+< 		catch (...)
+< 		{
+< 			throw SisUtilsException("ParserError", "string to wstring conversion failed");
+< 		}
+< 		delete [] buffer;
+---
+> 		throw SisUtilsException(const_cast<char *>("ParserError"),
+> 			const_cast<char *>("string to wstring conversion failed"));
+1404a1399
+> 	std::wstring reply((wchar_t *)&buffer[0]);
+1417c1412
+< int CompareTwoString(wchar_t* string ,wchar_t* option)
+---
+> int CompareTwoString(wchar_t const * string ,wchar_t const * option)
+1418a1414
+> #if defined(WIN32)
+1419a1416,1418
+> #elif defined(__LINUX__)
+> 	return wcscasecmp(string,option);
+> #endif
+1432c1431
+< int CompareNString(wchar_t* string ,wchar_t* option, int len)
+---
+> int CompareNString(wchar_t const * string ,wchar_t const * option, int len)
+1434c1433
+< 	return wcsnicmp(string,option,len);
+---
+> 	return wmemcmp(string,option,len);
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/sisutils/src/sis2iby.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/sisutils/src/sis2iby.cpp
+89c89
+< 				throw SisUtilsException((char*)sisFile.data(), "Failed to extract SIS file");
+---
+> 				throw SisUtilsException((char*)sisFile.data(), const_cast<char *>("Failed to extract SIS file"));
+94c94
+< 		throw SisUtilsException((char*)sisFile.data(), "File not found");
+---
+> 		throw SisUtilsException((char*)sisFile.data(), const_cast<char *>("File not found"));
+131c131
+< 		throw SisUtilsException((char*)iOutputPath.data(), "Failed to create path");
+---
+> 		throw SisUtilsException((char*)iOutputPath.data(), const_cast<char *>("Failed to create path"));
+142c142
+< 		throw SisUtilsException((char*)ibyFile.data(), "Failed to create IBY file");
+---
+> 		throw SisUtilsException((char*)ibyFile.data(), const_cast<char *>("Failed to create IBY file"));
+242c242
+< 			throw SisUtilsException((char*)pkgFileName.data(), "Could not create parser object");
+---
+> 			throw SisUtilsException((char*)pkgFileName.data(), const_cast<char *>("Could not create parser object"));
+245c245,246
+< 		throw SisUtilsException((char*)pkgFileName.data(), "File not found");
+---
+> 		throw SisUtilsException(const_cast<char *>(pkgFileName.data()),
+> 			const_cast<char *>("File not found"));
+554c555,560
+< #error "TODO: Implement this function under other OS than Windows"
+---
+> 	char fPath[FILENAME_MAX];
+> 	if (realpath(aFile.c_str(),fPath))
+> 	{
+> 		aFile.assign(fPath);
+> 	}
+> 
+655c661,662
+< 		throw SisUtilsException((char*)aFile.data(), "Cannot open file");
+---
+> 		throw SisUtilsException(const_cast<char *>(aFile.data()),
+> 			const_cast<char *>("Cannot open file"));
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/imgtools/sisutils/src/sisutils.cpp /home/imk/symbian/epocroot-pdk-3.0.h/build/imgtools/sisutils/src/sisutils.cpp
+22a23,29
+> #ifdef __LINUX__
+> #include <vector>
+> #include <cerrno>
+> #include <sys/wait.h>
+> #include <sys/stat.h>
+> #endif
+> 
+204c211,250
+< #error "TODO: Implement this function under other OS than Windows"
+---
+> 	String::iterator pch = cmd.begin();
+> 	String::iterator end = cmd.end();
+> 	char *token = NULL;
+> 	std::vector<char *> args;
+> 	for ( ;pch != end; ++pch)
+> 	{
+> 		if (isspace(*pch))
+> 		{
+> 			*pch = '\0';
+> 			if (token) {
+> 				token = NULL;
+> 			}
+> 		}
+> 		else if (!token)
+> 		{
+> 			token = &*pch;
+> 			args.push_back(token);
+> 		}  
+> 	}
+> 	args.push_back(NULL);
+>     pid_t pid = fork();
+>     if (pid == 0)
+> 	{
+>         execv(args[0],&args[0]);
+>     }
+>     else if (pid < 0)
+> 	{
+>         iExitCode = static_cast<TUint32>(STAT_FAILURE);
+>     }
+>     else
+> 	{
+> 		int rtc;
+>         pid_t ws = waitpid( pid, &rtc, 0);
+>         if (ws != pid) {
+>             iExitCode = static_cast<TUint32>(STAT_FAILURE);
+>         }
+> 		else {
+> 			iExitCode = rtc;
+> 		}
+>     }
+284c329,335
+< #error "TODO: Implement this function under other OS than Windows"
+---
+> 		if(mkdir(dir.data(),777) != 0)
+> 		{
+> 			if(errno != EEXIST)
+> 			{
+> 				status = EFalse;
+> 			}
+> 		}
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/sbsv2/cpp-raptor/group/exports.inf /home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/cpp-raptor/group/exports.inf
+18,20c18,20
+< ../win32/bin/cpp.exe /tools/sbs/win32/bv/bin/cpp.exe
+< ../win32/i686-pc-mingw32/bin/cc1.exe /tools/sbs/win32/bv/i686-pc-mingw32/bin/cc1.exe
+< ../win32/i686-pc-mingw32/bin/libiconv-2.dll /tools/sbs/win32/bv/i686-pc-mingw32/bin/libiconv-2.dll
+---
+> ../win32/bin/cpp.exe ../../tools/sbs/win32/bv/bin/cpp.exe
+> ../win32/i686-pc-mingw32/bin/cc1.exe ../../tools/sbs/win32/bv/i686-pc-mingw32/bin/cc1.exe
+> ../win32/i686-pc-mingw32/bin/libiconv-2.dll ../../tools/sbs/win32/bv/i686-pc-mingw32/bin/libiconv-2.dll
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/sbsv2/raptor/group/exports.inf /home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/group/exports.inf
+18,223c18,223
+< ../RELEASE-NOTES.txt /tools/sbs/RELEASE-NOTES.txt
+< ../bin/sbs /tools/sbs/bin/sbs
+< ../bin/fixmeta.py /tools/sbs/bin/fixmeta.py
+< ../bin/codetest_osbuild.sh /tools/sbs/bin/codetest_osbuild.sh
+< ../bin/countbinaries.sh /tools/sbs/bin/countbinaries.sh
+< ../bin/gethost.sh /tools/sbs/bin/gethost.sh
+< ../bin/failedstats.py /tools/sbs/bin/failedstats.py
+< ../bin/sbs.bat /tools/sbs/bin/sbs.bat
+< ../bin/unsplitdirs.py /tools/sbs/bin/unsplitdirs.py
+< ../bin/buildstats.py /tools/sbs/bin/buildstats.py
+< ../bin/speedtest_osbuild.sh /tools/sbs/bin/speedtest_osbuild.sh
+< ../bin/sbsv2cache.py /tools/sbs/bin/sbsv2cache.py
+< ../bin/whatsource.py /tools/sbs/bin/whatsource.py
+< ../bin/oby2linux.py /tools/sbs/bin/oby2linux.py
+< ../bin/createrfifile.pl /tools/sbs/bin/createrfifile.pl
+< ../bin/vartoxml.py /tools/sbs/bin/vartoxml.py
+< ../bin/readme.txt /tools/sbs/bin/readme.txt
+< ../bin/squashlog.py /tools/sbs/bin/squashlog.py
+< ../bin/statcollate.py /tools/sbs/bin/statcollate.py
+< ../bin/createvmap.py /tools/sbs/bin/createvmap.py
+< ../bin/raptorlog.py /tools/sbs/bin/raptorlog.py
+< ../bin/osbuild.sh /tools/sbs/bin/osbuild.sh
+< ../bin/setup_user.sh /tools/sbs/bin/setup_user.sh
+< ../bin/msvcr71.dll /tools/sbs/bin/msvcr71.dll
+< ../bin/install_raptor.sh /tools/sbs/bin/install_raptor.sh
+< ../bin/mkgetfailed.py /tools/sbs/bin/mkgetfailed.py
+< ../examples/os_properties.xml /tools/sbs/examples/os_properties.xml
+< ../examples/sbs_init.xml /tools/sbs/examples/sbs_init.xml
+< ../lib/flm/e32abiv2stdexe.flm /tools/sbs/lib/flm/e32abiv2stdexe.flm
+< ../lib/flm/user/default.flm_ex /tools/sbs/lib/flm/user/default.flm_ex
+< ../lib/flm/user/globals.mk_ex /tools/sbs/lib/flm/user/globals.mk_ex
+< ../lib/flm/e32abiv2dll.flm /tools/sbs/lib/flm/e32abiv2dll.flm
+< ../lib/flm/tracecompiler.mk /tools/sbs/lib/flm/tracecompiler.mk
+< ../lib/flm/win32exe.flm /tools/sbs/lib/flm/win32exe.flm
+< ../lib/flm/template_ext.flm /tools/sbs/lib/flm/template_ext.flm
+< ../lib/flm/e32abiv2ani.flm /tools/sbs/lib/flm/e32abiv2ani.flm
+< ../lib/flm/converged-comms/createcommdbs.flm /tools/sbs/lib/flm/converged-comms/createcommdbs.flm
+< ../lib/flm/converged-comms/installdefaultcommdb.flm /tools/sbs/lib/flm/converged-comms/installdefaultcommdb.flm
+< ../lib/flm/win32plugin.flm /tools/sbs/lib/flm/win32plugin.flm
+< ../lib/flm/win32klib.flm /tools/sbs/lib/flm/win32klib.flm
+< ../lib/flm/extensions.xml /tools/sbs/lib/flm/extensions.xml
+< ../lib/flm/stack.mk /tools/sbs/lib/flm/stack.mk
+< ../lib/flm/globals.mk /tools/sbs/lib/flm/globals.mk
+< ../lib/flm/win32stdexe.flm /tools/sbs/lib/flm/win32stdexe.flm
+< ../lib/flm/e32abiv2lib.flm /tools/sbs/lib/flm/e32abiv2lib.flm
+< ../lib/flm/win32resource.flm /tools/sbs/lib/flm/win32resource.flm
+< ../lib/flm/config/default.flm /tools/sbs/lib/flm/config/default.flm
+< ../lib/flm/win32lib.flm /tools/sbs/lib/flm/win32lib.flm
+< ../lib/flm/null.flm /tools/sbs/lib/flm/null.flm
+< ../lib/flm/tools/test_command_diff.sh /tools/sbs/lib/flm/tools/test_command_diff.sh
+< ../lib/flm/tools/stlport.flm /tools/sbs/lib/flm/tools/stlport.flm
+< ../lib/flm/tools/buildstubsis.flm /tools/sbs/lib/flm/tools/buildstubsis.flm
+< ../lib/flm/msvctools.xml /tools/sbs/lib/flm/msvctools.xml
+< ../lib/flm/tools2lib.flm /tools/sbs/lib/flm/tools2lib.flm
+< ../lib/flm/win32ldd.flm /tools/sbs/lib/flm/win32ldd.flm
+< ../lib/flm/tools.xml /tools/sbs/lib/flm/tools.xml
+< ../lib/flm/metaflm.mk /tools/sbs/lib/flm/metaflm.mk
+< ../lib/flm/e32abiv2ldd.flm /tools/sbs/lib/flm/e32abiv2ldd.flm
+< ../lib/flm/e32abiv2pdl.flm /tools/sbs/lib/flm/e32abiv2pdl.flm
+< ../lib/flm/e32abiv2stdlib.flm /tools/sbs/lib/flm/e32abiv2stdlib.flm
+< ../lib/flm/config.xml /tools/sbs/lib/flm/config.xml
+< ../lib/flm/win32stddll.flm /tools/sbs/lib/flm/win32stddll.flm
+< ../lib/flm/gccxmlresource.flm /tools/sbs/lib/flm/gccxmlresource.flm
+< ../lib/flm/e32abiv2textnotifier2.flm /tools/sbs/lib/flm/e32abiv2textnotifier2.flm
+< ../lib/flm/e32abiv2implib.flm /tools/sbs/lib/flm/e32abiv2implib.flm
+< ../lib/flm/e32abiv2exe.flm /tools/sbs/lib/flm/e32abiv2exe.flm
+< ../lib/flm/win32pdl.flm /tools/sbs/lib/flm/win32pdl.flm
+< ../lib/flm/win32.flm /tools/sbs/lib/flm/win32.flm
+< ../lib/flm/base.xml /tools/sbs/lib/flm/base.xml
+< ../lib/flm/grouping.flm /tools/sbs/lib/flm/grouping.flm
+< ../lib/flm/e32abiv2.flm /tools/sbs/lib/flm/e32abiv2.flm
+< ../lib/flm/e32abiv2exexp.flm /tools/sbs/lib/flm/e32abiv2exexp.flm
+< ../lib/flm/e32abiv2defaults.mk /tools/sbs/lib/flm/e32abiv2defaults.mk
+< ../lib/flm/e32abiv2fsy.flm /tools/sbs/lib/flm/e32abiv2fsy.flm
+< ../lib/flm/final.mk /tools/sbs/lib/flm/final.mk
+< ../lib/flm/none.flm /tools/sbs/lib/flm/none.flm
+< ../lib/flm/analysis.xml /tools/sbs/lib/flm/analysis.xml
+< ../lib/flm/e32abiv2var2.flm /tools/sbs/lib/flm/e32abiv2var2.flm
+< ../lib/flm/msvctools.flm /tools/sbs/lib/flm/msvctools.flm
+< ../lib/flm/win32kdll.flm /tools/sbs/lib/flm/win32kdll.flm
+< ../lib/flm/win32ani.flm /tools/sbs/lib/flm/win32ani.flm
+< ../lib/flm/e32abiv2plugin.flm /tools/sbs/lib/flm/e32abiv2plugin.flm
+< ../lib/flm/win32bitmap.flm /tools/sbs/lib/flm/win32bitmap.flm
+< ../lib/flm/tools2common.flm /tools/sbs/lib/flm/tools2common.flm
+< ../lib/flm/win32fsy.flm /tools/sbs/lib/flm/win32fsy.flm
+< ../lib/flm/readme.txt /tools/sbs/lib/flm/readme.txt
+< ../lib/flm/e32abiv2kext.flm /tools/sbs/lib/flm/e32abiv2kext.flm
+< ../lib/flm/e32abiv2stddll.flm /tools/sbs/lib/flm/e32abiv2stddll.flm
+< ../lib/flm/win32exexp.flm /tools/sbs/lib/flm/win32exexp.flm
+< ../lib/flm/stringtable.flm /tools/sbs/lib/flm/stringtable.flm
+< ../lib/flm/utils/utility.xml /tools/sbs/lib/flm/utils/utility.xml
+< ../lib/flm/utils/prebuilt.flm /tools/sbs/lib/flm/utils/prebuilt.flm
+< ../lib/flm/utils/copydir.flm /tools/sbs/lib/flm/utils/copydir.flm
+< ../lib/flm/win32pdd.flm /tools/sbs/lib/flm/win32pdd.flm
+< ../lib/flm/taggedrules.mk /tools/sbs/lib/flm/taggedrules.mk
+< ../lib/flm/booleanlogic.mk /tools/sbs/lib/flm/booleanlogic.mk
+< ../lib/flm/emulator.xml /tools/sbs/lib/flm/emulator.xml
+< ../lib/flm/win32kext.flm /tools/sbs/lib/flm/win32kext.flm
+< ../lib/flm/test/exeabiv2_2/test.cpp /tools/sbs/lib/flm/test/exeabiv2_2/test.cpp
+< ../lib/flm/test/exeabiv2_2/test_function.cpp /tools/sbs/lib/flm/test/exeabiv2_2/test_function.cpp
+< ../lib/flm/test/exeabiv2_2/exeabiv2_2.mk /tools/sbs/lib/flm/test/exeabiv2_2/exeabiv2_2.mk
+< ../lib/flm/test/templateext/temex.mk /tools/sbs/lib/flm/test/templateext/temex.mk
+< ../lib/flm/test/templateext/Makefile /tools/sbs/lib/flm/test/templateext/Makefile
+< ../lib/flm/test/Makefile /tools/sbs/lib/flm/test/Makefile
+< ../lib/flm/test/exeabiv2_4/test.cpp /tools/sbs/lib/flm/test/exeabiv2_4/test.cpp
+< ../lib/flm/test/exeabiv2_4/exeabiv2_4.mk /tools/sbs/lib/flm/test/exeabiv2_4/exeabiv2_4.mk
+< ../lib/flm/test/exeabiv2_4/test_big.cpp /tools/sbs/lib/flm/test/exeabiv2_4/test_big.cpp
+< ../lib/flm/test/flmtests.mk /tools/sbs/lib/flm/test/flmtests.mk
+< ../lib/flm/test/ciaabiv2_1/uc_exe.cia /tools/sbs/lib/flm/test/ciaabiv2_1/uc_exe.cia
+< ../lib/flm/test/ciaabiv2_1/uc_exe.cpp /tools/sbs/lib/flm/test/ciaabiv2_1/uc_exe.cpp
+< ../lib/flm/test/ciaabiv2_1/ciaabiv2_1.mk /tools/sbs/lib/flm/test/ciaabiv2_1/ciaabiv2_1.mk
+< ../lib/flm/test/export1/Makefile /tools/sbs/lib/flm/test/export1/Makefile
+< ../lib/flm/test/export1/t1e.h /tools/sbs/lib/flm/test/export1/t1e.h
+< ../lib/flm/test/export1/t4e.h /tools/sbs/lib/flm/test/export1/t4e.h
+< ../lib/flm/test/export1/t2e.h /tools/sbs/lib/flm/test/export1/t2e.h
+< ../lib/flm/test/export1/t3e.h /tools/sbs/lib/flm/test/export1/t3e.h
+< ../lib/flm/test/dllabiv2_1/test.cpp /tools/sbs/lib/flm/test/dllabiv2_1/test.cpp
+< ../lib/flm/test/dllabiv2_1/dllabiv2_1.mk /tools/sbs/lib/flm/test/dllabiv2_1/dllabiv2_1.mk
+< ../lib/flm/test/raptorglue/raptorglue.mk /tools/sbs/lib/flm/test/raptorglue/raptorglue.mk
+< ../lib/flm/test/dllbasictests.mk /tools/sbs/lib/flm/test/dllbasictests.mk
+< ../lib/flm/test/exeabiv2_1/test.cpp /tools/sbs/lib/flm/test/exeabiv2_1/test.cpp
+< ../lib/flm/test/exeabiv2_1/exeabiv2_1.mk /tools/sbs/lib/flm/test/exeabiv2_1/exeabiv2_1.mk
+< ../lib/flm/test/dllabiv2_defaults.mk /tools/sbs/lib/flm/test/dllabiv2_defaults.mk
+< ../lib/flm/test/exeperftests.mk /tools/sbs/lib/flm/test/exeperftests.mk
+< ../lib/flm/test/ciatests.mk /tools/sbs/lib/flm/test/ciatests.mk
+< ../lib/flm/test/environment/pvm/pvmtest.mk /tools/sbs/lib/flm/test/environment/pvm/pvmtest.mk
+< ../lib/flm/test/environment/make/test_variable_restore.mk /tools/sbs/lib/flm/test/environment/make/test_variable_restore.mk
+< ../lib/flm/test/exebasictests.mk /tools/sbs/lib/flm/test/exebasictests.mk
+< ../lib/flm/test/exeabiv2_defaults.mk /tools/sbs/lib/flm/test/exeabiv2_defaults.mk
+< ../lib/flm/test/exeabiv2_3/exeabiv2_3.mk /tools/sbs/lib/flm/test/exeabiv2_3/exeabiv2_3.mk
+< ../lib/flm/test/exeabiv2_3/test_big.cpp /tools/sbs/lib/flm/test/exeabiv2_3/test_big.cpp
+< ../lib/flm/win32stdlib.flm /tools/sbs/lib/flm/win32stdlib.flm
+< ../lib/flm/win32var2.flm /tools/sbs/lib/flm/win32var2.flm
+< ../lib/flm/win32implib.flm /tools/sbs/lib/flm/win32implib.flm
+< ../lib/flm/bitmap.flm /tools/sbs/lib/flm/bitmap.flm
+< ../lib/flm/build.flm /tools/sbs/lib/flm/build.flm
+< ../lib/flm/build.xml /tools/sbs/lib/flm/build.xml
+< ../lib/flm/tools2exe.flm /tools/sbs/lib/flm/tools2exe.flm
+< ../lib/flm/e32abiv2klib.flm /tools/sbs/lib/flm/e32abiv2klib.flm
+< ../lib/flm/standard.xml /tools/sbs/lib/flm/standard.xml
+< ../lib/flm/win32var.flm /tools/sbs/lib/flm/win32var.flm
+< ../lib/flm/e32abiv2pdd.flm /tools/sbs/lib/flm/e32abiv2pdd.flm
+< ../lib/flm/e32abiv2none.flm /tools/sbs/lib/flm/e32abiv2none.flm
+< ../lib/flm/romfile.mk /tools/sbs/lib/flm/romfile.mk
+< ../lib/flm/win32textnotifier2.flm /tools/sbs/lib/flm/win32textnotifier2.flm
+< ../lib/flm/resource.flm /tools/sbs/lib/flm/resource.flm
+< ../lib/flm/flmtools.mk /tools/sbs/lib/flm/flmtools.mk
+< ../lib/flm/gnumakefile.flm /tools/sbs/lib/flm/gnumakefile.flm
+< ../lib/flm/e32abiv2kdll.flm /tools/sbs/lib/flm/e32abiv2kdll.flm
+< ../lib/flm/e32abiv2var.flm /tools/sbs/lib/flm/e32abiv2var.flm
+< ../lib/flm/win32dll.flm /tools/sbs/lib/flm/win32dll.flm
+< ../lib/flm/gccxml.flm /tools/sbs/lib/flm/gccxml.flm
+< ../lib/flm/e32postlink.mk /tools/sbs/lib/flm/e32postlink.mk
+< ../lib/config/default.xml /tools/sbs/lib/config/default.xml
+< ../lib/config/build.xml /tools/sbs/lib/config/build.xml
+< ../lib/config/interfaces.xml /tools/sbs/lib/config/interfaces.xml
+< ../lib/config/gcc.xml /tools/sbs/lib/config/gcc.xml
+< ../lib/config/variants.xml /tools/sbs/lib/config/variants.xml
+< ../lib/config/coverity.xml /tools/sbs/lib/config/coverity.xml
+< ../lib/config/meta.xml /tools/sbs/lib/config/meta.xml
+< ../lib/config/locations.xml /tools/sbs/lib/config/locations.xml
+< ../lib/config/gccxml.xml /tools/sbs/lib/config/gccxml.xml
+< ../lib/config/carbide.xml /tools/sbs/lib/config/carbide.xml
+< ../lib/config/msvc.xml /tools/sbs/lib/config/msvc.xml
+< ../lib/config/make.xml /tools/sbs/lib/config/make.xml
+< ../lib/config/root.xml /tools/sbs/lib/config/root.xml
+< ../lib/config/winscw.xml /tools/sbs/lib/config/winscw.xml
+< ../lib/config/arm.xml /tools/sbs/lib/config/arm.xml
+< ../lib/config/gcce.xml /tools/sbs/lib/config/gcce.xml
+< ../lib/config/rvct.xml /tools/sbs/lib/config/rvct.xml
+< ../python/raptor_makefile.py /tools/sbs/python/raptor_makefile.py
+< ../python/filter_interface.py /tools/sbs/python/filter_interface.py
+< ../python/raptor_start.py /tools/sbs/python/raptor_start.py
+< ../python/pyparsing.py /tools/sbs/python/pyparsing.py
+< ../python/raptor_cli.py /tools/sbs/python/raptor_cli.py
+< ../python/raptor_cache.py /tools/sbs/python/raptor_cache.py
+< ../python/raptor_meta.py /tools/sbs/python/raptor_meta.py
+< ../python/raptor_xml.py /tools/sbs/python/raptor_xml.py
+< ../python/raptor_version.py /tools/sbs/python/raptor_version.py
+< ../python/generic_path.py /tools/sbs/python/generic_path.py
+< ../python/raptor_make.py /tools/sbs/python/raptor_make.py
+< ../python/plugins/filter_logfile.py /tools/sbs/python/plugins/filter_logfile.py
+< ../python/plugins/filter_terminal.py /tools/sbs/python/plugins/filter_terminal.py
+< ../python/plugins/filter_carbide.py /tools/sbs/python/plugins/filter_carbide.py
+< ../python/plugins/filter_what.py /tools/sbs/python/plugins/filter_what.py
+< ../python/plugins/dummyplugin.py /tools/sbs/python/plugins/dummyplugin.py
+< ../python/plugins/filter_clean.py /tools/sbs/python/plugins/filter_clean.py
+< ../python/plugins/filter_squashlog.py /tools/sbs/python/plugins/filter_squashlog.py
+< ../python/plugins/filter_checksource.py /tools/sbs/python/plugins/filter_checksource.py
+< ../python/plugins/filter_splitlog.py /tools/sbs/python/plugins/filter_splitlog.py
+< ../python/sbs_dist.py /tools/sbs/python/sbs_dist.py
+< ../python/raptor_utilities.py /tools/sbs/python/raptor_utilities.py
+< ../python/pluginbox.py /tools/sbs/python/pluginbox.py
+< ../python/dos2unix.py /tools/sbs/python/dos2unix.py
+< ../python/raptor_data.py /tools/sbs/python/raptor_data.py
+< ../python/filter_list.py /tools/sbs/python/filter_list.py
+< ../python/raptor.py /tools/sbs/python/raptor.py
+< ../python/mmpparser.py /tools/sbs/python/mmpparser.py
+< ../python/filter_utils.py /tools/sbs/python/filter_utils.py
+< ../schema/build/2_0.xsd /tools/sbs/schema/build/2_0.xsd
+< ../schema/build/log/1_0.xsd /tools/sbs/schema/build/log/1_0.xsd
+< ../schema/build/1_0.xsd /tools/sbs/schema/build/1_0.xsd
+< ../win32/bin/ransleep.exe /tools/sbs/win32/bin/ransleep.exe
+< ../win32/bin/sbs_descramble.exe /tools/sbs/win32/bin/sbs_descramble.exe
+< ../win32/bin/talonctl.exe /tools/sbs/win32/bin/talonctl.exe
+< ../win32/bin/talon.exe /tools/sbs/win32/bin/talon.exe
+---
+> ../RELEASE-NOTES.txt ../../tools/sbs/RELEASE-NOTES.txt
+> ../bin/sbs ../../tools/sbs/bin/sbs
+> ../bin/fixmeta.py ../../tools/sbs/bin/fixmeta.py
+> ../bin/codetest_osbuild.sh ../../tools/sbs/bin/codetest_osbuild.sh
+> ../bin/countbinaries.sh ../../tools/sbs/bin/countbinaries.sh
+> ../bin/gethost.sh ../../tools/sbs/bin/gethost.sh
+> ../bin/failedstats.py ../../tools/sbs/bin/failedstats.py
+> ../bin/sbs.bat ../../tools/sbs/bin/sbs.bat
+> ../bin/unsplitdirs.py ../../tools/sbs/bin/unsplitdirs.py
+> ../bin/buildstats.py ../../tools/sbs/bin/buildstats.py
+> ../bin/speedtest_osbuild.sh ../../tools/sbs/bin/speedtest_osbuild.sh
+> ../bin/sbsv2cache.py ../../tools/sbs/bin/sbsv2cache.py
+> ../bin/whatsource.py ../../tools/sbs/bin/whatsource.py
+> ../bin/oby2linux.py ../../tools/sbs/bin/oby2linux.py
+> ../bin/createrfifile.pl ../../tools/sbs/bin/createrfifile.pl
+> ../bin/vartoxml.py ../../tools/sbs/bin/vartoxml.py
+> ../bin/readme.txt ../../tools/sbs/bin/readme.txt
+> ../bin/squashlog.py ../../tools/sbs/bin/squashlog.py
+> ../bin/statcollate.py ../../tools/sbs/bin/statcollate.py
+> ../bin/createvmap.py ../../tools/sbs/bin/createvmap.py
+> ../bin/raptorlog.py ../../tools/sbs/bin/raptorlog.py
+> ../bin/osbuild.sh ../../tools/sbs/bin/osbuild.sh
+> ../bin/setup_user.sh ../../tools/sbs/bin/setup_user.sh
+> ../bin/msvcr71.dll ../../tools/sbs/bin/msvcr71.dll
+> ../bin/install_raptor.sh ../../tools/sbs/bin/install_raptor.sh
+> ../bin/mkgetfailed.py ../../tools/sbs/bin/mkgetfailed.py
+> ../examples/os_properties.xml ../../tools/sbs/examples/os_properties.xml
+> ../examples/sbs_init.xml ../../tools/sbs/examples/sbs_init.xml
+> ../lib/flm/e32abiv2stdexe.flm ../../tools/sbs/lib/flm/e32abiv2stdexe.flm
+> ../lib/flm/user/default.flm_ex ../../tools/sbs/lib/flm/user/default.flm_ex
+> ../lib/flm/user/globals.mk_ex ../../tools/sbs/lib/flm/user/globals.mk_ex
+> ../lib/flm/e32abiv2dll.flm ../../tools/sbs/lib/flm/e32abiv2dll.flm
+> ../lib/flm/tracecompiler.mk ../../tools/sbs/lib/flm/tracecompiler.mk
+> ../lib/flm/win32exe.flm ../../tools/sbs/lib/flm/win32exe.flm
+> ../lib/flm/template_ext.flm ../../tools/sbs/lib/flm/template_ext.flm
+> ../lib/flm/e32abiv2ani.flm ../../tools/sbs/lib/flm/e32abiv2ani.flm
+> ../lib/flm/converged-comms/createcommdbs.flm ../../tools/sbs/lib/flm/converged-comms/createcommdbs.flm
+> ../lib/flm/converged-comms/installdefaultcommdb.flm ../../tools/sbs/lib/flm/converged-comms/installdefaultcommdb.flm
+> ../lib/flm/win32plugin.flm ../../tools/sbs/lib/flm/win32plugin.flm
+> ../lib/flm/win32klib.flm ../../tools/sbs/lib/flm/win32klib.flm
+> ../lib/flm/extensions.xml ../../tools/sbs/lib/flm/extensions.xml
+> ../lib/flm/stack.mk ../../tools/sbs/lib/flm/stack.mk
+> ../lib/flm/globals.mk ../../tools/sbs/lib/flm/globals.mk
+> ../lib/flm/win32stdexe.flm ../../tools/sbs/lib/flm/win32stdexe.flm
+> ../lib/flm/e32abiv2lib.flm ../../tools/sbs/lib/flm/e32abiv2lib.flm
+> ../lib/flm/win32resource.flm ../../tools/sbs/lib/flm/win32resource.flm
+> ../lib/flm/config/default.flm ../../tools/sbs/lib/flm/config/default.flm
+> ../lib/flm/win32lib.flm ../../tools/sbs/lib/flm/win32lib.flm
+> ../lib/flm/null.flm ../../tools/sbs/lib/flm/null.flm
+> ../lib/flm/tools/test_command_diff.sh ../../tools/sbs/lib/flm/tools/test_command_diff.sh
+> ../lib/flm/tools/stlport.flm ../../tools/sbs/lib/flm/tools/stlport.flm
+> ../lib/flm/tools/buildstubsis.flm ../../tools/sbs/lib/flm/tools/buildstubsis.flm
+> ../lib/flm/msvctools.xml ../../tools/sbs/lib/flm/msvctools.xml
+> ../lib/flm/tools2lib.flm ../../tools/sbs/lib/flm/tools2lib.flm
+> ../lib/flm/win32ldd.flm ../../tools/sbs/lib/flm/win32ldd.flm
+> ../lib/flm/tools.xml ../../tools/sbs/lib/flm/tools.xml
+> ../lib/flm/metaflm.mk ../../tools/sbs/lib/flm/metaflm.mk
+> ../lib/flm/e32abiv2ldd.flm ../../tools/sbs/lib/flm/e32abiv2ldd.flm
+> ../lib/flm/e32abiv2pdl.flm ../../tools/sbs/lib/flm/e32abiv2pdl.flm
+> ../lib/flm/e32abiv2stdlib.flm ../../tools/sbs/lib/flm/e32abiv2stdlib.flm
+> ../lib/flm/config.xml ../../tools/sbs/lib/flm/config.xml
+> ../lib/flm/win32stddll.flm ../../tools/sbs/lib/flm/win32stddll.flm
+> ../lib/flm/gccxmlresource.flm ../../tools/sbs/lib/flm/gccxmlresource.flm
+> ../lib/flm/e32abiv2textnotifier2.flm ../../tools/sbs/lib/flm/e32abiv2textnotifier2.flm
+> ../lib/flm/e32abiv2implib.flm ../../tools/sbs/lib/flm/e32abiv2implib.flm
+> ../lib/flm/e32abiv2exe.flm ../../tools/sbs/lib/flm/e32abiv2exe.flm
+> ../lib/flm/win32pdl.flm ../../tools/sbs/lib/flm/win32pdl.flm
+> ../lib/flm/win32.flm ../../tools/sbs/lib/flm/win32.flm
+> ../lib/flm/base.xml ../../tools/sbs/lib/flm/base.xml
+> ../lib/flm/grouping.flm ../../tools/sbs/lib/flm/grouping.flm
+> ../lib/flm/e32abiv2.flm ../../tools/sbs/lib/flm/e32abiv2.flm
+> ../lib/flm/e32abiv2exexp.flm ../../tools/sbs/lib/flm/e32abiv2exexp.flm
+> ../lib/flm/e32abiv2defaults.mk ../../tools/sbs/lib/flm/e32abiv2defaults.mk
+> ../lib/flm/e32abiv2fsy.flm ../../tools/sbs/lib/flm/e32abiv2fsy.flm
+> ../lib/flm/final.mk ../../tools/sbs/lib/flm/final.mk
+> ../lib/flm/none.flm ../../tools/sbs/lib/flm/none.flm
+> ../lib/flm/analysis.xml ../../tools/sbs/lib/flm/analysis.xml
+> ../lib/flm/e32abiv2var2.flm ../../tools/sbs/lib/flm/e32abiv2var2.flm
+> ../lib/flm/msvctools.flm ../../tools/sbs/lib/flm/msvctools.flm
+> ../lib/flm/win32kdll.flm ../../tools/sbs/lib/flm/win32kdll.flm
+> ../lib/flm/win32ani.flm ../../tools/sbs/lib/flm/win32ani.flm
+> ../lib/flm/e32abiv2plugin.flm ../../tools/sbs/lib/flm/e32abiv2plugin.flm
+> ../lib/flm/win32bitmap.flm ../../tools/sbs/lib/flm/win32bitmap.flm
+> ../lib/flm/tools2common.flm ../../tools/sbs/lib/flm/tools2common.flm
+> ../lib/flm/win32fsy.flm ../../tools/sbs/lib/flm/win32fsy.flm
+> ../lib/flm/readme.txt ../../tools/sbs/lib/flm/readme.txt
+> ../lib/flm/e32abiv2kext.flm ../../tools/sbs/lib/flm/e32abiv2kext.flm
+> ../lib/flm/e32abiv2stddll.flm ../../tools/sbs/lib/flm/e32abiv2stddll.flm
+> ../lib/flm/win32exexp.flm ../../tools/sbs/lib/flm/win32exexp.flm
+> ../lib/flm/stringtable.flm ../../tools/sbs/lib/flm/stringtable.flm
+> ../lib/flm/utils/utility.xml ../../tools/sbs/lib/flm/utils/utility.xml
+> ../lib/flm/utils/prebuilt.flm ../../tools/sbs/lib/flm/utils/prebuilt.flm
+> ../lib/flm/utils/copydir.flm ../../tools/sbs/lib/flm/utils/copydir.flm
+> ../lib/flm/win32pdd.flm ../../tools/sbs/lib/flm/win32pdd.flm
+> ../lib/flm/taggedrules.mk ../../tools/sbs/lib/flm/taggedrules.mk
+> ../lib/flm/booleanlogic.mk ../../tools/sbs/lib/flm/booleanlogic.mk
+> ../lib/flm/emulator.xml ../../tools/sbs/lib/flm/emulator.xml
+> ../lib/flm/win32kext.flm ../../tools/sbs/lib/flm/win32kext.flm
+> ../lib/flm/test/exeabiv2_2/test.cpp ../../tools/sbs/lib/flm/test/exeabiv2_2/test.cpp
+> ../lib/flm/test/exeabiv2_2/test_function.cpp ../../tools/sbs/lib/flm/test/exeabiv2_2/test_function.cpp
+> ../lib/flm/test/exeabiv2_2/exeabiv2_2.mk ../../tools/sbs/lib/flm/test/exeabiv2_2/exeabiv2_2.mk
+> ../lib/flm/test/templateext/temex.mk ../../tools/sbs/lib/flm/test/templateext/temex.mk
+> ../lib/flm/test/templateext/Makefile ../../tools/sbs/lib/flm/test/templateext/Makefile
+> ../lib/flm/test/Makefile ../../tools/sbs/lib/flm/test/Makefile
+> ../lib/flm/test/exeabiv2_4/test.cpp ../../tools/sbs/lib/flm/test/exeabiv2_4/test.cpp
+> ../lib/flm/test/exeabiv2_4/exeabiv2_4.mk ../../tools/sbs/lib/flm/test/exeabiv2_4/exeabiv2_4.mk
+> ../lib/flm/test/exeabiv2_4/test_big.cpp ../../tools/sbs/lib/flm/test/exeabiv2_4/test_big.cpp
+> ../lib/flm/test/flmtests.mk ../../tools/sbs/lib/flm/test/flmtests.mk
+> ../lib/flm/test/ciaabiv2_1/uc_exe.cia ../../tools/sbs/lib/flm/test/ciaabiv2_1/uc_exe.cia
+> ../lib/flm/test/ciaabiv2_1/uc_exe.cpp ../../tools/sbs/lib/flm/test/ciaabiv2_1/uc_exe.cpp
+> ../lib/flm/test/ciaabiv2_1/ciaabiv2_1.mk ../../tools/sbs/lib/flm/test/ciaabiv2_1/ciaabiv2_1.mk
+> ../lib/flm/test/export1/Makefile ../../tools/sbs/lib/flm/test/export1/Makefile
+> ../lib/flm/test/export1/t1e.h ../../tools/sbs/lib/flm/test/export1/t1e.h
+> ../lib/flm/test/export1/t4e.h ../../tools/sbs/lib/flm/test/export1/t4e.h
+> ../lib/flm/test/export1/t2e.h ../../tools/sbs/lib/flm/test/export1/t2e.h
+> ../lib/flm/test/export1/t3e.h ../../tools/sbs/lib/flm/test/export1/t3e.h
+> ../lib/flm/test/dllabiv2_1/test.cpp ../../tools/sbs/lib/flm/test/dllabiv2_1/test.cpp
+> ../lib/flm/test/dllabiv2_1/dllabiv2_1.mk ../../tools/sbs/lib/flm/test/dllabiv2_1/dllabiv2_1.mk
+> ../lib/flm/test/raptorglue/raptorglue.mk ../../tools/sbs/lib/flm/test/raptorglue/raptorglue.mk
+> ../lib/flm/test/dllbasictests.mk ../../tools/sbs/lib/flm/test/dllbasictests.mk
+> ../lib/flm/test/exeabiv2_1/test.cpp ../../tools/sbs/lib/flm/test/exeabiv2_1/test.cpp
+> ../lib/flm/test/exeabiv2_1/exeabiv2_1.mk ../../tools/sbs/lib/flm/test/exeabiv2_1/exeabiv2_1.mk
+> ../lib/flm/test/dllabiv2_defaults.mk ../../tools/sbs/lib/flm/test/dllabiv2_defaults.mk
+> ../lib/flm/test/exeperftests.mk ../../tools/sbs/lib/flm/test/exeperftests.mk
+> ../lib/flm/test/ciatests.mk ../../tools/sbs/lib/flm/test/ciatests.mk
+> ../lib/flm/test/environment/pvm/pvmtest.mk ../../tools/sbs/lib/flm/test/environment/pvm/pvmtest.mk
+> ../lib/flm/test/environment/make/test_variable_restore.mk ../../tools/sbs/lib/flm/test/environment/make/test_variable_restore.mk
+> ../lib/flm/test/exebasictests.mk ../../tools/sbs/lib/flm/test/exebasictests.mk
+> ../lib/flm/test/exeabiv2_defaults.mk ../../tools/sbs/lib/flm/test/exeabiv2_defaults.mk
+> ../lib/flm/test/exeabiv2_3/exeabiv2_3.mk ../../tools/sbs/lib/flm/test/exeabiv2_3/exeabiv2_3.mk
+> ../lib/flm/test/exeabiv2_3/test_big.cpp ../../tools/sbs/lib/flm/test/exeabiv2_3/test_big.cpp
+> ../lib/flm/win32stdlib.flm ../../tools/sbs/lib/flm/win32stdlib.flm
+> ../lib/flm/win32var2.flm ../../tools/sbs/lib/flm/win32var2.flm
+> ../lib/flm/win32implib.flm ../../tools/sbs/lib/flm/win32implib.flm
+> ../lib/flm/bitmap.flm ../../tools/sbs/lib/flm/bitmap.flm
+> ../lib/flm/build.flm ../../tools/sbs/lib/flm/build.flm
+> ../lib/flm/build.xml ../../tools/sbs/lib/flm/build.xml
+> ../lib/flm/tools2exe.flm ../../tools/sbs/lib/flm/tools2exe.flm
+> ../lib/flm/e32abiv2klib.flm ../../tools/sbs/lib/flm/e32abiv2klib.flm
+> ../lib/flm/standard.xml ../../tools/sbs/lib/flm/standard.xml
+> ../lib/flm/win32var.flm ../../tools/sbs/lib/flm/win32var.flm
+> ../lib/flm/e32abiv2pdd.flm ../../tools/sbs/lib/flm/e32abiv2pdd.flm
+> ../lib/flm/e32abiv2none.flm ../../tools/sbs/lib/flm/e32abiv2none.flm
+> ../lib/flm/romfile.mk ../../tools/sbs/lib/flm/romfile.mk
+> ../lib/flm/win32textnotifier2.flm ../../tools/sbs/lib/flm/win32textnotifier2.flm
+> ../lib/flm/resource.flm ../../tools/sbs/lib/flm/resource.flm
+> ../lib/flm/flmtools.mk ../../tools/sbs/lib/flm/flmtools.mk
+> ../lib/flm/gnumakefile.flm ../../tools/sbs/lib/flm/gnumakefile.flm
+> ../lib/flm/e32abiv2kdll.flm ../../tools/sbs/lib/flm/e32abiv2kdll.flm
+> ../lib/flm/e32abiv2var.flm ../../tools/sbs/lib/flm/e32abiv2var.flm
+> ../lib/flm/win32dll.flm ../../tools/sbs/lib/flm/win32dll.flm
+> ../lib/flm/gccxml.flm ../../tools/sbs/lib/flm/gccxml.flm
+> ../lib/flm/e32postlink.mk ../../tools/sbs/lib/flm/e32postlink.mk
+> ../lib/config/default.xml ../../tools/sbs/lib/config/default.xml
+> ../lib/config/build.xml ../../tools/sbs/lib/config/build.xml
+> ../lib/config/interfaces.xml ../../tools/sbs/lib/config/interfaces.xml
+> ../lib/config/gcc.xml ../../tools/sbs/lib/config/gcc.xml
+> ../lib/config/variants.xml ../../tools/sbs/lib/config/variants.xml
+> ../lib/config/coverity.xml ../../tools/sbs/lib/config/coverity.xml
+> ../lib/config/meta.xml ../../tools/sbs/lib/config/meta.xml
+> ../lib/config/locations.xml ../../tools/sbs/lib/config/locations.xml
+> ../lib/config/gccxml.xml ../../tools/sbs/lib/config/gccxml.xml
+> ../lib/config/carbide.xml ../../tools/sbs/lib/config/carbide.xml
+> ../lib/config/msvc.xml ../../tools/sbs/lib/config/msvc.xml
+> ../lib/config/make.xml ../../tools/sbs/lib/config/make.xml
+> ../lib/config/root.xml ../../tools/sbs/lib/config/root.xml
+> ../lib/config/winscw.xml ../../tools/sbs/lib/config/winscw.xml
+> ../lib/config/arm.xml ../../tools/sbs/lib/config/arm.xml
+> ../lib/config/gcce.xml ../../tools/sbs/lib/config/gcce.xml
+> ../lib/config/rvct.xml ../../tools/sbs/lib/config/rvct.xml
+> ../python/raptor_makefile.py ../../tools/sbs/python/raptor_makefile.py
+> ../python/filter_interface.py ../../tools/sbs/python/filter_interface.py
+> ../python/raptor_start.py ../../tools/sbs/python/raptor_start.py
+> ../python/pyparsing.py ../../tools/sbs/python/pyparsing.py
+> ../python/raptor_cli.py ../../tools/sbs/python/raptor_cli.py
+> ../python/raptor_cache.py ../../tools/sbs/python/raptor_cache.py
+> ../python/raptor_meta.py ../../tools/sbs/python/raptor_meta.py
+> ../python/raptor_xml.py ../../tools/sbs/python/raptor_xml.py
+> ../python/raptor_version.py ../../tools/sbs/python/raptor_version.py
+> ../python/generic_path.py ../../tools/sbs/python/generic_path.py
+> ../python/raptor_make.py ../../tools/sbs/python/raptor_make.py
+> ../python/plugins/filter_logfile.py ../../tools/sbs/python/plugins/filter_logfile.py
+> ../python/plugins/filter_terminal.py ../../tools/sbs/python/plugins/filter_terminal.py
+> ../python/plugins/filter_carbide.py ../../tools/sbs/python/plugins/filter_carbide.py
+> ../python/plugins/filter_what.py ../../tools/sbs/python/plugins/filter_what.py
+> ../python/plugins/dummyplugin.py ../../tools/sbs/python/plugins/dummyplugin.py
+> ../python/plugins/filter_clean.py ../../tools/sbs/python/plugins/filter_clean.py
+> ../python/plugins/filter_squashlog.py ../../tools/sbs/python/plugins/filter_squashlog.py
+> ../python/plugins/filter_checksource.py ../../tools/sbs/python/plugins/filter_checksource.py
+> ../python/plugins/filter_splitlog.py ../../tools/sbs/python/plugins/filter_splitlog.py
+> ../python/sbs_dist.py ../../tools/sbs/python/sbs_dist.py
+> ../python/raptor_utilities.py ../../tools/sbs/python/raptor_utilities.py
+> ../python/pluginbox.py ../../tools/sbs/python/pluginbox.py
+> ../python/dos2unix.py ../../tools/sbs/python/dos2unix.py
+> ../python/raptor_data.py ../../tools/sbs/python/raptor_data.py
+> ../python/filter_list.py ../../tools/sbs/python/filter_list.py
+> ../python/raptor.py ../../tools/sbs/python/raptor.py
+> ../python/mmpparser.py ../../tools/sbs/python/mmpparser.py
+> ../python/filter_utils.py ../../tools/sbs/python/filter_utils.py
+> ../schema/build/2_0.xsd ../../tools/sbs/schema/build/2_0.xsd
+> ../schema/build/log/1_0.xsd ../../tools/sbs/schema/build/log/1_0.xsd
+> ../schema/build/1_0.xsd ../../tools/sbs/schema/build/1_0.xsd
+> ../win32/bin/ransleep.exe ../../tools/sbs/win32/bin/ransleep.exe
+> ../win32/bin/sbs_descramble.exe ../../tools/sbs/win32/bin/sbs_descramble.exe
+> ../win32/bin/talonctl.exe ../../tools/sbs/win32/bin/talonctl.exe
+> ../win32/bin/talon.exe ../../tools/sbs/win32/bin/talon.exe
+diff -r -b -B -E -x '*.hg*' -x '*cross-plat-dev-utils*' -x '*baseline.txt' -x '*README' -x '*.pyc' -x '*~' -x '*.bak' -x '*linux-unknown-libc2_11*' /home/imk/symbian/epocroot-pdk-3.0.h/build_latest/build/sbsv2/raptor/lib/config/gcc.xml /home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/lib/config/gcc.xml
+29c29
+< 		<set name='CFLAGS' value='-fdefer-pop -fmerge-constants -fthread-jumps -floop-optimize -fif-conversion -fif-conversion2 -fguess-branch-probability -fcprop-registers -foptimize-sibling-calls -fstrength-reduce -fcse-follow-jumps -fcse-skip-blocks -frerun-cse-after-loop -frerun-loop-opt -fgcse -fgcse-lm -fgcse-sm -fgcse-las -fdelete-null-pointer-checks -fexpensive-optimizations -fregmove -fschedule-insns -fschedule-insns2 -fsched-interblock -fsched-spec -fcaller-saves -fpeephole2 -freorder-blocks -freorder-functions -fstrict-aliasing -funit-at-a-time -falign-functions -falign-jumps -falign-loops -falign-labels -fcrossjumping -pipe -Wall -Wno-ctor-dtor-privacy -Wno-unknown-pragmas -m32'/>
+---
+> 		<set name='CFLAGS' value='-std=c++0x -fdefer-pop -fmerge-constants -fthread-jumps -floop-optimize -fif-conversion -fif-conversion2 -fguess-branch-probability -fcprop-registers -foptimize-sibling-calls -fstrength-reduce -fcse-follow-jumps -fcse-skip-blocks -frerun-cse-after-loop -frerun-loop-opt -fgcse -fgcse-lm -fgcse-sm -fgcse-las -fdelete-null-pointer-checks -fexpensive-optimizations -fregmove -fschedule-insns -fschedule-insns2 -fsched-interblock -fsched-spec -fcaller-saves -fpeephole2 -freorder-blocks -freorder-functions -fstrict-aliasing -funit-at-a-time -falign-functions -falign-jumps -falign-loops -falign-labels -fcrossjumping -pipe -Wall -Wno-ctor-dtor-privacy -Wno-unknown-pragmas -m32'/>
+48c48
+< 		<set name='INC.COMPILER' value='$(EPOCINCLUDE)/gcc_mingw/gcc_mingw_3_4_2.h'/>
+---
+> 		<set name='INC.COMPILER' value='$(EPOCINCLUDE)/gcc/gcc.h'/>
+58,59c58
+< 		<!-- always use stlport headers -->
+< 		<set name='SYSTEMINCLUDE' value='$(EPOCINCLUDE)/tools/stlport'/>
+---
+> 		<set name='SYSTEMINCLUDE' value=''/>
+63c62
+< 		<set name='STATICLIBRARY' value='stlport.5.1'/>
+---
+> 		<set name='STATICLIBRARY' value=''/>
+Only in /home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/util: build

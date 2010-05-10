@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+============================================================================ 
+Name        : ccmgetinput.ant.xml 
+Part of     : Helium 
+
+Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+All rights reserved.
+This component and the accompanying materials are made available
+under the terms of the License "Eclipse Public License v1.0"
+which accompanies this distribution, and is available
+at the URL "http://www.eclipse.org/legal/epl-v10.html".
+
+Initial Contributors:
+Nokia Corporation - initial contribution.
+
+Contributors:
+
+Description:
+
+============================================================================
+-->
+<!--* @package preparation -->
+<project name="ccmgetinput" xmlns:hlm="http://www.nokia.com/helium">
+    <description>
+      Retrieves content from Synergy
+    </description>
+    
+    <!--* @property ccm.home.dir
+    Home directory of CCM operations.
+    @type string
+    @editable required
+    @scope public
+    -->
+
+    <!--* @property ccm.database
+    Name of the CCM database to use. No default value.
+    @type string
+    @editable required
+    @scope public
+    -->
+
+    <!--* @property ccm.engine.host
+    Engine host of CCM database. No default value.
+    @type string
+    @editable required
+    @scope public
+    -->
+    
+    <!--* @property prep.delivery.file
+    Defines configuration file used in synergy operations (ccm-get-input for example). This file contains definition of projects that are checkouted or snapshotted.
+    @type string
+    @editable required
+    @scope public
+    -->
+    
+    <hlm:recordfilterset id="prepWorkArea.logextract.config">
+        <hlm:recordfilter category="error" regexp="^ERROR:" />
+        <hlm:recordfilter category="warning" regexp="^WARNING:" />
+        <hlm:recordfilter category="info" regexp="^INFO:" />
+    </hlm:recordfilterset>
+
+    
+    <!-- This target uses an XML input file to retrieve content from Synergy.
+      -->
+    <target name="prep-work-area" depends="log-build-start" if="run.ccm">
+        <hlm:tempRecordStartMacro name="${build.id}_ccm_get_input.log" />
+        <runtarget target="get-ccm-password"/>
+        <runtarget target="ccm-prepare-input"/>
+        
+        <hlm:assertPropertySet property="prep.delivery.file" message="Property prep.delivery.file is not defined." />
+        <trycatch>
+            <try>
+                <hlm:python failonerror="true">
+import preparation
+import configuration
+import traceback
+import logging            
+import ant
+import sys
+import os.path
+
+# enabling logging
+logging.basicConfig(level=logging.INFO)
+
+builder = None           
+try:
+    configBuilder = configuration.NestedConfigurationBuilder(open(ant.get_property(r'${prep.delivery.conf.parsed}'), 'r'))
+    configSet = configBuilder.getConfiguration()
+    password = ant.get_property(r'${ccm.user.password}')
+    builder = preparation.PreparationBuilder(configSet.getConfigurations(), ant.get_property(r'${ccm.user.login}'), password, cache=ant.get_property(r'${ccm.cache.xml}'))
+    builder.check()
+    builder.get_content()
+    builder.close()
+except Exception, e:
+    print "ERROR: error found during preparation phase:" 
+    for l in traceback.format_exc().splitlines(False):
+        print "ERROR: %s" % l         
+    print "ERROR: this is a critical error, build will fail now:"
+    for l in str(e).splitlines(False):
+        print "ERROR: %s" % l         
+    if builder != None:
+        builder.close()
+    sys.exit(-1)
+sys.exit(0)
+                </hlm:python>
+            </try>
+            <finally>
+                <hlm:tempRecordStopMacro name="${build.id}_ccm_get_input.log" filterref="filterset.prepWorkArea" phase="prep"/>
+                <hlm:assertFileExists file="${build.cache.log.dir}/${build.id}_ccm_get_input.log" />
+            </finally>
+        </trycatch>
+    </target>
+
+</project>

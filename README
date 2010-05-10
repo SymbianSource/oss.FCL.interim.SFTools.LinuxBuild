@@ -1,0 +1,161 @@
+# Copyright (c) 2010 Symbian Foundation Ltd
+# This component and the accompanying materials are made available
+# under the terms of the License "Eclipse Public License v1.0"
+# which accompanies this distribution, and is available
+# at the URL "http://www.eclipse.org/legal/epl-v10.html".
+#
+# Initial Contributors:
+# Mike Kinghan, mikek@symbian.org, for Symbian Foundation Ltd - initial
+# contribution.
+
+== Contents ==
+==============
+- Intro
+- Strategy for building this package
+- Preparing to build this package on Linux
+- Preparing to build this package on Windows
+- Patch files for the upstream package
+
+== Intro ==
+===========
+
+This README describes the status quo at a point in time and it may be out of
+date. See also the files TODO and NEWS for possibly more current information.
+This README will be updated from time to time.
+
+This package is a branch from the Symbian Build package
+(http://developer.symbian.org/oss/MCL/sftools/dev/build) at Mercurial revision
+mentioned in the file baseline.txt. The Build package "provides everything you
+need to build the Symbian platform." This branch work-in-progress toward
+enabling those tools to build without problems and run correctly on a
+conventional GNU/Linux host, as well Windows hosts.
+ 
+It fixes the upstream package so that:-
+
+* All targets will build without errors or warnings on a GNU/Linux host using
+the GCC 4.4.x toolchain and Standard C++ Library.
+* All targets will build without errors or warnings on a Windows host using the
+Mingw GCC 3.4.x toolchain Standard C++ Library, from a Symbian PDT 1.6
+installation.
+
+(There is one unimportant target that cannot be built. This is the sbsv2guide
+target, which merely exports documentation for Raptor. It cannot be fixed
+because the documentation is not present in the upstream package at the branched
+revision, bug #2607.)
+
+These fixes *do not* suffice to make all the tools fit for purpose on both Linux
+and Windows. That requires more work, which you are invited to undertake and
+conrtibute to this package. See the TODO and NEWS files.   
+
+== Strategy for building this package ==
+========================================
+
+The strategy for building this package on Linux was:
+
+* Build Raptor, using the native GCC 4.4 toolchain and Standard Library.
+* Configure Raptor to use the native GCC toolchain and Standard Library, and
+compile according to the C++0x language standard.
+* Build the remaining targets conventionally using Raptor.
+* Fix the compilation errors and warnings that appeared in this environment in a
+way that is proved portable to the Windows build.
+
+The strategy for building the package on Windows was:
+* Install PDT 1.6 to get Raptor, with the Mingw GCC 3.4 toolchain and Standard
+Library
+* Configure Raptor to use the Mingw Standard Library.
+* Build the targets, except Raptor itself, conventionally using Raptor.
+* Fix the compilation errors and warnings that appeared in this environment in a
+way that is proved portable to the Linux build.
+
+The Windows and Linux fix/build cycles were alternated iteratively until both
+were error free. The Windows build was performed solely as a portability check,
+since all the tools in the package are provided for Windows in the PDT. The
+Windows build did not include the building of Raptor itself, since nothing
+needs fixed to build Raptor.
+
+For both Linux and Windows, the upstream Raptor configuration was amended to
+make GCC invoke the Standard Library installed with the toolchain, and not the
+retro STLPort implementation that is included in PDKs and which GCC is
+configured to use by default. The code dependencies on this STLPort library are 
+superficial and are fixed.
+
+If you contribute to this package, *please ensure your preverse portability
+between Windows and Linux*
+
+== Preparing to build this package on Linux ==
+==============================================
+
+* Install the host GCC toolchain, if not already present.
+
+* Install preqrequisities for building Raptor.
+  - bison
+  - ncurses & its headers
+  - libbz2 & its headers
+
+* Install the boost libraries and their headers. The upstream package bundles
+a defective copy of the boost libraries v1.39 for building the imgtools/imglib
+target. The headers of this copy compile for Windows (with one small fix)
+but are broken for Linux, so the Linux build is fixed to expect boost libraries
+from the system. v1.40 is OK.
+  
+* Install libxml2 and its headers. These are also bundled with the upstream
+package for building the imgtools/imgcheck target, but there is no target that
+exports them so they are not found by the imgcheck build.
+    
+* Clone, copy or extract this package into a directory that is going to be your
+EPOCROOT for Raptor builds.
+
+* Browse to the Symbian Developer website, http://developer.symbian.org
+* Navigate: Tools & Kits -> Download the Symbian^3 kits.
+* This package is built using Symbian headers from PDK 3.0.h. If that is not the
+current PDK listed under Downloads, then click "Previous releases" and navigate
+to the download page for PDK 3.0.h.
+* Download the following 3 zip archives from PDK 3.0.h and extract them into
+your EPOCROOT directory:
+  - binaries_epoc.zip, 
+  - binaries_epoc_sdk.zip 
+  - tools_epoc.zip
+
+* Consult the README-LINUX file in the subdirectory cross-plat-dev-utils.
+
+== Preparing to build this package on Windows ==
+================================================
+
+* Browse to the Symbian Developer website, http://developer.symbian.org
+* Navigate: Tools & Kits -> Download the PDT
+* For Windows, this package is built using Raptor 2.12.1 in PDT 1.6 If 1.6 is
+not the current PDT listed under Downloads, then click "Previous releases" and
+navigate to the download page for PDT 1.6.
+* Download and install PDT 1.6
+
+* Clone, copy or extract this package into a directory that is going to be your
+EPOCROOT for Raptor builds.
+
+* Browse to the Symbian Developer website, http://developer.symbian.org
+* Navigate: Tools & Kits -> Download the Symbian^3 kits.
+* This package is built using Symbian headers from PDK 3.0.h. If that is not the
+current PDK listed under Downloads, then click "Previous releases" and navigate
+to the download page for PDK 3.0.h.
+* Download the following 3 zip archives from PDK 3.0.h and extract them into
+your EPOCROOT directory:
+  - binaries_epoc.zip, 
+  - binaries_epoc_sdk.zip 
+  - tools_epoc.zip
+* Consult the README-WINDOWS file in the subdirectory cross-plat-dev-utils.
+
+== Patch files for the upstream package ==
+==========================================
+
+In the directory cross-plat-dev-utils/patch-files/diffs you will find one or
+more files with names like 'patch-dddddddddddd.patch', for digits 'd'.
+
+The patch file 'patch-dddddddddddd.patch' shows the diffs between the upstream
+package ((http://developer.symbian.org/oss/MCL/sftools/dev/build) at revision
+dddddddddddd and this package as baselined on that upstream revision. Only
+diffs relevant to changing the upstream package are included.
+
+You can also apply this patch file to the upstream package at revision
+dddddddddddd to make it the same as the revision of this package from which it
+was diffed. You can use the utility cross-plat-dev-tools/patch_upstream.pl to
+do this. 
+

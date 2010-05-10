@@ -1,0 +1,6 @@
+#!/home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/linux-unknown-libc2_11/python262/bin/python2.6
+from lib2to3.main import main
+import sys
+import os
+
+sys.exit(main("lib2to3.fixes"))

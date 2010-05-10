@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+============================================================================ 
+Name        : imaker.ant.xml 
+Part of     : Helium 
+
+Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+All rights reserved.
+This component and the accompanying materials are made available
+under the terms of the License "Eclipse Public License v1.0"
+which accompanies this distribution, and is available
+at the URL "http://www.eclipse.org/legal/epl-v10.html".
+
+Initial Contributors:
+Nokia Corporation - initial contribution.
+
+Contributors:
+
+Description:
+
+============================================================================
+-->
+<!--* @package rombuild -->
+<project name="rombuild.imaker" xmlns:hlm="http://www.nokia.com/helium">
+    <description>
+        ROM image creation using iMaker (future implementation).
+    </description>
+
+    <!--
+       This task merges all files mentioned in the fileset and output them in filename output file. 
+    -->
+    <scriptdef name="mergeConfigXML" language="beanshell"  uri="http://www.nokia.com/helium">
+        <element name="fileset" type="fileset"/>
+        <attribute name="filename"/>
+<![CDATA[
+import java.io.File;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.Document;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
+
+Document document = DocumentHelper.createDocument();
+Element root = document.addElement("build");
+Element rootConfig = root.addElement( "config" );
+rootConfig.addAttribute("abstract", "true");
+rootConfig.addAttribute("name", "ee-roms");
+
+filesets = elements.get("fileset");
+for (i = 0; i < filesets.size(); ++i) {
+        ds = filesets.get(i).getDirectoryScanner(project);
+        ds.scan();
+        String[] files = ds.getIncludedFiles();
+        for (j = 0; j < files.length ; ++j) {
+           romconf = new File(ds.getBasedir(), files[j]);
+           self.log("Adding " + romconf + ".");
+           SAXReader reader = new SAXReader();
+           Document document = reader.read(romconf);
+           Node node = document.selectSingleNode("//build/config");
+           rootConfig.add(node.detach());
+        }
+}
+// lets write to a file
+OutputFormat format = OutputFormat.createPrettyPrint();
+XMLWriter writer = new XMLWriter(new FileWriter(attributes.get("filename")), format);
+writer.write( document );
+writer.close();
+]]>
+    </scriptdef>
+    
+    <!--
+       This target is an helper to recompose the rom image configuration using the output of iMaker.
+    -->
+    <target name="imaker-merge-rom-xml">
+        <mkdir dir="${temp.build.dir}"/>
+        <!-- Locates the parsed configuration for ROM builds.
+        @type string
+        @scope private
+        -->
+        <property name="rombuild.config.file.parsed" location="${build.output.dir}/rom_config.xml.parsed" />
+        <hlm:mergeConfigXML filename="${rombuild.config.file.parsed}">
+            <fileset dir="${release.images.dir}" includes="**/*.iconfig.xml"/>    
+        </hlm:mergeConfigXML>
+    </target>
+
+    <!--
+        Implement a solution to create build information for imaker.
+    -->
+    <target name="rombuild-imaker-create-buildinfo">
+        <!-- FMPP template to generate a buildinfo makefile.
+        @type string
+        -->
+        <property name="rombuild.buildinfo.template" location="${helium.dir}/tools/common/templates/imaker/image_conf_buildinfo.mk.ftl" />
+        <!-- Location of the output file.
+        @type string
+        @scope private
+        -->
+        <property name="rombuild.buildinfo.output" location="${build.drive}${env.EPOCROOT}epoc32/rom/config/image_conf_buildinfo.mk" />
+        <fmpp sourceFile="${rombuild.buildinfo.template}" outputFile="${rombuild.buildinfo.output}">
+            <data expandProperties="yes">
+                ant: antProperties()
+            </data>
+        </fmpp>
+    </target>
+
+    <!--
+         Official target to build rom images using iMaker under Helium.
+         To configure that target you have to define an imakerconfigurationset type identified by
+         'imaker.rom.config'.
+         The accelerator will automatically be selected based on the build.system property. But this
+         default behaviour can be overriden by defining the reference of the engine to use via the 'imaker.engine'
+         property.
+    -->
+    <target name="build-roms" depends="rombuild-imaker-create-buildinfo">
+        <mkdir dir="${roms.log.dir}"/>
+        <if>
+            <not>
+                <isset property="imaker.engine" />
+            </not>
+            <then>
+                <if>
+                    <or>
+                        <equals arg1="${build.system}" arg2="ec-helium" />
+                        <equals arg1="${build.system}" arg2="sbs-ec" />
+                    </or>
+                    <then>
+                        <!-- Defines which accelerator to use for running iMaker. (default value from build.system property)
+                        @type string
+                        @scope private
+                        -->
+                        <property name="imaker.engine" value="imaker.engine.ec" />
+                    </then>
+                </if>
+            </then>
+        </if>
+        <!-- Defines which accelerator to use for running iMaker. (default value from build.system property)
+        @type string
+        @scope private
+        -->
+        <property name="imaker.engine" value="imaker.engine.default" />        
+        <property name="imaker.rom.name" value=""/>
+        <hlm:imaker epocroot="${build.drive}/" engineRefid="${imaker.engine}"
+                        output="${roms.log.dir}/${build.id}${imaker.rom.name}.roms.log" verbose="true">
+            <hlm:imakerconfigurationset refid="imaker.rom.config" />
+        </hlm:imaker>
+        <if>
+            <available file="${roms.log.dir}/${build.id}${imaker.rom.name}.roms.log" />
+            <then>
+                <echo message="WARNING: Nothing to build." file="${roms.log.dir}/${build.id}${imaker.rom.name}.roms.log" />
+            </then>
+        </if>
+        <hlm:metadatarecord database="${metadata.dbfile}">
+            <hlm:textmetadatainput>
+                <fileset casesensitive="false" file="${roms.log.dir}/${build.id}${imaker.rom.name}.roms.log" />
+                <metadatafilterset refid="filterset.imaker" />
+            </hlm:textmetadatainput>
+        </hlm:metadatarecord>
+        <hlm:signalMacro logfile="${roms.log.dir}/${build.id}${imaker.rom.name}.roms.log" 
+                         signal.input="rombuildSignalInput" />
+        <if>
+            <istrue value="${blocks.enabled}" />
+            <then>
+                <mkdir dir="${blocks.config.dir}" />
+                <exec executable="python">
+                    <arg value="-m"/>
+                    <arg value="packager.cli"/>
+                    <arg value="--epocroot=${build.drive}/" />
+                    <arg value="--config=${blocks.config.dir}" />
+                    <arg value="--datasource=imaker-romdir" />
+                    <arg value="-Dname=roms" />
+                    <arg value="-Dversion=1" />
+                    <arg value="-Ddir=${release.images.dir}" />
+                    <arg value="--updateData" />
+                </exec>
+            </then>
+        </if>
+    </target>
+    
+    <!-- iMaker engine configuration -->
+    <hlm:defaultEngine id="imaker.engine.default" threads="${number.of.threads}" />
+
+    <hlm:emakeEngine id="imaker.engine.ec">
+        <arg value="--emake-emulation=symbian" />
+        <arg value="--emake-annofile=${roms.log.dir}/${build.id}${imaker.rom.name}.anno.xml"/>
+        <arg value="--emake-root=${env.EMAKE_ROOT}${path.separator}${helium.dir}"/>
+        <arg value="--emake-annodetail=basic,history,file,waiting"/>
+        <arg value="--emake-historyfile=${roms.log.dir}/${build.id}${imaker.rom.name}.emake.data" />
+        <arg value="--emake-class=${ec.build.class}" />
+    </hlm:emakeEngine>
+    
+</project>

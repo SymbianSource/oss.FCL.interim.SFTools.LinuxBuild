@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+============================================================================ 
+Name        : docs.ant.xml 
+Part of     : Helium 
+
+Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+All rights reserved.
+This component and the accompanying materials are made available
+under the terms of the License "Eclipse Public License v1.0"
+which accompanies this distribution, and is available
+at the URL "http://www.eclipse.org/legal/epl-v10.html".
+
+Initial Contributors:
+Nokia Corporation - initial contribution.
+
+Contributors:
+
+Description:
+
+============================================================================
+-->
+<!--* @package framework -->
+<project name="internal.docs" xmlns:hlm="http://www.nokia.com/helium" xmlns:ivy="antlib:org.apache.ivy.ant">
+    <description>
+    Documentation generation targets.
+    </description>
+    
+    <!-- Location of documentation source.
+    @type string
+    @scope public
+    -->
+    <property name="doc.src.dir" location="${basedir}/doc" />
+    
+    <!-- The location where the docs will be built.
+    @type string
+    @scope private -->
+    <property name="docs.build.dir" location="${basedir}/build/doc" />
+    
+    <fileset id="python.library.files" dir="${helium.dir}">
+        <include name="extensions/nokia/tools/common/python/lib/**/*.py"/>
+        <include name="tools/common/python/lib/**/*.py"/>
+        <include name="external/helium-antlib/python/**/*.py"/>
+        <include name="extensions/nokia/external/helium-nokia-antlib/python/**/*.py"/>
+    </fileset>
+    
+    <fileset id="static.doc.files" dir="${helium.dir}/doc/src">
+        <include name="conf.py"/>
+        <include name=".static"/>
+        <include name=".templates/**"/>
+        <include name="*.jpg"/>
+        <include name="*.css"/>
+    </fileset>
+        
+    
+    <!-- Cleans the Helium API documentation. -->
+    <target name="clean-helium-apidocs">
+        <delete dir="${docs.build.dir}/api/helium"/>
+        <delete dir="${docs.build.dir}/temp/doc/api/helium"/>
+    </target>
+    
+    
+    <!-- Creates images of the dependencies for all Ant targets.
+        
+    This includes creating a cmap file that is included in the HTML document,
+    so the boxes in the image are linked to their targets. -->
+    <target name="helium-api-dependency-images">
+        <mkdir dir="${docs.build.dir}/api/helium"/>
+        <fmpp sourceRoot="${helium.dir}/doc/src/api" includes="*.dot.ftl" outputRoot="${docs.build.dir}/temp/doc/api/helium"
+              replaceExtension="dot.ftl, dot">
+            <data expandProperties="yes">
+                doc: xml(${database.file})
+            </data>
+        </fmpp>
+        <for param="dot.file" parallel="true" threadCount="${number.of.threads}">
+            <fileset dir="${docs.build.dir}/temp/doc/api/helium" includes="*.dot"/>
+            <sequential>
+                <echo>Processing dot file: @{dot.file}</echo>
+                <exec executable="dot" dir="${docs.build.dir}/temp/doc/api/helium">
+                    <arg line="-Tcmap @{dot.file} -O"/>
+                </exec>
+                <exec executable="dot" dir="${docs.build.dir}/api">
+                    <arg line="-Tpng @{dot.file} -O"/>
+                </exec>
+            </sequential>
+        </for>
+        <move todir="${docs.build.dir}/api/helium" overwrite="true">
+            <fileset dir="${docs.build.dir}/temp/doc/api/helium" includes="*.dot.png"/>
+        </move>
+    </target>
+    
+    
+    <!-- Builds the HTML files for the Helium API documentation. -->
+    <target name="helium-api-html-docs">
+        <mkdir dir="${docs.build.dir}/api/helium"/>
+        <copy todir="${docs.build.dir}/temp/doc/api/helium" overwrite="true">
+            <fileset dir="${helium.dir}/doc/src/api"/>
+        </copy>
+        <fmpp sourceRoot="${docs.build.dir}/temp/doc/api/helium" excludes="*.dot.png,*.dot.ftl,**/*.dot,**/*.cmap,*.bak"
+              outputRoot="${docs.build.dir}/api/helium"
+              replaceExtension="html.ftl, html">
+            <data expandProperties="yes">
+                ant: antProperties()
+                doc: xml(${database.file})
+            </data>            
+        </fmpp>
+    </target>
+    
+    
+    <!-- Builds the Helium API documentation. -->
+    <target name="helium-apidocs" depends="clean-helium-apidocs,database,
+                    helium-api-dependency-images,helium-api-html-docs"/>
+    
+    
+    <!-- Generate search index for apis -->
+    <target name="apidocs-search">
+        <hlm:python>
+import html2rest
+import os
+import codecs
+#import traceback
+for root, dirs, files in os.walk(r'${docs.build.dir}/api', topdown=False):
+    for fname in files:
+        if '.html' in fname:
+            filename = os.path.abspath(os.path.join(root, fname))
+            rstfilename = filename.replace('.html', '.rst')
+            try:
+                out = open(rstfilename, 'w')
+                html2rest.html2rest(html2rest.readsoup(filename), out)
+            except:
+                #traceback.print_exc()
+                print filename + ' failed to be converted to rst'
+            finally:
+                out.close()
+                
+            try:
+                rstfile = codecs.open(rstfilename, 'r', 'utf8')
+                rstfile.read()
+            except:
+                print rstfilename + ' has invalid unicode'
+                rstfile.close()
+                os.remove(rstfilename)
+        </hlm:python>
+        
+        <move todir="${docs.build.dir}/temp_search/doc" overwrite="true">
+            <fileset dir="${docs.build.dir}/api">
+                <include name="**/*.rst"/>
+            </fileset>
+        </move>
+        
+        <move todir="${docs.build.dir}/api_backup" overwrite="true">
+            <fileset dir="${docs.build.dir}/api"/>
+        </move>
+        
+        <copy file="${helium.dir}/doc/src/api/apisearchindex.rst" tofile="${docs.build.dir}/temp_search/doc/index.rst"/>
+        
+        <copy todir="${docs.build.dir}/temp_search/doc">
+            <fileset refid="static.doc.files"/>
+        </copy>
+        
+        <hlm:rstMacro src="${docs.build.dir}/temp_search/doc" output="${docs.build.dir}/api"/>
+        
+        <move todir="${docs.build.dir}/api" overwrite="true">
+            <fileset dir="${docs.build.dir}/api_backup"/>
+        </move>
+    </target>
+
+    
+    <!-- Generate API documentation from the source code. -->
+    <target name="apidocs" depends="helium-apidocs,apidocs-search"/>
+    
+    
+    <!-- Macro to generate HTML docs from rst. -->
+    <macrodef name="rstMacro" uri="http://www.nokia.com/helium">
+        <attribute name="version" default="${helium.version}"/>
+        <attribute name="src" default="${docs.build.dir}/temp/doc"/>
+        <attribute name="output" default="${docs.build.dir}"/>
+        <sequential>
+            <property name="sphinx.lib.dir" location="${helium.dir}/external/python/lib/common/Sphinx-0.5.1-py2.5.egg/sphinx" />
+            <if>
+                <available file="${nokia.python.tools}/sphinxfixsearch.diff"/>
+                <then>
+                    <patch patchfile="${nokia.python.tools}/sphinxfixsearch.diff" originalfile="${sphinx.lib.dir}/search.py"/>
+                </then>
+            </if>
+            <if>
+                <resourcecount when="greater" count="0">
+                    <fileset dir="@{src}" includes="**/*.rst"/>
+                </resourcecount>
+                <then>
+                    <exec executable="python" failonerror="true">        
+                        <arg file="${python.dir}/common/sphinx-build.py"/>
+                        <arg value="-b" />
+                        <arg value="html" />            
+                        <arg value="-D" />
+                        <arg value="version=@{version}" />
+                        <arg value="-D" />
+                        <arg value="release=@{version}" />
+                        <arg file="@{src}" />
+                        <arg file="@{output}" />
+                    </exec>
+                </then>
+            </if>
+            <if>
+                <available file="${nokia.python.tools}/sphinxfixsearch.diff"/>
+                <then>
+                    <patch reverse="true" patchfile="${nokia.python.tools}/sphinxfixsearch.diff" originalfile="${sphinx.lib.dir}/search.py"/>
+                </then>
+            </if>
+        </sequential>
+    </macrodef>
+    
+    
+    <!-- Generate rst files for docs -->
+    <target name="prep-textdocs">
+        <echo>Building docs into ${docs.build.dir}.</echo>
+        <mkdir dir="${docs.build.dir}/images"/>
+        
+        <delete dir="${docs.build.dir}/.doctrees"/>
+        <delete file="${docs.build.dir}/searchindex.json"/>
+        
+        <copy todir="${docs.build.dir}/images" failonerror="false">
+            <fileset dir="${doc.src.dir}/images"/>
+        </copy>
+
+        <!-- Temporarily copy the image directory so that doc generation will complete happily.-->
+        <copy todir="${docs.build.dir}/temp/doc/images" failonerror="false">
+            <fileset dir="${docs.build.dir}/images"/>
+        </copy>
+
+        <if>
+            <available file="${doc.src.dir}/src"/>
+            <then>
+                <copy todir="${docs.build.dir}/temp/doc">
+                    <fileset dir="${doc.src.dir}/src">
+                        <include name="**/*.rst"/>
+                        <include name="**/*.css"/>
+                        <include name="**/*.jpg"/>
+                        <include name="**/*.dot"/>
+                    </fileset>
+                </copy>
+                
+                <!--<fileset id="internal.ref.minibuilds" dir="${docs.build.dir}/temp/doc/minibuilds" includes="*/**/index.rst"/>-->
+                <fmpp sourceRoot="${doc.src.dir}/src"
+                      outputRoot="${docs.build.dir}/temp/doc" includes="*.rst.ftl" removeExtensions="ftl" excludes="api_changes.rst.ftl,minibuilds.rst.ftl">
+                    <data expandProperties="yes">
+                        ant: antProperties()
+                        project: antProject()
+                    </data>
+                </fmpp>
+            </then>
+        </if>
+        
+        <!-- Copy static content files from Helium -->
+        <copy todir="${docs.build.dir}/temp/doc">
+            <fileset refid="static.doc.files"/>
+        </copy>
+        
+        <for param="dot.file">
+            <fileset dir="${docs.build.dir}/temp/doc" includes="manual/*.dot"/>
+            <sequential>
+                <echo>Building dot file: @{dot.file}</echo>
+                <exec executable="dot">
+                    <arg line="-Tpng @{dot.file} -O"/>
+                </exec>
+            </sequential>
+        </for>
+    </target>
+    
+    
+    <!-- Generate HTML documentation from .rst documents with Sphinx.
+    
+    All doc .rst files should be generated or copied into build/temp/doc before being processed into HTML.    
+    -->
+    <target name="textdocs" depends="prep-textdocs">        
+        <hlm:rstMacro />
+        
+        <copy file="${database.file}" todir="${docs.build.dir}"/>
+        <copy file="${docs.build.dir}/temp/doc/default.css" todir="${docs.build.dir}/_static" overwrite="true" failonerror="true"/>
+        <copy file="${docs.build.dir}/temp/doc/helium_pallot_small.jpg" todir="${docs.build.dir}/_static" overwrite="true"/>
+        <copy todir="${docs.build.dir}" overwrite="true">
+            <fileset dir="${doc.src.dir}/src">
+                <include name="**/*.zip"/>
+            </fileset>
+        </copy>
+    </target>
+
+    
+    <!-- Clean old build/doc dir. -->
+    <target name="clean-docs">
+        <delete dir="${docs.build.dir}"/>
+    </target>
+    
+    
+    <!-- generate all the user documentation for helium -->
+    <target name="docs" depends="clean-docs,apidocs,textdocs"/>
+
+</project>

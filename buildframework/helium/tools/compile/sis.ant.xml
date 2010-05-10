@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+============================================================================ 
+Name        : sis.ant.xml 
+Part of     : Helium 
+
+Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+All rights reserved.
+This component and the accompanying materials are made available
+under the terms of the License "Eclipse Public License v1.0"
+which accompanies this distribution, and is available
+at the URL "http://www.eclipse.org/legal/epl-v10.html".
+
+Initial Contributors:
+Nokia Corporation - initial contribution.
+
+Contributors:
+
+Description:
+
+============================================================================
+-->
+<!--* @package compile -->
+<project name="compile.sis" xmlns:hlm="http://www.nokia.com/helium">
+    <description>Create SIS files.</description>
+    
+    <!-- Common Configuration config name. Override to select a specific config group.
+    @type string
+    -->
+    <property name="sis.config.name" value=""/>
+    
+    <!-- Preprocesses the SIS configuration file to insert Ant properties. -->
+    <target name="preprocess-sis-config" if="sis.config.file">
+        <property name="sis.config.file.parsed" location="${build.output.dir}/sis.cfg.xml.parsed" />
+        <copy file="${sis.config.file}" tofile="${sis.config.file.parsed}" overwrite="true">
+            <filterchain>
+                <expandproperties/>
+            </filterchain>
+        </copy>
+    </target>
+    
+    
+    <!-- Create SIS files. -->
+    <target name="sisfiles" depends="preprocess-sis-config" if="sis.config.file">
+        <hlm:tempRecordStartMacro name="${build.id}_sisfiles.log"/>        
+        <mkdir dir="${build.sisfiles.dir}" />
+        <delete file="${temp.build.dir}/sis_build.ant.xml" failonerror="false"/>
+        <hlm:python>
+import configuration
+import sis
+import os
+
+builder = configuration.NestedConfigurationBuilder(open(r'${sis.config.file.parsed}', 'r'))
+config_set = builder.getConfiguration()
+config_name = r'${sis.config.name}' if (len(r'${sis.config.name}') > 0) else None
+
+prebuilder = sis.SisPreBuilder(config_set, config_name)
+prebuilder.write(os.path.join(r'${temp.build.dir}', 'sis_build.ant.xml'))
+        </hlm:python>
+        <ant antfile="${temp.build.dir}/sis_build.ant.xml"/>
+        <hlm:tempRecordStopMacro name="${build.id}_sisfiles.log" filterref="filterset.sisfiles" phase="post"/>
+        <hlm:metadatarecord xmlns:hlm="http://www.nokia.com/helium" database="${metadata.dbfile}">
+            <hlm:textmetadatainput>
+                <fileset casesensitive="false" file="${build.cache.log.dir}/${build.id}_sisfiles.log"/>
+                <metadatafilterset refid="filterset.sisfiles"/>
+            </hlm:textmetadatainput> 
+        </hlm:metadatarecord>
+    </target>
+
+</project>
+
+
+

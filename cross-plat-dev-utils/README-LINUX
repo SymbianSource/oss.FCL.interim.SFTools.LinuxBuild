@@ -1,0 +1,184 @@
+# Copyright (c) 2010 Symbian Foundation Ltd
+# This component and the accompanying materials are made available
+# under the terms of the License "Eclipse Public License v1.0"
+# which accompanies this distribution, and is available
+# at the URL "http://www.eclipse.org/legal/epl-v10.html".
+#
+# Initial Contributors:
+# Mike Kinghan, mikek@symbian.org for Symbian Foundation Ltd - initial contribution.
+
+== Contents ==
+==============
+- Intro
+- One-time utilities
+--- fix_raptor_config.pl
+--- fix_epoc32.pl
+--- prep_env.pl
+- General utilities
+--- build_raptor.pl
+--- clean_raptor.pl
+--- deepclean_raptor.pl
+--- list_targets.pl
+--- build_target.pl
+--- build_all.pl
+--- clean_target.pl
+--- clean_all.pl
+--- reallyclean_target.pl
+--- reallyclean_all.pl
+--- clean_build_logs.pl
+--- weed_backups.pl
+--- get_upstream.pl
+--- diff_upstream.pl
+- Getting started.
+
+== Intro ==
+===========
+
+Read the README file in the parent directory, and the NEWS and TODO files if you
+have not already done so. Make the preparations described in that README before
+you try to use any of the utilities in this directory.
+
+This directory contains utilities and associated resources for building this
+package on Linux. All the utilities are Perl scripts (.pl files) which will
+indicate their purpose if run with either of the options -h, --help. They are
+also documented below.
+
+Provided you placed the package directory under the directory you want to be
+EPOCROOT (as per the build/README file), there is no need to set EPOCROOT to run
+any of the scripts. They will set it. If you set EPOCROOT in the environment for
+these scripts they will respect your setting. 
+
+There are two sorts of utilities:
+
+* Utilities that you need only run once, to make necessary fixes to the upstream
+Raptor configuration or to the PDK 3.0.h epoc32 tree, so that it is possible to
+build any of the targets. The one-time utilties may make use of the patch-files
+directory. Any file located at ./patch-files/linux/SOME_PATH/SOME.FILE will be
+deployed to replace the file $EPOCROOT/SOME_PATH/SOME.FILE 
+
+* General utilities that you can use repeatedly for development work.
+
+You need to run these utilities from this directory.
+
+== One-time utilities ==
+========================
+
+* fix_raptor_config.pl:
+-----------------------
+Patches the Raptor config file
+$EPOCROOT/build/sbsv2/raptor/lib/config/gcc.xml so that:
+a) the GCC compiler is configured as gcc, not gcc_mingw.
+b) the Standard C/C++ Library is configured as the one installed with the
+compiler, not the PDK's STLPort implementation of the Standard Library.
+c) the compiler complies with the C++0x standard.
+
+* fix_epoc32.pl:
+----------------
+Patches the epoc32 tree:
+a) to workaround ancient bug #1399.
+b) to create a valid preinclude header for gcc 4.4
+
+* prep_env.pl:
+--------------
+A wrapper for all the other fix_???.pl utilities.
+
+== General utilities ==
+=======================
+
+* build_raptor.pl:
+------------------
+Builds Raptor
+
+* clean_raptor.pl:
+------------------
+Cleans Raptor (by invoking the 'clean' target of the Raptor build).
+
+* deepclean_raptor.pl:
+----------------------
+Deletes all files created by building Raptor (which clean_raptor.pl does
+not).
+
+* list_targets.pl:
+------------------
+Lists the targets in the package, with comments on any that don't need to be
+built. The targets are listed as component paths relative to $EPOCROOT/build.
+
+* build_target.pl TARGET:
+-------------------------
+Build the target TARGET, where TARGET is one of the targets listed by
+list_targets.pl.
+  
+* build_all.pl:
+---------------
+Build all the targets except Raptor, with Raptor.
+
+* clean_target.pl TARGET:
+-------------------------
+Clean the target TARGET, where TARGET is one of the targets listed by
+list_targets.pl
+
+* clean_all.pl:
+---------------
+Clean all the targets except Raptor, with Raptor.
+
+* reallyclean_target.pl TARGET:
+-------------------------------
+Really-cleans target TARGET, where TARGET is one of the targets listed by
+list_targets.pl.
+
+* reallyclean_all.pl:
+---------------
+Really-clean all the targets except Raptor, with Raptor.
+
+* clean_build_logs.pl:
+----------------------
+Deletes all Raptor build logs from $EPOCROOT/epoc32/build.
+
+* weed_backups.pl:
+-----------------
+Deletes all files in the package dir that end with '~'.
+
+* get_upstream.pl CLONEDIR:
+---------------------------
+Clones or updates the upstream package at the baseline revision found in
+../baseline.txt, from http://developer.symbian.org/oss/MCL/sftools/dev/build.
+The upstream package will be cloned into the existing directory CLONEDIR if
+this does not appear to have been already done. Otherwise CLONEDIR/build will
+be updated.
+
+* diff_upstream.pl:
+-------------------
+Diffs this package with upstream package at the baseline revision found in
+../baseline.txt.
+Options:
+-d, --diff-file FILE:    The diffs will be written to FILE.
+Default ./patch-files/diff/patch-N.patch, where N is the baseline revision.
+-b, --baseline-dir DIR:  The upstream baseline will be cloned into DIR if this
+does not seem to have been done already. Otherwise DIR/build will be udated to
+the baseline revision before diffing.
+It is assumed that the command 'diff' will invoke the diff tool.
+
+* patch_upstream.pl
+-------------------
+Gets a copy of upstream package at the baseline revision in ../baseline.txt and
+applies a patch to it, by default making it the same as the revision of this
+package that had that upstream baseline.
+Options:
+-p, --patch-file FILE:   Apply the patch file FILE.
+Default ./patch-files/diffs/patch-N.patch, where N is the baseline revision
+-b, --baseline-dir DIR:  The upstream baseline will be cloned into DIR if this
+does not seem to have been done already. Otherwise DIR/build will be udated to
+the baseline revision before patching.
+It is assumed that the command 'patch' will invoke the patch tool.
+
+== Getting started ==
+=====================
+
+To start your development cycle with this package:
+
+* Run build_raptor.pl. This takes some time.
+* Run prev_env.pl
+* Run build_all.pl. This takes some time.
+* If anything has gone wrong, try fixing it.
+* Otherwise, pick something to do from the TODO file.
+

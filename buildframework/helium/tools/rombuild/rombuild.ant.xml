@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+============================================================================ 
+Name        : rombuild.ant.xml 
+Part of     : Helium 
+
+Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+All rights reserved.
+This component and the accompanying materials are made available
+under the terms of the License "Eclipse Public License v1.0"
+which accompanies this distribution, and is available
+at the URL "http://www.eclipse.org/legal/epl-v10.html".
+
+Initial Contributors:
+Nokia Corporation - initial contribution.
+
+Contributors:
+
+Description:
+
+============================================================================
+-->
+<!--* @package rombuild -->
+<project name="rombuild" xmlns:hlm="http://www.nokia.com/helium">
+    <description>
+        ROM image creation using iMaker.
+        Flash config file generation.
+    </description>
+    <import file="imaker.ant.xml" />
+    
+    <!--* @property ee.rom.output.dir
+    /output/development_flash_images/engineering_english/logs
+    @type string
+    @editable required
+    @scope public
+    -->
+
+    <!--* @property core.rom.output.dir
+    /output/release_flash_images/rnd/core
+    @type string
+    @editable required
+    @scope public
+    -->
+
+    <!-- should be overriden - default configuration -->
+    <!-- The path to the iMaker executable file.
+    @type string
+    @scope private
+    -->
+    <property name="imaker.command" location="${build.drive}\epoc32\tools\imaker.cmd" />
+
+
+    <!--
+        Creates subcon certified rom images.
+        The build will be based on the hlm:imakerconfigurationset referenced
+        as 'imaker.subcon.rom.config'.
+     -->
+    <target name="subcon-roms">
+        <if>
+            <isreference refid="imaker.subcon.rom.config" />
+            <then>
+                <antcall target="build-roms">
+                    <param name="imaker.rom.name" value="_subcon_roms" />
+                    <reference refid="imaker.subcon.rom.config" torefid="imaker.rom.config"/>
+                </antcall>
+            </then>
+            <else>
+                <echo>Configuration 'imaker.subcon.rom.config' not defined. Skipping subcon-roms build.</echo>
+            </else>
+        </if>
+    </target>
+
+    <!-- Internal target to export iMaker Helium additions. @scope private-->
+    <target name="rombuild-export-features">
+        <copy todir="${build.drive}/epoc32/rom/config" overwrite="true">
+            <fileset dir="${helium.dir}/tools/rombuild/features" casesensitive="false">
+                <include name="*.mk" />
+            </fileset>
+        </copy>
+    </target>
+
+
+    <!--
+        Creates trace rom images.
+        The build will be based on the hlm:imakerconfigurationset referenced
+        as 'imaker.trace.rom.config'.
+     -->
+    <target name="trace-roms">
+        <if>
+            <isreference refid="imaker.trace.rom.config" />
+            <then>
+                <antcall target="build-roms">
+                    <param name="imaker.rom.name" value="_trace_roms" />
+                    <reference refid="imaker.trace.rom.config" torefid="imaker.rom.config"/>
+                </antcall>
+            </then>
+            <else>
+                <echo>Configuration 'imaker.trace.rom.config' not defined. Skipping trace-roms build.</echo>
+            </else>
+        </if>
+    </target>
+
+
+    <!-- Internal iMaker macro. @scope private -->
+    <macrodef name="internalImakerMacro" uri="http://www.nokia.com/helium">
+        <attribute name="product" />
+        <attribute name="target" />
+        <attribute name="makefile" default="" />
+        <attribute name="cmd" default="" />
+        <sequential>
+            <var name="rom.product.path" unset="true" />
+            <script language="jython" setbeans="false">
+                <![CDATA[
+import imaker
+import os
+os.chdir(project.getProperty('build.drive') + os.sep)
+project.setProperty('rom.product.path', imaker.get_product_dir(r'@{product}'))
+              ]]>
+            </script>
+            <if>
+                <equals arg1="@{makefile}" arg2="" />
+                <then>
+                    <var name="var.makefile" value="" />
+                </then>
+                <else>
+                    <var name="var.makefile" value="-f ${rom.product.path}/@{makefile}" />
+                </else>
+            </if>
+            <exec executable="${imaker.command}" dir="${build.drive}/" failonerror="${failonerror}">
+                <arg line="-p@{product} @{cmd}" />
+                <arg line="${var.makefile}" />
+                <arg line="@{cmd}" />
+                <arg value="@{target}" />
+            </exec>
+        </sequential>
+    </macrodef>
+
+</project>

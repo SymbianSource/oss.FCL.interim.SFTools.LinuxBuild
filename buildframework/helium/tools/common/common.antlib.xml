@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+============================================================================ 
+Name        : common.antlib.xml 
+Part of     : Helium 
+
+Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+All rights reserved.
+This component and the accompanying materials are made available
+under the terms of the License "Eclipse Public License v1.0"
+which accompanies this distribution, and is available
+at the URL "http://www.eclipse.org/legal/epl-v10.html".
+
+Initial Contributors:
+Nokia Corporation - initial contribution.
+
+Contributors:
+
+Description:
+
+============================================================================
+-->
+<!--* @package framework -->
+<antlib xmlns:au="org.apache.ant.antunit" xmlns:hlm="http://www.nokia.com/helium">
+    
+    
+    <!-- Macro to execute bldmake command. To be removed if not used. -->
+    <macrodef name="bldmakeBldfilesMacro" uri="http://www.nokia.com/helium">
+        <attribute name="dir"/>
+        <sequential>
+            <exec executable="${build.drive}/epoc32/tools/bldmake.bat" dir="@{dir}" failonerror="${failonerror}">
+                <arg value="bldfiles"/>
+                <arg value="-k"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
+
+    <!-- Macro to execute abld command. Once used in rombuild.ant.xml. -->
+    <macrodef name="abldMacro" uri="http://www.nokia.com/helium">
+        <attribute name="dir"/>
+        <attribute name="command"/>
+        <attribute name="platform"/>
+        <sequential>
+            <exec executable="@{dir}/abld.bat" dir="@{dir}" failonerror="${failonerror}">
+                <arg value="@{command}"/>
+                <arg value="@{platform}"/>
+                <arg value="-k"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <!--
+        This macro generate a file that contains a list of path from a path structure:
+        <pre>
+        <hlm:pathToFileListMacro file="output.lst">
+            <path>
+                <pathelement path="${helium.dir}"/>
+            </path>
+        </hlm:pathToFileListMacro> 
+        </pre>
+    -->
+    <scriptdef name="pathToFileListMacro" language="beanshell" uri="http://www.nokia.com/helium">
+        <attribute name="file"/>
+        <element name="path" type="path"/>
+        <![CDATA[
+    import java.io.FileWriter;
+    FileWriter out = new FileWriter(attributes.get("file"));
+    paths = elements.get("path");
+    for (int i = 0 ; i < paths.size() ; i++) {
+        String[] files = paths.get(i).list();
+        for (int l = 0; l < files.length ; l++) {
+            out.write(files[l] + "\n");
+        }
+    }
+out.close();
+]]>   
+    </scriptdef>
+
+    
+   
+    <!-- This Macro is a wrapper to command line tool 
+        Currently supported command line tools are
+        configuration tool and
+        sbs tool
+        Usage: 
+            name - name of the tool:
+            toolvarset - reference id for variables to be passed to the tool
+        <pre>
+        <hlm:toolMacro name="configuration">
+            <hlm:toolvarset refid="cnftool.conf.50"/>
+        </hlm:toolMacro>
+        </pre>
+    -->
+    <scriptdef name="toolMacro" language="beanshell" uri="http://www.nokia.com/helium">
+        <element name="toolvarset" classname="com.nokia.helium.core.ant.types.VariableSet"/>
+        <attribute name="name"/>
+<![CDATA[
+import com.nokia.ant.util.ToolsProcess;
+import com.nokia.tools.*;
+import com.nokia.helium.core.ant.types.VariableSet;
+import org.apache.tools.ant.types.Reference;
+    Reference ref;
+    java.lang.String toolName = attributes.get("name");
+    confTool =  ToolsProcess.getTool(toolName);
+    varSets = elements.get("toolvarset");
+    for (i = 0; i < varSets.size(); ++i) {
+        try {
+            varSet = (VariableSet)varSets.get(i);
+            if (varSet.isReference()) {
+                varSet = varSet.getRefid().getReferencedObject(project);
+            }
+            confTool.execute(varSet,project);
+        } catch (Exception e) {
+            self.log("Error: " + e);
+            //self.log("Tool Argument Validation failure");
+            throw e;
+        }
+  }
+]]>
+    </scriptdef>
+    
+    <!-- ConE tool macro to run the command for each argument -->
+    <scriptdef name="conEToolMacro" language="beanshell" uri="http://www.nokia.com/helium">
+        <element name="arg" classname="com.nokia.ant.types.Variable"/>
+        <attribute name="name"/>
+<![CDATA[
+import com.nokia.ant.util.ToolsProcess;
+import com.nokia.tools.*;
+import com.nokia.ant.types.Variable;
+    conETool =  ToolsProcess.getTool("ConE");
+    vars = elements.get("arg");
+    for (i = 0; i < vars.size(); ++i) {
+        try {
+            var = (Variable)vars.get(i);
+            conETool.storeVariables(var.getName(), var.getValue());
+        } catch (Exception e) {
+            self.log("Error: " + e);
+            //self.log("Tool Argument Validation failure");
+            throw e;
+        }
+  }
+  conETool.execute(project);
+]]>
+    </scriptdef>
+    
+    
+    <!-- This macro will read the line from file which matches the regexp -->
+    <scriptdef name="grepMacro" language="beanshell" uri="http://www.nokia.com/helium">
+        <attribute name="filename"/>
+        <attribute name="output"/>
+        <attribute name="regexp"/>
+<![CDATA[
+import java.util.*;
+import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+if (attributes.get("filename") == null ||  attributes.get("output") == null || attributes.get("regexp") == null)
+    throw new BuildException("Filename/output/regexp attribute is not set for readLineMacro");
+    
+String search = attributes.get("regexp");
+String output = "";
+pattern = Pattern.compile(search);
+
+BufferedReader input =  new BufferedReader(new FileReader(attributes.get("filename")));
+try {
+        String line = null;
+        Matcher match = null;
+        while (( line = input.readLine()) != null) {
+             match = pattern.matcher(line);
+            if (match.find()) {
+                //self.log("Line containg " + search + " is = " + line + " returned vaue = " + match.group(1));
+                int checkIndex = output.indexOf(match.group(1), 0);
+                if (checkIndex == -1 ) {
+                   output = output + match.group(1) + ",";
+                }
+            }
+        }
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    }
+    project.setNewProperty(attributes.get("output") , output);
+
+]]>
+    </scriptdef>
+
+    <!-- This task allow to dump the content of a text file to the shell. -->
+    <scriptdef name="echoFileMacro" language="beanshell" uri="http://www.nokia.com/helium">
+        <attribute name="file"/>
+        <![CDATA[        
+        //Open the file for reading
+         try {
+            java.io.BufferedReader in = new java.io.BufferedReader(new java.io.FileReader(attributes.get("file")));
+            while ((thisLine = in.readLine()) != null) { // while loop begins here
+                 self.log(thisLine);
+            } // end while 
+        } catch (java.io.IOException e) {
+            self.log("Error: " + e);
+            throw e;
+        }        
+        ]]>
+    </scriptdef>
+    
+    <!-- This task create the herder information in the symbian log file -->
+    <scriptdef name="symbianLogHeaderMacro" language="jython" uri="http://www.nokia.com/helium">
+        <attribute name="config"/>
+        <attribute name="command"/>
+        <attribute name="dir"/>
+import log2xml
+log2xml.symbian_log_header(self, attributes.get('config'), attributes.get('command'), attributes.get('dir'))
+    </scriptdef>
+
+    <!-- This task create the footer information in the symbian log file -->
+    <scriptdef name="symbianLogFooterMacro" language="jython" uri="http://www.nokia.com/helium">
+import log2xml
+log2xml.symbian_log_footer(self)
+    </scriptdef>
+
+
+    
+    <!-- A generic assert macro similar to AntUnit "assertTrue". -->
+    <macrodef name="assert" uri="http://www.nokia.com/helium">
+        <attribute name="message" default="Value is not true."/>
+        <element name="condition" implicit="yes"/>
+        <sequential>
+            <if>
+                <isset property="hlm.enable.asserts"/>
+                <then>
+                    <au:assertTrue message="@{message}">
+                        <condition/>
+                    </au:assertTrue>
+                </then>
+                <else>
+                    <trycatch property="assert.try">
+                        <try>
+                            <au:assertTrue message="@{message}">
+                                <condition/>
+                            </au:assertTrue>
+                        </try>
+                        <catch>
+                            <echo message="Warning: @{message}"/>
+                            <hlm:hlmassertmessage assertName="hlm:assert" message="Warning: @{message}"/>
+                        </catch>
+                    </trycatch>
+                </else>
+            </if>
+        </sequential>
+    </macrodef>
+    
+    
+    <!-- A generic assert macro similar to AntUnit "assertFileExists". -->
+    <macrodef name="assertFileExists" uri="http://www.nokia.com/helium">
+        <attribute name="file"/>
+        <attribute name="message" default="@{file} does not exists."/>
+        <sequential>
+            <if>
+                <isset property="hlm.enable.asserts"/>
+                <then>
+                    <au:assertFileExists file="@{file}" message="Warning: @{message}"/>
+                </then>
+                <else>
+                    <trycatch property="assert.try">
+                        <try>
+                            <au:assertFileExists file="@{file}" message="Warning: @{message}"/>                                
+                        </try>
+                        <catch>
+                            <echo message="Warning: @{message}"/>
+                            <hlm:hlmassertmessage assertName="hlm:assertFileExists" message="Warning: @{message}"/>
+                        </catch>
+                    </trycatch>
+                </else>
+            </if>
+        </sequential>
+    </macrodef>
+
+    <!-- A generic assert macro similar to AntUnit "assertPropertySet". -->
+    <macrodef name="assertPropertySet" uri="http://www.nokia.com/helium">
+        <attribute name="property"/>
+        <attribute name="message" default="@{property} is not set."/>
+        <sequential>
+            <if>
+                <isset property="hlm.enable.asserts"/>
+                <then>
+                    <au:assertPropertySet name="@{property}" message="@{message}"/>
+                </then>
+                <else>
+                    <trycatch property="assert.try">
+                        <try>
+                            <au:assertPropertySet name="@{property}" message="@{message}"/>
+                        </try>
+                        <catch>
+                            <echo message="Warning: @{message}"/>
+                            <hlm:hlmassertmessage assertName="hlm:assertPropertySet" message="Warning: @{message}"/>
+                        </catch>
+                    </trycatch>
+                </else>
+            </if>
+        </sequential>
+    </macrodef>
+
+
+    
+    <!-- Script definition to collect target dependencies -->
+    <scriptdef name="dependencies" language="jython" uri="http://www.nokia.com/helium">
+        <attribute name="target"/>
+        <attribute name="format"/>
+parsedTargets = []
+targetList = []
+
+def collectTargetDependencies(targetName, indent):    
+    targetObject = project.getTargets().get(targetName)
+    if targetObject is None :
+        print  "Target '" + targetName + "' not found."   
+    else :
+        dependenciesEnum = targetObject.getDependencies()
+        while dependenciesEnum.hasMoreElements():
+            dependency = dependenciesEnum.nextElement()
+            if dependency not in parsedTargets:
+                collectTargetDependencies(dependency, indent + 1)
+                parsedTargets.append(dependency)
+                targetList.append((dependency, indent))
+
+target = str(attributes.get('target'))
+
+collectTargetDependencies(target, 1)
+targetList.append((target, 0))
+    
+format = str(attributes.get('format'))
+
+if format == 'nested':    
+    for target, indent in targetList:        
+        indentString = ''.join(['   ' for x in range(indent)])
+        print indentString + str(target)
+elif format == 'executable':
+    print "Top level targets:\n"
+    print ''.join([str(target) + ' ' for target, indent in targetList[:-1] if indent == 1])
+    print "\n\nAll targets in sequence:\n"
+    print ''.join([str(target) + ' ' for target, indent in targetList[:-1]])
+    </scriptdef>
+    
+    
+    <!-- This new task allows to save a reference to a file. -->
+    <scriptdef name="referenceToFileMacro" language="jython" uri="http://www.nokia.com/helium">
+        <attribute name="refid"/>
+        <attribute name="output"/>
+    <![CDATA[
+from java.io import FileWriter
+
+refid = str(attributes.get("refid"))
+output = str(attributes.get("output"))
+
+if refid == None:
+    raise Exception("'refid' attribute must be defined!")    
+if output == None:
+    raise Exception("'output' attribute must be defined!")
+    
+self.log("Creating %s using %s" % (output, refid))
+
+reference = project.getReference(refid)
+if reference == None:
+    raise Exception("Unknown reference '%s'" % refid)
+output = FileWriter(output)
+i = reference.iterator()
+while i.hasNext():
+    path = i.next().toString()
+    self.log(path)
+    output.write(path + "\n")
+output.close()
+    ]]></scriptdef>
+    
+    <!-- Reads password from .netrc file for a specific type of service. -->
+    <scriptdef name="netrcPasswordMacro" language="jython" uri="http://www.nokia.com/helium">
+        <attribute name="output-prop"/>
+        <attribute name="result-prop"/>
+        <attribute name="type"/>
+        <![CDATA[
+import netrc
+import os
+result = "0"
+try:
+    netrc_file = netrc.netrc()
+    self.log("Type: %s" % str(attributes.get("type")))
+    netrc_info = netrc_file.authenticators(str(attributes.get("type")))
+    if netrc_info == None:
+        raise Exception("No entry found for Type: %s" % str(attributes.get("type")))
+    (n_username, n_account, n_password) = netrc_info
+    if attributes.get('output-prop') != None:
+        project.setProperty(str(attributes.get('output-prop')), str(n_password))
+except Exception, e:
+    result = "-1"
+    print "Warning: %s" % e
+if attributes.get('result-prop') != None:
+    project.setProperty(str(attributes.get('result-prop')), str(result))
+        ]]>
+    </scriptdef>
+
+    <!-- Reads user name from .netrc file for a specific type of service. -->
+    <scriptdef name="netrcUsernameMacro" language="jython" uri="http://www.nokia.com/helium">
+        <attribute name="output-prop"/>
+        <attribute name="result-prop"/>
+        <attribute name="type"/>
+        <![CDATA[
+import netrc
+import os
+result = "0"
+try:
+    netrc_file = netrc.netrc()
+    self.log("Type: %s" % str(attributes.get("type")))
+    netrc_info = netrc_file.authenticators(str(attributes.get("type")))
+    if netrc_info == None:
+        raise Exception("No entry found for Type: %s" % str(attributes.get("type")))
+    (n_username, n_account, n_password) = netrc_info
+    if attributes.get('output-prop') != None:
+        project.setProperty(str(attributes.get('output-prop')), str(n_username))
+except Exception, e:
+    result = "-1"
+    print "Warning: %s" % e
+if attributes.get('result-prop') != None:
+    project.setProperty(str(attributes.get('result-prop')), str(result))
+        ]]>
+    </scriptdef>
+     
+    <!-- Check availability of synergy. -->   
+    <scriptdef  name="ccmAvailableMacro" language="jython" uri="http://www.nokia.com/helium">
+        <attribute name="resultproperty"/>
+        <![CDATA[
+import nokia.nokiaccm
+import logging
+import ccm.extra
+
+logging.basicConfig(level=logging.INFO)
+
+session = None
+result = "0"
+cache = None
+if project.getProperty("ccm.cache.xml")is not None:
+    cache = str(project.getProperty("ccm.cache.xml"))
+try:
+    database = project.getProperty('ccm.database')
+    
+    if project.getProperty('ccm.user.login') == None :
+        raise Exception("'ccm.user.login' property is not defined")
+        
+    username = project.getProperty('ccm.user.login')
+    
+    if project.getProperty('ccm.user.password') == None :
+        raise Exception("'ccm.user.password' property is not defined")
+        
+    password = project.getProperty('ccm.user.password')
+    
+    
+    engine = project.getProperty('ccm.engine.host')
+    dbpath = project.getProperty('ccm.database.path')
+    provider = ccm.extra.CachedSessionProvider(opener=nokia.nokiaccm.open_session, cache=cache)
+    if database != None:
+        session = provider.get(username, password, database=database, reuse=False)
+    else:
+        session = provider.get(username, password, engine, dbpath, reuse=False)
+    session.close()
+    provider.close()
+except Exception, e:
+    print "ERROR: %s" % e
+    if str(e).find("access denied") != -1:
+        result = "-2"
+    else:
+        result = "-1"
+self.log("Result: %s" % attributes.get('resultproperty'))
+project.setProperty(str(attributes.get('resultproperty')), str(result))
+        ]]>
+     </scriptdef>
+
+    <macrodef name="signalMacro" uri="http://www.nokia.com/helium">
+        <attribute name="logfile"/>
+        <attribute name="phase" default=""/>
+        <attribute name="signal.input" />
+        <attribute name="skip.count" default="false" />
+        <attribute name="result" default="not-set"/>
+        <sequential>
+            <var name="signal.errors.total" value="" unset="true"/>
+            <var name="base.signal.log.file" value="" unset="true"/>
+            <basename property="base.signal.log.file" file="@{logfile}"/>
+            <if>
+                <isfalse value="@{skip.count}" />
+                <then>
+                    <hlm:metadataCountSeverity severity="error" 
+                        log="@{logfile}"
+                        db="${metadata.dbfile}" property="signal.errors.total"/>
+                </then>
+                <else>
+                    <if>
+                        <equals arg1="@{result}" arg2="not-set"/>
+                        <then>
+                            <fail message="result parameter is missing for signa macro" />
+                        </then>
+                    </if>
+                    <var name="signal.errors.total" value="@{result}" />
+                </else>
+            </if>
+            <if>
+                <isset property="@{phase}.log.dir" />
+                <then>
+                    <var name="signal.log.dir" value="" unset="true"/>
+                    <property name="signal.log.dir" value="${@{phase}.log.dir}"/>
+                    <echo>signal.log.dir = ${signal.log.dir}</echo>
+                </then>
+                <else>
+                    <var name="signal.log.dir" value="" unset="true"/>
+                    <property name="signal.log.dir" value="${build.log.dir}"/>
+                </else>
+            </if>
+            <hlm:generateBuildStatus output-dir="${build.signal.status.dir}/" 
+                file="${base.signal.log.file}" />
+            <!-- signal for errors -->
+            <hlm:signal name="@{signal.input}" result="${signal.errors.total}" >
+                <signalNotifierInput>
+                    <signalInput refid="@{signal.input}" />
+                    <notifierInput>
+                        <fileset casesensitive="false" dir="${build.log.dir}" >
+                            <include name="**/${base.signal.log.file}*" />
+                        </fileset>
+                    </notifierInput>
+                </signalNotifierInput>
+            </hlm:signal>
+        </sequential>
+    </macrodef>
+
+    <!-- A simple test macro -->
+    <macrodef name="fooMacro" uri="http://www.nokia.com/helium">
+        <sequential>
+            <echo>foo</echo>
+            <runtarget target="hello"/>
+        </sequential>
+    </macrodef>
+    
+    
+    <!-- Asserts that two XML resources are logically equal.
+    
+    This looks at the XML content rather than just diffing the strings. -->
+    <scriptdef name="assertXmlEqual" language="jython" uri="http://www.nokia.com/helium">
+        <attribute name="control"/>
+        <attribute name="test"/>
+        <attribute name="failonerror"/>
+        <![CDATA[
+import logging
+
+import java.io
+import org.custommonkey.xmlunit
+
+control_id = str(attributes.get('control'))
+test_id = str(attributes.get('test'))
+
+control_resource = project.getReference(control_id)
+test_resource = project.getReference(test_id)
+control_reader = java.io.InputStreamReader(control_resource.getInputStream())
+test_reader = java.io.InputStreamReader(test_resource.getInputStream())
+
+org.custommonkey.xmlunit.XMLUnit.setIgnoreWhitespace(True)
+org.custommonkey.xmlunit.XMLUnit.setIgnoreComments(True)
+diff = org.custommonkey.xmlunit.Diff(control_reader, test_reader)
+detailed_diff = org.custommonkey.xmlunit.DetailedDiff(diff)
+differences = detailed_diff.getAllDifferences()
+print 'Differences total = ' + str(differences.size())
+for diff in differences.toArray():
+    print logging.warning(diff.toString())
+
+try:
+    control_reader = java.io.InputStreamReader(control_resource.getInputStream())
+    test_reader = java.io.InputStreamReader(test_resource.getInputStream())
+    org.custommonkey.xmlunit.XMLAssert.assertXMLEqual(control_reader, test_reader)
+    print 'XML is similar'
+except Exception, e:
+    print 'XML is NOT similar!'
+    failonerror = str(attributes.get('failonerror'))
+    if failonerror == 'true' or failonerror == 'None':
+        raise e
+        ]]>
+    </scriptdef>
+    
+    <!-- unsubst task, will unsubst a given drive. -->
+    <scriptdef name="unsubst" language="jython" uri="http://www.nokia.com/helium">
+        <attribute name="drive"/>
+        <attribute name="failonerror"/>
+""" internal.codescanner.drive """
+import fileutils
+self.setTaskName('unsubst')
+drive = attributes.get('drive')
+failonerror = attributes.get('failonerror')
+if (failonerror == None or str(failonerror) == "true"):
+    failonerror = True
+else:
+    failonerror = False
+if drive == None or len(str(drive)) != 2:
+    raise Exception("'drive' attribute is missing or invalid. " + str(drive))
+drive = str(drive)
+try:
+    self.log(str("Unsubsting %s..." % drive))
+    fileutils.unsubst(drive)
+except Exception, e:
+    if failonerror:
+        raise e
+    else:
+        self.log(str("Error: %s" % e))
+    </scriptdef>
+    
+    <!-- Touches the files in the paths given. -->
+    <scriptdef name="touch" language="jython" uri="http://www.nokia.com/helium">
+        <element name="path" type="path"/>
+        <![CDATA[
+import fileutils
+for id in range(elements.get("path").size()):
+    iterator = elements.get("path").get(int(id)).iterator()
+    while iterator.hasNext():
+        path = str(iterator.next())
+        fileutils.touch(path)
+        ]]>
+    </scriptdef>
+    
+</antlib>

@@ -1,0 +1,7 @@
+# *** Change this file if and only if you are rebuilding from a new
+# upstream baseline ***
+# This package was branched from
+# http://developer.symbian.org/oss/MCL/sftools/dev/build)
+# at Mercurial revision:
+0f5e3a7fb6af
+
