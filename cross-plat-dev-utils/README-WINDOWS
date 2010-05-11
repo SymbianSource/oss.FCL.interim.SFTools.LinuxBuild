@@ -153,7 +153,7 @@ Options:
 -d, --diff-file FILE:    The diffs will be written to FILE.
 Default ./patch-files/diff/patch-N.patch, where N is the baseline revision.
 -b, --baseline-dir DIR:  The upstream baseline will be cloned into DIR if this
-does not seem to have been done already. Otherwise DIR/build will be udated to
+does not seem to have been done already. Otherwise DIR/build will be updated to
 the baseline revision before diffing.
 It is assumed that the command 'diff' will invoke the diff tool. diff is not
 standard equioment on Windows but a port is available:
@@ -161,14 +161,14 @@ http://gnuwin32.sourceforge.net/packages/diffutils.htm.
 
 * patch_upstream.pl
 -------------------
-Gets a copy of upstream package at the baseline revision in ../baseline.txt and
-applies a patch to it, by default making it the same as the revision of this
+Gets a copy of the upstream package at the baseline revision in ../baseline.txt
+and applies a patch to it, by default making it the same as the revision of this
 package that had that upstream baseline.
 Options:
 -p, --patch-file FILE:   Apply the patch file FILE.
 Default ./patch-files/diffs/patch-N.patch, where N is the baseline revision
 -b, --baseline-dir DIR:  The upstream baseline will be cloned into DIR if this
-does not seem to have been done already. Otherwise DIR/build will be udated to
+does not seem to have been done already. Otherwise DIR/build will be updated to
 the baseline revision before patching.
 It is assumed that the command 'patch' will invoke the patch tool. patch is not
 standard equioment on Windows but a port is available:

@@ -1,3 +1,0 @@
->>> EPOCROOT not defined. Assuming ../..
->>> EPOCROOT=/home/imk/symbian/epocroot-pdk-3.0.h
->>> OK

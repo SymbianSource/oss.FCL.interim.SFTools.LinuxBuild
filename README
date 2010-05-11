@@ -26,7 +26,7 @@ This README will be updated from time to time.
 This package is a branch from the Symbian Build package
 (http://developer.symbian.org/oss/MCL/sftools/dev/build) at Mercurial revision
 mentioned in the file baseline.txt. The Build package "provides everything you
-need to build the Symbian platform." This branch work-in-progress toward
+need to build the Symbian platform." This branch is work-in-progress toward
 enabling those tools to build without problems and run correctly on a
 conventional GNU/Linux host, as well Windows hosts.
  
