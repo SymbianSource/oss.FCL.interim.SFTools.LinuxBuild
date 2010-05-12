@@ -47,6 +47,7 @@
 #include <time.h>
 #include <assert.h>
 #include <errno.h>
+#include <limits.h>
 
 #include <e32std.h>
 #include <e32std_private.h>
