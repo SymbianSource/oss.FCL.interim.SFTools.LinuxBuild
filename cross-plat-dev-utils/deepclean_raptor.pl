@@ -25,15 +25,18 @@ my $host_platform_dir = $1;
 die "*** Error: Can't determine HOSTPLATFORM_DIR ***", unless ($host_platform_dir);
 my $epocroot = get_epocroot();
 my $abs_host_platform_dir = File::Spec->catfile(get_sbs_home(),"$host_platform_dir");
-if (-d $abs_host_platform_dir) {
+my $raptor_build_dir = File::Spec->catfile(get_sbs_home(),"util","build");
+my @del_dirs = ();
+push(@del_dirs,$abs_host_platform_dir), if (-d $abs_host_platform_dir);
+push(@del_dirs,$raptor_build_dir), if (-d $raptor_build_dir); 	
+if (@del_dirs) {
 	print ">>> Clean Raptor\n";
 	perl_run("clean_raptor.pl") and die $!;
-	print ">>> Delete the HOSTPLATFORM_DIR\n";
-	print ">>> HOSTPLATFORM_DIR = \"$abs_host_platform_dir\"\n";
+	print ">>> Delete Raptor build products\n";
 	my $remove_tree_err;
-	remove_tree($abs_host_platform_dir, { verbose => 1, error => \$remove_tree_err });
+	remove_tree((@del_dirs), { verbose => 1, error => \$remove_tree_err });
 	if (@$remove_tree_err) {
-		print "*** Error(s) while deleting HOSTPLATFORM_DIR ***\n";
+		print "*** Error(s) while deleting Raptor build products ***\n";
 		for my $diag (@$remove_tree_err) {
 			my ($file, $message) = %$diag;
 			if ($file eq '') {

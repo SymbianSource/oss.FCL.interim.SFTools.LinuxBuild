@@ -1,1 +1,0 @@
-/home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/util/build/linux-unknown-libc2_11/Python-2.6.2/Modules/_ctypes/libffi/include/ffi_common.h

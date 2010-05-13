@@ -1,5 +1,0 @@
-#!/home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/linux-unknown-libc2_10/python262/bin/python2.6
-
-import pydoc
-if __name__ == '__main__':
-    pydoc.cli()

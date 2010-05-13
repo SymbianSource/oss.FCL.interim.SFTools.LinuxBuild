@@ -18,7 +18,6 @@ use places;
 use get_hostplatform_dir;
 use check_os;
 use File::Spec;
-use File::Temp 'tempfile';
 use Cwd 'abs_path';
 use Getopt::Long;
 
@@ -31,7 +30,6 @@ sub usage(*);
 sub usage_error($);
 sub help();
 sub get_old_baseline_dir($);
-sub regen_patch_file($);
 
 GetOptions("help=i" => \$help, "patch-file=s" => \$patch_in,
 	"baseline-dir=s" => \$baseline_dir) or usage_error("Usage error");
