@@ -53,7 +53,7 @@ Constructor intializes the class pointer members and member variables.
 RomReader::RomReader(const char* aFile, EImageType aImgType) 
 : ImageReader(aFile), iImageHeader(0), iData(0), iImgType(aImgType)
 {
-	iRomImageRootDirEntry = new RomImageDirEntry(const_cast<char *>(""));
+	iRomImageRootDirEntry = new RomImageDirEntry("");
 }
 
 /** 

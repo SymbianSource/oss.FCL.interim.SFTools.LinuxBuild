@@ -13,14 +13,13 @@
 
 use strict;
 use usage;
-use set_epocroot;
+use places;
 use File::Spec;
 use Cwd; 
 
 usage(\@ARGV,"This script deletes all Raptor build logs");
-set_epocroot();
-my $epocroot = $ENV{'EPOCROOT'};
-my $log_stem = File::Spec->catfile("$epocroot","epoc32","build","Makefile");
+my $epocroot = get_epocroot();
+my $log_stem = File::Spec->catfile(get_epoc32_dir(),"build","Makefile");
 my $log_pattern = "$log_stem\.\*\.log"; 
 my @old_logs = glob($log_pattern);
 if (@old_logs) {

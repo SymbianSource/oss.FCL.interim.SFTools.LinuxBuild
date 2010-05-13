@@ -39,10 +39,11 @@ private:
     const char* _eat_obj_header(const char*, const char*, unsigned long*, const char* = 0) const;
 
 private:
-    const char* m_mem_p;
+	char * m_mem_p;
 
     const char* m_first_p;
     const char* m_last_p;
+
 
     mutable std::vector<const char*> m_symbols;
     mutable std::vector< std::pair<const char*, const char*> > m_objects;

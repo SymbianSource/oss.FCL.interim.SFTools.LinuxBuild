@@ -84,7 +84,7 @@ class Message
 		// display message to output device
 		virtual void Output(const char *aName) =0;
 		// start logging to a file
-		virtual void StartLogging(char *fileName)=0;
+		virtual void StartLogging(char const *fileName)=0;
 		virtual void ReportMessage(int aMsgType, int aMsgIndex,...)=0;
 		virtual void InitializeMessages()=0;
 };
@@ -105,7 +105,7 @@ class MessageImplementation : public Message
 		char* GetMessageString(int errorIndex);
 		void Output(const char *aName);
 		void LogOutput(const char *aString);
-		void StartLogging(char *fileName);
+		void StartLogging(char const *fileName);
 		void ReportMessage(int aMsgType, int aMsgIndex,...);
 		void InitializeMessages();
     private:

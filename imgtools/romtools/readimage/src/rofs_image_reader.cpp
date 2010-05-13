@@ -290,7 +290,7 @@ void RofsImageReader::DumpFileAttributes()
 
 			*out << "********************************************************************" << endl;
 			iPath.assign((char*)aNode->iName);	
-			GetCompleteNodePath(aNode,iPath,const_cast<char *>("/"));
+			GetCompleteNodePath(aNode,iPath,"/");
 			*out << "File........................" << iPath.c_str() << endl;
 			if( aNode->iEntry->iExecutable )
 			{
@@ -417,7 +417,7 @@ void RofsImageReader::CheckFileExtension(char* aFileName,TRomBuilderEntry* aEntr
 	{
 		// get the complete path 
 		path.assign( (char*)aNode->iName );
-		GetCompleteNodePath( aNode, path, const_cast<char *>("\\\\") );
+		GetCompleteNodePath( aNode, path,"\\\\");
 
 	}
 	else
@@ -463,7 +463,7 @@ Function to get the complete path information of a file from an image.
 @param aAppStr	- string to append.
 @return - returns full path of the given file.
 */
-void RofsImageReader::GetCompleteNodePath(TRomNode* aNode,string& aName,char* aAppStr)
+void RofsImageReader::GetCompleteNodePath(TRomNode* aNode,string& aName, char const* aAppStr)
 {
 	// check if the entry has a parent.
 	TRomNode* NodeParent = aNode->GetParent();
@@ -497,7 +497,7 @@ void RofsImageReader::WriteEntryToFile(char* aFileName,TRomNode* aNode,ofstream&
 	{
 		// get the complete path 
 		path.assign( (char*)aNode->iName );
-		GetCompleteNodePath( aNode, path, const_cast<char *>("\\") );
+		GetCompleteNodePath( aNode, path,"\\");
 	}
 	else
 	{
@@ -550,7 +550,7 @@ void RofsImageReader::GetFileInfo(FILEINFOMAP &aFileMap)
 				{
 					// get the complete path 
 					fileName.assign( (char*)currNode->iName );
-					GetCompleteNodePath( currNode, fileName, (char*)DIR_SEPARATOR );
+					GetCompleteNodePath( currNode, fileName,DIR_SEPARATOR );
 				}
 			}
 			else

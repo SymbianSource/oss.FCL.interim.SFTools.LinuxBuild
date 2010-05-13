@@ -103,7 +103,7 @@ public:
 	TText* Filename();
 private:
 	TInt ReadIdentifier();
-	TInt ImageError(int aBytesRead, int aExpected, char* aInfo);
+	TInt ImageError(int aBytesRead, int aExpected, char const* aInfo);
 
 	/** Image type of the file being read */
 	TImageType iImageType;

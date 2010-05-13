@@ -29,7 +29,7 @@
 MACHINE="i686"
 OS="linux-gnu"
 CC="gcc"
-CFLAGS=" -DPROGRAM='bash' -DCONF_HOSTTYPE='i686' -DCONF_OSTYPE='linux-gnu' -DCONF_MACHTYPE='i686-pc-linux-gnu' -DCONF_VENDOR='pc' -DLOCALEDIR='/home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/linux-unknown-libc2_11/share/locale' -DPACKAGE='bash' -DSHELL -DHAVE_CONFIG_H   -I.  -I. -I./include -I./lib   -O2 -mtune=i686 -s"
+CFLAGS=" -DPROGRAM='bash' -DCONF_HOSTTYPE='i686' -DCONF_OSTYPE='linux-gnu' -DCONF_MACHTYPE='i686-pc-linux-gnu' -DCONF_VENDOR='pc' -DLOCALEDIR='/home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/linux-unknown-libc2_11/share/locale' -DPACKAGE='bash' -DSHELL -DHAVE_CONFIG_H   -I.  -I. -I./include -I./lib   -O2 -mtune=i686 -s"
 RELEASE="4.0"
 PATCHLEVEL="24"
 RELSTATUS="release"

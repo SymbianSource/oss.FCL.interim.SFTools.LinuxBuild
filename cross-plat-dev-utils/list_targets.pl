@@ -12,7 +12,7 @@
 # Lists all directories that contain a BLD.INF or bld.inf file.
 
 use strict;
-use set_epocroot;
+use places;
 use usage;
 use File::Spec;
 sub list_targets($);
@@ -21,10 +21,8 @@ my @broken_targs = (File::Spec->catfile("buildtoolguides","sbsv2guide"));
 usage(\@ARGV,"This script lists the available Raptor targets in the build package",
 		"Lists all directories that contain a BLD.INF or bld.inf file");
 
-
-set_epocroot();
-my $epocroot = $ENV{'EPOCROOT'};
-my $build_pkg_dir = File::Spec->catfile("$epocroot","build");
+my $epocroot = get_epocroot();
+my $build_pkg_dir = get_pkg_dir();
 my $build_pkg_dir_parts = File::Spec->splitdir($build_pkg_dir);
   
 list_targets($build_pkg_dir);

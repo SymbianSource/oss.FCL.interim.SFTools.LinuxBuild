@@ -74,27 +74,27 @@ void E32ImageReader::DumpE32Attributes(E32ImageFile& aE32Image)
 {
 	bool aContinue = true;
 
-	DumpInHex(const_cast<char *>("Size"), aE32Image.iSize ) << endl;
-	DumpInHex(const_cast<char *>("Uids"),aE32Image.iOrigHdr->iUid1);
-	DumpInHex(const_cast<char *>(" "),aE32Image.iOrigHdr->iUid2, aContinue);
-	DumpInHex(const_cast<char *>(" "),aE32Image.iOrigHdr->iUid3, aContinue);
-	DumpInHex(const_cast<char *>(" "),aE32Image.iOrigHdr->iUidChecksum, aContinue) << endl;
+	DumpInHex("Size", aE32Image.iSize ) << endl;
+	DumpInHex("Uids", aE32Image.iOrigHdr->iUid1);
+	DumpInHex(" ", aE32Image.iOrigHdr->iUid2, aContinue);
+	DumpInHex(" ", aE32Image.iOrigHdr->iUid3, aContinue);
+	DumpInHex(" ", aE32Image.iOrigHdr->iUidChecksum, aContinue) << endl;
 
 	
-	DumpInHex(const_cast<char *>("Entry point"), aE32Image.iOrigHdr->iEntryPoint ) << endl;
-	DumpInHex(const_cast<char *>("Code start addr") ,aE32Image.iOrigHdr->iCodeBase)<< endl;
-	DumpInHex(const_cast<char *>("Data start addr") ,aE32Image.iOrigHdr->iDataBase) << endl;
-	DumpInHex(const_cast<char *>("Text size") ,aE32Image.iOrigHdr->iTextSize) << endl;
-	DumpInHex(const_cast<char *>("Code size") ,aE32Image.iOrigHdr->iCodeSize) << endl;
-	DumpInHex(const_cast<char *>("Data size") ,aE32Image.iOrigHdr->iDataSize) << endl;
-	DumpInHex(const_cast<char *>("Bss size") ,aE32Image.iOrigHdr->iBssSize) << endl;
-	DumpInHex(const_cast<char *>("Total data size") ,(aE32Image.iOrigHdr->iBssSize + aE32Image.iOrigHdr->iDataSize)) << endl;
-	DumpInHex(const_cast<char *>("Heap min") ,aE32Image.iOrigHdr->iHeapSizeMin) << endl;
-	DumpInHex(const_cast<char *>("Heap max") ,aE32Image.iOrigHdr->iHeapSizeMax) << endl;
-	DumpInHex(const_cast<char *>("Stack size") ,aE32Image.iOrigHdr->iStackSize) << endl;
-	DumpInHex(const_cast<char *>("Export directory") ,aE32Image.iOrigHdr->iExportDirOffset) << endl;
-	DumpInHex(const_cast<char *>("Export dir count") ,aE32Image.iOrigHdr->iExportDirCount) << endl;
-	DumpInHex(const_cast<char *>("Flags") ,aE32Image.iOrigHdr->iFlags) << endl;
+	DumpInHex("Entry point", aE32Image.iOrigHdr->iEntryPoint ) << endl;
+	DumpInHex("Code start addr", aE32Image.iOrigHdr->iCodeBase)<< endl;
+	DumpInHex("Data start addr", aE32Image.iOrigHdr->iDataBase) << endl;
+	DumpInHex("Text size", aE32Image.iOrigHdr->iTextSize) << endl;
+	DumpInHex("Code size", aE32Image.iOrigHdr->iCodeSize) << endl;
+	DumpInHex("Data size", aE32Image.iOrigHdr->iDataSize) << endl;
+	DumpInHex("Bss size", aE32Image.iOrigHdr->iBssSize) << endl;
+	DumpInHex("Total data size", (aE32Image.iOrigHdr->iBssSize + aE32Image.iOrigHdr->iDataSize)) << endl;
+	DumpInHex("Heap min", aE32Image.iOrigHdr->iHeapSizeMin) << endl;
+	DumpInHex("Heap max", aE32Image.iOrigHdr->iHeapSizeMax) << endl;
+	DumpInHex("Stack size", aE32Image.iOrigHdr->iStackSize) << endl;
+	DumpInHex("Export directory", aE32Image.iOrigHdr->iExportDirOffset) << endl;
+	DumpInHex("Export dir count", aE32Image.iOrigHdr->iExportDirCount) << endl;
+	DumpInHex("Flags", aE32Image.iOrigHdr->iFlags) << endl;
 
 	TUint aHeaderFmt = E32ImageHeader::HdrFmtFromFlags(aE32Image.iOrigHdr->iFlags);
 
@@ -105,10 +105,10 @@ void E32ImageReader::DumpE32Attributes(E32ImageFile& aE32Image)
 		// because this is relied on by used by "Symbian Signed".
 		//
 		E32ImageHeaderV* v = aE32Image.iHdr;
-		DumpInHex(const_cast<char *>("Secure ID"), v->iS.iSecureId) << endl;
-		DumpInHex(const_cast<char *>("Vendor ID"), v->iS.iVendorId) << endl;
-		DumpInHex(const_cast<char *>("Capability"), v->iS.iCaps[1]);
-		DumpInHex(const_cast<char *>(" "), v->iS.iCaps[0], aContinue) << endl;
+		DumpInHex("Secure ID", v->iS.iSecureId) << endl;
+		DumpInHex("Vendor ID", v->iS.iVendorId) << endl;
+		DumpInHex("Capability", v->iS.iCaps[1]);
+		DumpInHex(" ", v->iS.iCaps[0], aContinue) << endl;
 
 	}
 
@@ -119,17 +119,17 @@ void E32ImageReader::DumpE32Attributes(E32ImageFile& aE32Image)
 	*out << "(" << dec << aE32Image.iOrigHdr->iToolsVersion.iBuild << ")" << endl;
 
 	*out << "Module Version.............." << dec << (aE32Image.iOrigHdr->iModuleVersion >> 16) << endl;
-	DumpInHex(const_cast<char *>("Compression"), aE32Image.iOrigHdr->iCompressionType) << endl;
+	DumpInHex("Compression", aE32Image.iOrigHdr->iCompressionType) << endl;
 
 	if( aHeaderFmt >= KImageHdrFmt_V )
 	{
 		E32ImageHeaderV* v = aE32Image.iHdr;
-		DumpInHex(const_cast<char *>("Exception Descriptor"), v->iExceptionDescriptor) << endl;
-		DumpInHex(const_cast<char *>("Code offset"), v->iCodeOffset) << endl;
+		DumpInHex("Exception Descriptor", v->iExceptionDescriptor) << endl;
+		DumpInHex("Code offset", v->iCodeOffset) << endl;
 
 	}
 
 	*out << "Priority...................." << dec << aE32Image.iOrigHdr->iProcessPriority << endl;
-	DumpInHex(const_cast<char *>("Dll ref table size"), aE32Image.iOrigHdr->iDllRefTableCount) << endl << endl << endl;
+	DumpInHex("Dll ref table size", aE32Image.iOrigHdr->iDllRefTableCount) << endl << endl << endl;
 }
 

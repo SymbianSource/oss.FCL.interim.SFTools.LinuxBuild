@@ -1,4 +1,4 @@
-#!/home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/linux-unknown-libc2_11/python262/bin/python2.6
+#!/home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/linux-unknown-libc2_11/python262/bin/python2.6
 """An RFC 2821 smtp proxy.
 
 Usage: %(program)s [options] [localhost:localport [remotehost:remoteport]]

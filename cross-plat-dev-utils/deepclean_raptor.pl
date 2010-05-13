@@ -15,7 +15,7 @@ use usage;
 use perl_run;
 use File::Spec;
 use File::Path 'remove_tree';
-use set_epocroot;
+use places;
 
 usage(\@ARGV,"This script removes all files created by building Raptor");
 my $any_old_targ = File::Spec->catfile("buildtoolguides","romtoolsguide");
@@ -23,9 +23,8 @@ my $build_log = perl_slurp("build_target.pl $any_old_targ --what 2> ". File::Spe
 $build_log =~ /<info>Environment HOSTPLATFORM_DIR=(\S*)<\/info>/;
 my $host_platform_dir = $1;
 die "*** Error: Can't determine HOSTPLATFORM_DIR ***", unless ($host_platform_dir);
-set_epocroot();
-my $epocroot = $ENV{'EPOCROOT'};
-my $abs_host_platform_dir = File::Spec->catfile("$epocroot","build","sbsv2","raptor","$host_platform_dir");
+my $epocroot = get_epocroot();
+my $abs_host_platform_dir = File::Spec->catfile(get_sbs_home(),"$host_platform_dir");
 if (-d $abs_host_platform_dir) {
 	print ">>> Clean Raptor\n";
 	perl_run("clean_raptor.pl") and die $!;

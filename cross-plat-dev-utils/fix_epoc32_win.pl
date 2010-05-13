@@ -19,9 +19,8 @@ use File::Spec;
 
 require_os_windows();
 usage(\@ARGV,"This script makes required fixes to epoc32 tree in Windows");
-set_epocroot();
-my $epocroot = $ENV{'EPOCROOT'};
-my $gcc_mingw_include_dir = File::Spec->catfile("$epocroot","epoc32","include","gcc_mingw");
+my $epocroot = get_epocroot();
+my $gcc_mingw_include_dir = File::Spec->catfile(get_epoc32_dir(),"include","gcc_mingw");
 
 if (! -d $gcc_mingw_include_dir) { 
 	print ">>> Creating \"$gcc_mingw_include_dir\"\n";

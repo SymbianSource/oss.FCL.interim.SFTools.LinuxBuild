@@ -21,7 +21,7 @@
 use strict;
 use File::Spec;
 use File::Copy;
-use set_epocroot;
+use places;
 use check_os;
 
 sub compare_files($$)
@@ -43,13 +43,12 @@ sub apply_patch_file($)
 {
     my $patch_file = shift;
     my ($src_file, $dest_file);
-    set_epocroot();
-    my $epocroot = $ENV{'EPOCROOT'};
+    my $epocroot = get_epocroot();
     my $patch_files_dir;
 	if (os_is_windows()) {
-		$patch_files_dir = File::Spec->catfile("$epocroot","build","cross-plat-dev-utils","patch-files","windows");
+		$patch_files_dir = File::Spec->catfile(get_pkg_dir(),"cross-plat-dev-utils","patch-files","windows");
 	} elsif (os_is_linux()) {
-		$patch_files_dir = File::Spec->catfile("$epocroot","build","cross-plat-dev-utils","patch-files","linux");
+		$patch_files_dir = File::Spec->catfile(get_pkg_dir(),"cross-plat-dev-utils","patch-files","linux");
 	} else {
 		die "*** Unsupported OS $^O ***";
 	} 

@@ -78,7 +78,7 @@ PY_CFLAGS=	$(CFLAGS) $(CPPFLAGS) $(CFLAGSFORSHARED) -DPy_BUILD_CORE
 MACHDEP=	linux2
 
 # Install prefix for architecture-independent files
-prefix=		/home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/linux-unknown-libc2_11/python262
+prefix=		/home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/linux-unknown-libc2_11/python262
 
 # Install prefix for architecture-dependent files
 exec_prefix=	${prefix}
@@ -127,7 +127,7 @@ MACOSX_DEPLOYMENT_TARGET=
 OTHER_LIBTOOL_OPT=
 
 # Environment to run shared python without installed libraries
-RUNSHARED=       LD_LIBRARY_PATH=/home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/util/build/linux-unknown-libc2_11/Python-2.6.2:
+RUNSHARED=       LD_LIBRARY_PATH=/home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/util/build/linux-unknown-libc2_11/Python-2.6.2:
 
 # Modes for directories, executables and data files created by the
 # install process.  Default to user-only-writable for all file types.
@@ -136,7 +136,7 @@ EXEMODE=	755
 FILEMODE=	644
 
 # configure script arguments
-CONFIG_ARGS=	 '--prefix=/home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/linux-unknown-libc2_11/python262' '--enable-shared' '--with-threads' 'CFLAGS=-O3 -mtune=i686 -s'
+CONFIG_ARGS=	 '--prefix=/home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/linux-unknown-libc2_11/python262' '--enable-shared' '--with-threads' 'CFLAGS=-O3 -mtune=i686 -s'
 
 
 # Subdirectories with code

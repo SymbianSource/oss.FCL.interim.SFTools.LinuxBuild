@@ -6,7 +6,7 @@ SHELL		= /bin/sh
 srcdir		= .
 
 
-prefix		= /home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/linux-unknown-libc2_11
+prefix		= /home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/linux-unknown-libc2_11
 exec_prefix	= ${prefix}
 
 top_builddir	= .

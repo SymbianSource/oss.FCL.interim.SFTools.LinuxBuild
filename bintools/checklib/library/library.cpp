@@ -53,7 +53,7 @@ Library::Library(const char a_file_name[])
     m_mem_p = new char[size];
 
     file.seekg(0, std::ios::beg);
-    file.read( const_cast<char*>(m_mem_p), size );
+	file.read(m_mem_p, size );
 
     file.close();
 

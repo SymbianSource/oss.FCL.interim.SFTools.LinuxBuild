@@ -197,7 +197,7 @@ private:
 	VARIANTVAL m_tokenValue;
 	int m_nLineNo;
 
-	void ParserError(char* msg);
+	void ParserError(char const* msg);
 
 	friend String wstring2string (const std::wstring& aWide);
 	friend std::wstring string2wstring (const String& aNarrow);

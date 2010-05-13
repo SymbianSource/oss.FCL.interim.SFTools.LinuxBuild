@@ -28,6 +28,6 @@
 #define SYS_PROFILE "/etc/profile"
 
 /* The default location of the bash debugger initialization/startup file. */
-#define DEBUGGER_START_FILE	"/home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/linux-unknown-libc2_11/share/bashdb/bashdb-main.inc"
+#define DEBUGGER_START_FILE	"/home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/linux-unknown-libc2_11/share/bashdb/bashdb-main.inc"
 
 #endif /* _PATHNAMES_H */

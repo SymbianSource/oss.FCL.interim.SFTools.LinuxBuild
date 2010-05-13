@@ -204,7 +204,7 @@ Function to start logging.
 
 @param aFileName - Name of the Log file
 */
-void MessageImplementation::StartLogging(char *aFileName)
+void MessageImplementation::StartLogging(char const *aFileName)
 {
 	char logFile[1024];
 	FILE *fptr;

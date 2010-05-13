@@ -175,7 +175,7 @@ void PkgParser::ParsePkgFile()
 {
 	if(!OpenFile())
 	{
-		throw SisUtilsException((char*)iPkgFile.data(), const_cast<char *>("Could not open file"));
+		throw SisUtilsException(iPkgFile.c_str(),"Could not open file");
 	}
 
 	GetNextChar();
@@ -220,7 +220,7 @@ void PkgParser::ParsePkgFile()
 		case EOF_TOKEN:
 			break;
 		default:
-			ParserError(const_cast<char *>("Unexpected token"));
+			ParserError("Unexpected token");
 			break;
 		}
 	}
@@ -675,7 +675,7 @@ void PkgParser::ParseFactor(String& aExpression)
 				aExpression.append("\"");
 				break;
 			case ALPHA_TOKEN:
-                if(!CompareNString(m_tokenValue.pszString,const_cast<wchar_t *>(L"option"),6))
+                if(!CompareNString(m_tokenValue.pszString,L"option",6))
 				{
 					aExpression.append(" defined(");
 					aExpression.append(wstring2string(m_tokenValue.pszString));
@@ -698,7 +698,7 @@ void PkgParser::ParseFactor(String& aExpression)
 		}
 		break;
 	default:
-		ParserError(const_cast<char *>("ErrBadCondFormat"));
+		ParserError("ErrBadCondFormat");
 	}
 	GetNextToken ();
 }
@@ -1017,7 +1017,7 @@ void PkgParser::ExpectToken(int aToken)
 {
 	if (m_token!=aToken)
 	{
-		ParserError(const_cast<char *>("Unexpected Token"));
+		ParserError("Unexpected Token");
 	}
 }
 
@@ -1125,11 +1125,11 @@ bool PkgParser::GetStringToken()
 				if(wCount < (MAX_STRING - 1))
 					m_tokenValue.pszString[wCount++] = m_pkgChar;
 				else //We dont want the string with length greater than MAX_STRING to be cut off silently
-					ParserError(const_cast<char *>("Bad String"));
+					ParserError("Bad String");
 				GetNextChar();
 			}
 			if(m_pkgChar == '\0')
-				ParserError(const_cast<char *>("Bad String"));
+				ParserError("Bad String");
 			GetNextChar();
 			done=true;
 		}
@@ -1188,7 +1188,7 @@ unsigned short PkgParser::ParseEscapeChars()
 		}
 		unsigned num=m_tokenValue.dwNumber;
 		// watch for CP1252 escapes which aren't appropriate for UNICODE
-		if (num>=0x80 && num<=0x9F) ParserError(const_cast<char *>("Invalid Escape"));
+		if (num>=0x80 && num<=0x9F) ParserError("Invalid Escape");
 		unsigned len=wcslen(temp);
 		wcscpy(m_tokenValue.pszString,temp);
 		if (len+2<=MAX_STRING)
@@ -1265,17 +1265,17 @@ void PkgParser::GetNumericToken()
 	unsigned wchRead = fread(&temp[1],sizeof(wchar_t),MAX_STRING - 2,iPkgHandle);
 	if (!wchRead)
 	{ 
-		ParserError(const_cast<char *>("Read failed"));
+		ParserError("Read failed");
 	}
 	temp[1+wchRead] = 0;
-	hexString = (!CompareNString(temp, const_cast<wchar_t *>(L"0x"), 2) ||
-		!CompareNString(&temp[1], const_cast<wchar_t *>(L"0x"), 2));
+	hexString = (!CompareNString(temp,L"0x", 2) ||
+		!CompareNString(&temp[1],L"0x", 2));
 	
 	m_tokenValue.dwNumber = wcstoul(temp, &end, (hexString) ? 16 : 10);
 	
 	if (end==temp)
 	{
-		ParserError(const_cast<char *>("Read failed"));
+		ParserError("Read failed");
 	}
 	std::fsetpos(iPkgHandle,&foff);
 	std::fseek(iPkgHandle,(end-temp-1) * sizeof(wchar_t),SEEK_CUR);		
@@ -1349,13 +1349,13 @@ ParserError: Throws exception with the given error message
 
 @param msg - error message to be thrown
 */
-void PkgParser::ParserError(char* msg)
+void PkgParser::ParserError(char const* msg)
 {
 	std::ostringstream str;
 
 	str << (char*)iPkgFile.data() << "(" << m_nLineNo << "): " << msg;
 
-	throw SisUtilsException(const_cast<char *>("PackageFile-Parser Error"), (char*)(str.str()).data());
+	throw SisUtilsException("PackageFile-Parser Error",str.str().c_str());
 }
 
 /**
@@ -1372,8 +1372,7 @@ String wstring2string (const std::wstring& aWide)
 	size_t nchars = wcstombs(&buffer[0],aWide.c_str(),buffer.size());
 	if (nchars == (size_t)-1)
 	{
-		throw SisUtilsException(const_cast<char *>("ParserError"),
-			const_cast<char *>("wstring to string conversion failed"));
+		throw SisUtilsException("ParserError","wstring to string conversion failed");
 	}
 	String reply(&buffer[0]);
 	return reply;
@@ -1393,8 +1392,7 @@ std::wstring string2wstring (const String& aNarrow)
 	size_t nchars = mbstowcs((wchar_t *)&buffer[0],aNarrow.c_str(),buffer.size());
 	if (nchars == (size_t)-1)
 	{
-		throw SisUtilsException(const_cast<char *>("ParserError"),
-			const_cast<char *>("string to wstring conversion failed"));
+		throw SisUtilsException("ParserError","string to wstring conversion failed");
 	}
 	std::wstring reply((wchar_t *)&buffer[0]);
 	return reply;

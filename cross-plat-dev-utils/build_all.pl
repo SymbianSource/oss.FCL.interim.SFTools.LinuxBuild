@@ -13,7 +13,7 @@
 
 use strict;
 use perl_run;
-use set_epocroot;
+use places;
 use check_os;
 my $keepgoing = 0;
 my @built = ();
@@ -27,7 +27,7 @@ sub build($)
 	print ">>> Building target $targ\n";
 	my $rc = perl_run("build_target.pl $targ");
 	if ($rc) {
-		print "*** Failed to build target $targ ***";
+		print "*** Failed to build target $targ ***\n";
 		if ($keepgoing) {
 			push(@failed,$targ);
 		} else {
@@ -58,8 +58,7 @@ if (@ARGV) {
         exit 1;
     }         
 }
-set_epocroot();
-my $epocroot = $ENV{'EPOCROOT'};
+my $epocroot = get_epocroot();
 my @targ_lines = perl_slurp("list_targets.pl");
 open DEPS,"<deps.txt" or die $!;
 my @deps = <DEPS>;

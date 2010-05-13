@@ -99,7 +99,7 @@ Reads the 4 byte image type identifier from the core image file.
 TInt RCoreImageReader::ReadIdentifier()
 	{
 	int itemsRead = fread(&iIdentifier, sizeof(TUint8), K_ID_SIZE, iCoreImage);
-	TInt result = ImageError(itemsRead,  K_ID_SIZE, const_cast<char *>("Read Identifier"));
+	TInt result = ImageError(itemsRead,  K_ID_SIZE, "Read Identifier");
 	if (result != KErrNone)
 		{
 		iIdentifier[0] = 0;
@@ -117,7 +117,7 @@ TInt RCoreImageReader::ReadCoreHeader(TRofsHeader& aHeader)
 	{
 	int itemsRead = fread (&aHeader.iHeaderSize, 
 			(sizeof(TRofsHeader)) - K_ID_SIZE*sizeof(TUint8), 1, iCoreImage);
-	TInt result = ImageError(itemsRead, 1, const_cast<char *>("Read Core Header"));
+	TInt result = ImageError(itemsRead, 1, "Read Core Header");
 	if (result == KErrNone)
 		{
 		// copy the previously read identifier into the header
@@ -137,7 +137,7 @@ TInt RCoreImageReader::ReadExtensionHeader(TExtensionRofsHeader& aHeader)
 	{
 	int itemsRead = fread (&aHeader.iHeaderSize, 
 			(sizeof(TExtensionRofsHeader)) - K_ID_SIZE*sizeof(TUint8), 1, iCoreImage);
-	TInt result = ImageError(itemsRead, 1, const_cast<char *>("Read Extension Header"));
+	TInt result = ImageError(itemsRead, 1, "Read Extension Header");
 	if (result == KErrNone)
 		{
 		// copy the previously read identifier into the header
@@ -199,7 +199,7 @@ TInt RCoreImageReader::ReadDirEntry(TRofsDir& aDir)
 	// is read later when handling subdirectories
 	int bytesRead = sizeof(TRofsDir) - sizeof(TRofsEntry);
 	int itemsRead = fread (&aDir, bytesRead , 1, iCoreImage);
-	if (ImageError(itemsRead, 1, const_cast<char *>("Read Dir")) == KErrNone)
+	if (ImageError(itemsRead, 1, "Read Dir") == KErrNone)
 		return bytesRead;
 	else
 		return 0;
@@ -233,13 +233,13 @@ TInt RCoreImageReader::ReadRofEntry(TRofsEntry& aEntry)
 	// need to work out how big entry needs to be from the Struct Size
 	// in TRofsEntry
 	int itemsRead = fread(&aEntry.iStructSize, sizeof(TUint16), 1, iCoreImage);
-	int result = ImageError(itemsRead, 1, const_cast<char *>("Read Entry Size"));
+	int result = ImageError(itemsRead, 1, "Read Entry Size");
 	if (result == KErrNone)
 		{
 		// read rest of entry excluding the iStructSize
 		itemsRead = fread(&aEntry.iUids[0], sizeof(TRofsEntry) -sizeof(TUint16), 
 				          1, iCoreImage);
-		result = ImageError(itemsRead, 1, const_cast<char *>("Rest of Entry"));
+		result = ImageError(itemsRead, 1, "Rest of Entry");
 		// return length read - this include includes iStructSize and first char of name
 		if (result == KErrNone)
 			return sizeof(TRofsEntry);	
@@ -270,7 +270,7 @@ Reads a name of the specified length from the core image file.
 TInt RCoreImageReader::ReadRofEntryName(TUint16* aName, int aLength)
 	{
 	int itemsRead = fread(aName, sizeof(TUint16), aLength, iCoreImage);
-	return ImageError(itemsRead, aLength, const_cast<char *>("Rof Entry Name"));
+	return ImageError(itemsRead, aLength, "Rof Entry Name");
 	}
 
 /**
@@ -305,7 +305,7 @@ returned.
 @param aInfo Used by the caller to identify where the error occurred.
 @return Error number. KErrNone is returned if there are no errors.
 */
-TInt RCoreImageReader::ImageError(int aItemsRead, int aExpected, char *aInfo)
+TInt RCoreImageReader::ImageError(int aItemsRead, int aExpected, char const *aInfo)
 	{
 	if (aItemsRead != aExpected)
 		{

@@ -35,7 +35,7 @@ OBJEXT='o'
 EXEEXT=''
 
 # Common prefix for machine-independent installed files.
-prefix='/home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/linux-unknown-libc2_11'
+prefix='/home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/linux-unknown-libc2_11'
 # Common prefix for machine-dependent installed files.
 exec_prefix=`eval echo ${prefix}`
 # Directory to find libraries in for `-lXXX'.

@@ -56,7 +56,7 @@ class SisUtils
 class SisUtils
 {
 public:
-	SisUtils(char* aFile);
+	SisUtils(char const* aFile);
 	virtual ~SisUtils();
 
 	void SetVerboseMode();
@@ -84,7 +84,7 @@ private:
 class SisUtilsException
 {
 public:
-	SisUtilsException(char* aFile, char* aErrMessage);
+	SisUtilsException(char const* aFile, char const* aErrMessage);
 	virtual ~SisUtilsException();
 	virtual void Report();
 

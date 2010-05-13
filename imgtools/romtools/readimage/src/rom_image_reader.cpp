@@ -92,60 +92,60 @@ void RomImageHeader::DumpRomHdr()
 
 	*out << endl << endl;
 
-	DumpInHex(const_cast<char *>("Timestamp"), (iRomHdr->iTime >> 32)) ;
-	DumpInHex(const_cast<char *>(" "), (iRomHdr->iTime &0xffffffff), aContinue) << endl;
+	DumpInHex("Timestamp", (iRomHdr->iTime >> 32)) ;
+	DumpInHex(" ", (iRomHdr->iTime &0xffffffff), aContinue) << endl;
 
-	DumpInHex(const_cast<char *>("RomBase"), iRomHdr->iRomBase) << endl;
+	DumpInHex("RomBase", iRomHdr->iRomBase) << endl;
 
-	DumpInHex(const_cast<char *>("RomSize"), iRomHdr->iRomSize) << endl;
-	DumpInHex(const_cast<char *>("KernelDataAddress"), iRomHdr->iKernDataAddress) << endl;
-	DumpInHex(const_cast<char *>("KernelLimit"), iRomHdr->iKernelLimit) << endl;
-	DumpInHex(const_cast<char *>("PrimaryFile"), iRomHdr->iPrimaryFile) << endl;
-	DumpInHex(const_cast<char *>("SecondaryFile"), iRomHdr->iSecondaryFile) << endl;
-	DumpInHex(const_cast<char *>("CheckSum"), iRomHdr->iCheckSum) << endl;
-	DumpInHex(const_cast<char *>("Hardware"), iRomHdr->iHardware) << endl;
+	DumpInHex("RomSize", iRomHdr->iRomSize) << endl;
+	DumpInHex("KernelDataAddress", iRomHdr->iKernDataAddress) << endl;
+	DumpInHex("KernelLimit", iRomHdr->iKernelLimit) << endl;
+	DumpInHex("PrimaryFile", iRomHdr->iPrimaryFile) << endl;
+	DumpInHex("SecondaryFile", iRomHdr->iSecondaryFile) << endl;
+	DumpInHex("CheckSum", iRomHdr->iCheckSum) << endl;
+	DumpInHex("Hardware", iRomHdr->iHardware) << endl;
 
-	DumpInHex(const_cast<char *>("Language"), (TUint)(iRomHdr->iLanguage >> 32));
-	DumpInHex(const_cast<char *>(" "), ((TUint)(iRomHdr->iLanguage & 0xffffffff)), aContinue) <<endl;
+	DumpInHex("Language", (TUint)(iRomHdr->iLanguage >> 32));
+	DumpInHex(" ", ((TUint)(iRomHdr->iLanguage & 0xffffffff)), aContinue) <<endl;
 
-	DumpInHex(const_cast<char *>("KernelConfigFlags"), iRomHdr->iKernelConfigFlags) << endl;
-	DumpInHex(const_cast<char *>("RomExceptionSearchTable"), iRomHdr->iRomExceptionSearchTable) << endl;
-	DumpInHex(const_cast<char *>("RomHeaderSize"), iRomHdr->iRomHeaderSize) << endl;
-	DumpInHex(const_cast<char *>("RomSectionHeader"), iRomHdr->iRomSectionHeader) << endl;
-	DumpInHex(const_cast<char *>("TotalSvDataSize"), iRomHdr->iTotalSvDataSize) << endl;
-	DumpInHex(const_cast<char *>("VariantFile"), iRomHdr->iVariantFile) << endl;
-	DumpInHex(const_cast<char *>("ExtensionFile"), iRomHdr->iExtensionFile) << endl;
-	DumpInHex(const_cast<char *>("RelocInfo"), iRomHdr->iRelocInfo) << endl;
-	DumpInHex(const_cast<char *>("OldTraceMask"), iRomHdr->iOldTraceMask) << endl;
-	DumpInHex(const_cast<char *>("UserDataAddress"), iRomHdr->iUserDataAddress) << endl;
-	DumpInHex(const_cast<char *>("TotalUserDataSize"), iRomHdr->iTotalUserDataSize) << endl;
-	DumpInHex(const_cast<char *>("DebugPort"), iRomHdr->iDebugPort) << endl;
+	DumpInHex("KernelConfigFlags", iRomHdr->iKernelConfigFlags) << endl;
+	DumpInHex("RomExceptionSearchTable", iRomHdr->iRomExceptionSearchTable) << endl;
+	DumpInHex("RomHeaderSize", iRomHdr->iRomHeaderSize) << endl;
+	DumpInHex("RomSectionHeader", iRomHdr->iRomSectionHeader) << endl;
+	DumpInHex("TotalSvDataSize", iRomHdr->iTotalSvDataSize) << endl;
+	DumpInHex("VariantFile", iRomHdr->iVariantFile) << endl;
+	DumpInHex("ExtensionFile", iRomHdr->iExtensionFile) << endl;
+	DumpInHex("RelocInfo", iRomHdr->iRelocInfo) << endl;
+	DumpInHex("OldTraceMask", iRomHdr->iOldTraceMask) << endl;
+	DumpInHex("UserDataAddress", iRomHdr->iUserDataAddress) << endl;
+	DumpInHex("TotalUserDataSize", iRomHdr->iTotalUserDataSize) << endl;
+	DumpInHex("DebugPort", iRomHdr->iDebugPort) << endl;
 	
-	DumpInHex(const_cast<char *>("Version"), iRomHdr->iVersion.iMajor, false, 2);
-	DumpInHex(const_cast<char *>("."), iRomHdr->iVersion.iMinor, aContinue, 2);
-	DumpInHex(const_cast<char *>("(") ,iRomHdr->iVersion.iBuild, aContinue, 2);
+	DumpInHex("Version", iRomHdr->iVersion.iMajor, false, 2);
+	DumpInHex(".", iRomHdr->iVersion.iMinor, aContinue, 2);
+	DumpInHex("(" ,iRomHdr->iVersion.iBuild, aContinue, 2);
 	*out << ")" << endl;
 
-	DumpInHex(const_cast<char *>("CompressionType"), iRomHdr->iCompressionType) << endl;
-	DumpInHex(const_cast<char *>("CompressedSize"), iRomHdr->iCompressedSize) << endl;
-	DumpInHex(const_cast<char *>("UncompressedSize"), iRomHdr->iUncompressedSize) << endl;
-	DumpInHex(const_cast<char *>("HcrFileAddress"), iRomHdr->iHcrFileAddress) << endl;
+	DumpInHex("CompressionType", iRomHdr->iCompressionType) << endl;
+	DumpInHex("CompressedSize", iRomHdr->iCompressedSize) << endl;
+	DumpInHex("UncompressedSize", iRomHdr->iUncompressedSize) << endl;
+	DumpInHex("HcrFileAddress", iRomHdr->iHcrFileAddress) << endl;
 	
-	DumpInHex(const_cast<char *>("DisabledCapabilities"), iRomHdr->iDisabledCapabilities[0]);
-	DumpInHex(const_cast<char *>(" "), iRomHdr->iDisabledCapabilities[1], aContinue) << endl;
+	DumpInHex("DisabledCapabilities", iRomHdr->iDisabledCapabilities[0]);
+	DumpInHex(" ", iRomHdr->iDisabledCapabilities[1], aContinue) << endl;
 
-	DumpInHex(const_cast<char *>("TraceMask"), iRomHdr->iTraceMask[0]);
+	DumpInHex("TraceMask", iRomHdr->iTraceMask[0]);
 
 	aPos = 1;
 	while( aPos < (TUint)KNumTraceMaskWords)
 	{
 		if(iRomHdr->iTraceMask[aPos])
 		{
-			DumpInHex(const_cast<char *>(" "), iRomHdr->iTraceMask[aPos++], aContinue);
+			DumpInHex(" ", iRomHdr->iTraceMask[aPos++], aContinue);
 		}
 		else
 		{
-			DumpInHex(const_cast<char *>(" "), iRomHdr->iTraceMask[aPos++], aContinue, 1);
+			DumpInHex(" ", iRomHdr->iTraceMask[aPos++], aContinue, 1);
 		}
 
 	}
@@ -158,22 +158,22 @@ void RomImageHeader::DumpRomXHdr()
 	*out << "Extension ROM Image" << endl << endl;
 	bool aContinue = true;
 
-	DumpInHex(const_cast<char *>("Timestamp"), (iExtRomHdr->iTime >> 32)) ;
-	DumpInHex(const_cast<char *>(" "), (iExtRomHdr->iTime &0xffffffff), aContinue) << endl;
+	DumpInHex("Timestamp", (iExtRomHdr->iTime >> 32)) ;
+	DumpInHex(" ", (iExtRomHdr->iTime &0xffffffff), aContinue) << endl;
 
-	DumpInHex(const_cast<char *>("RomBase"), iExtRomHdr->iRomBase) << endl;
+	DumpInHex("RomBase", iExtRomHdr->iRomBase) << endl;
 
-	DumpInHex(const_cast<char *>("RomSize"), iExtRomHdr->iRomSize) << endl;
-	DumpInHex(const_cast<char *>("CheckSum"), iExtRomHdr->iCheckSum) << endl;
+	DumpInHex("RomSize", iExtRomHdr->iRomSize) << endl;
+	DumpInHex("CheckSum", iExtRomHdr->iCheckSum) << endl;
 	
-	DumpInHex(const_cast<char *>("Version"), iExtRomHdr->iVersion.iMajor, false, 2);
-	DumpInHex(const_cast<char *>("."), iExtRomHdr->iVersion.iMinor, aContinue, 2);
-	DumpInHex(const_cast<char *>("(") ,iExtRomHdr->iVersion.iBuild, aContinue, 2);
+	DumpInHex("Version", iExtRomHdr->iVersion.iMajor, false, 2);
+	DumpInHex(".", iExtRomHdr->iVersion.iMinor, aContinue, 2);
+	DumpInHex("(" ,iExtRomHdr->iVersion.iBuild, aContinue, 2);
 	*out << ")" << endl;
 
-	DumpInHex(const_cast<char *>("CompressionType"), iExtRomHdr->iCompressionType) << endl;
-	DumpInHex(const_cast<char *>("CompressedSize"), iExtRomHdr->iCompressedSize) << endl;
-	DumpInHex(const_cast<char *>("UncompressedSize"), iExtRomHdr->iUncompressedSize) << endl;
+	DumpInHex("CompressionType", iExtRomHdr->iCompressionType) << endl;
+	DumpInHex("CompressedSize", iExtRomHdr->iCompressedSize) << endl;
+	DumpInHex("UncompressedSize", iExtRomHdr->iUncompressedSize) << endl;
 	
 	*out << endl << endl;
 
@@ -583,31 +583,31 @@ void RomImageReader::DumpImage(RomImageFileEntry * aEntry)
 {
 	bool aContinue = true;
 
-	DumpInHex(const_cast<char *>("Load Address"), aEntry->iTRomEntryPtr->iAddressLin) << endl;
-	DumpInHex(const_cast<char *>("Size"), aEntry->iTRomEntryPtr->iSize) << endl;
+	DumpInHex("Load Address", aEntry->iTRomEntryPtr->iAddressLin) << endl;
+	DumpInHex("Size", aEntry->iTRomEntryPtr->iSize) << endl;
 
 	TRomImageHeader		*aRomImgEntry = aEntry->ImagePtr.iRomFileEntry;
 
 	if( !aRomImgEntry )
 		return;
 	//UIDs
-	DumpInHex(const_cast<char *>("Uids"), aRomImgEntry->iUid1);
-	DumpInHex(const_cast<char *>(" "), aRomImgEntry->iUid2, aContinue);
-	DumpInHex(const_cast<char *>(" "), aRomImgEntry->iUid3, aContinue);
-	DumpInHex(const_cast<char *>(" "), aRomImgEntry->iUidChecksum, aContinue) << endl;
+	DumpInHex("Uids", aRomImgEntry->iUid1);
+	DumpInHex(" ", aRomImgEntry->iUid2, aContinue);
+	DumpInHex(" ", aRomImgEntry->iUid3, aContinue);
+	DumpInHex(" ", aRomImgEntry->iUidChecksum, aContinue) << endl;
 
-	DumpInHex(const_cast<char *>("Entry point"), aRomImgEntry->iEntryPoint) << endl;
-	DumpInHex(const_cast<char *>("Code start addr"), aRomImgEntry->iCodeAddress) << endl;
-	DumpInHex(const_cast<char *>("Data start addr"), aRomImgEntry->iDataAddress) << endl;
-	DumpInHex(const_cast<char *>("DataBssLinearBase"), aRomImgEntry->iDataBssLinearBase) << endl;
-	DumpInHex(const_cast<char *>("Text size"), aRomImgEntry->iTextSize) << endl;
-	DumpInHex(const_cast<char *>("Code size"), aRomImgEntry->iCodeSize) << endl;
-	DumpInHex(const_cast<char *>("Data size"), aRomImgEntry->iDataSize) << endl;
-	DumpInHex(const_cast<char *>("Bss size"), (aRomImgEntry->iBssSize)) << endl;
-	DumpInHex(const_cast<char *>("Total data size"), aRomImgEntry->iTotalDataSize) << endl;
-	DumpInHex(const_cast<char *>("Heap min"), aRomImgEntry->iHeapSizeMin) << endl;
-	DumpInHex(const_cast<char *>("Heap max"), aRomImgEntry->iHeapSizeMax) << endl;
-	DumpInHex(const_cast<char *>("Stack size"), aRomImgEntry->iStackSize) << endl;
+	DumpInHex("Entry point", aRomImgEntry->iEntryPoint) << endl;
+	DumpInHex("Code start addr", aRomImgEntry->iCodeAddress) << endl;
+	DumpInHex("Data start addr", aRomImgEntry->iDataAddress) << endl;
+	DumpInHex("DataBssLinearBase", aRomImgEntry->iDataBssLinearBase) << endl;
+	DumpInHex("Text size", aRomImgEntry->iTextSize) << endl;
+	DumpInHex("Code size", aRomImgEntry->iCodeSize) << endl;
+	DumpInHex("Data size", aRomImgEntry->iDataSize) << endl;
+	DumpInHex("Bss size", (aRomImgEntry->iBssSize)) << endl;
+	DumpInHex("Total data size", aRomImgEntry->iTotalDataSize) << endl;
+	DumpInHex("Heap min", aRomImgEntry->iHeapSizeMin) << endl;
+	DumpInHex("Heap max", aRomImgEntry->iHeapSizeMax) << endl;
+	DumpInHex("Stack size", aRomImgEntry->iStackSize) << endl;
 
 	TDllRefTable *aRefTbl = NULL;
 
@@ -615,18 +615,18 @@ void RomImageReader::DumpImage(RomImageFileEntry * aEntry)
 		TUint32 aOff = (TUint32)aRomImgEntry->iDllRefTable - iImageHeader->iRomHdr->iRomBase;
 		aRefTbl = (TDllRefTable*) ((char*)iImageHeader->iRomHdr + aOff);
 		TUint32 aVirtualAddr = (TUint32)aRefTbl->iEntry[0];
-		DumpInHex(const_cast<char *>("Dll ref table"), aVirtualAddr) << endl;
+		DumpInHex("Dll ref table", aVirtualAddr) << endl;
 	}
 
-	DumpInHex(const_cast<char *>("Export directory"), aRomImgEntry->iExportDir) << endl;
-	DumpInHex(const_cast<char *>("Export dir count"), aRomImgEntry->iExportDirCount) << endl;
-	DumpInHex(const_cast<char *>("Hardware variant"), aRomImgEntry->iHardwareVariant) << endl;
-	DumpInHex(const_cast<char *>("Flags"), aRomImgEntry->iFlags) << endl;
-	DumpInHex(const_cast<char *>("Secure ID"), aRomImgEntry->iS.iSecureId) << endl;
-	DumpInHex(const_cast<char *>("Vendor ID"), aRomImgEntry->iS.iVendorId) << endl;
+	DumpInHex("Export directory", aRomImgEntry->iExportDir) << endl;
+	DumpInHex("Export dir count", aRomImgEntry->iExportDirCount) << endl;
+	DumpInHex("Hardware variant", aRomImgEntry->iHardwareVariant) << endl;
+	DumpInHex("Flags", aRomImgEntry->iFlags) << endl;
+	DumpInHex("Secure ID", aRomImgEntry->iS.iSecureId) << endl;
+	DumpInHex("Vendor ID", aRomImgEntry->iS.iVendorId) << endl;
 
-	DumpInHex(const_cast<char *>("Capability"), aRomImgEntry->iS.iCaps[1]);
-	DumpInHex(const_cast<char *>(" "), aRomImgEntry->iS.iCaps[0], aContinue) << endl;
+	DumpInHex("Capability", aRomImgEntry->iS.iCaps[1]);
+	DumpInHex(" ", aRomImgEntry->iS.iCaps[0], aContinue) << endl;
 	
 	*out << "Tools Version..............." << dec << (TUint)aRomImgEntry->iToolsVersion.iMajor;
 	*out << "." ; 
@@ -637,13 +637,13 @@ void RomImageReader::DumpImage(RomImageFileEntry * aEntry)
 	*out << endl;
 
 	*out << "Module Version.............." << dec << (aRomImgEntry->iModuleVersion >> 16) << endl;
-	DumpInHex(const_cast<char *>("Exception Descriptor"), aRomImgEntry->iExceptionDescriptor) << endl;
+	DumpInHex("Exception Descriptor", aRomImgEntry->iExceptionDescriptor) << endl;
 	*out << "Priority...................." << dec << aRomImgEntry->iPriority << endl;
 
 	if( aRefTbl )
-		DumpInHex(const_cast<char *>("Dll ref table size"), aRefTbl->iNumberOfEntries*8) << endl;
+		DumpInHex("Dll ref table size", aRefTbl->iNumberOfEntries*8) << endl;
 	else
-		DumpInHex(const_cast<char *>("Dll ref table size"), 0) << endl;
+		DumpInHex("Dll ref table size", 0) << endl;
 
 	if( iDisplayOptions & DUMP_E32_IMG_FLAG){
 		if(stricmp(iE32ImgFileName.c_str(), aEntry->Name()) == 0){
@@ -702,8 +702,8 @@ void RomImageReader::DumpAttribs(RomImageFSEntry* aFsEntry)
 	*out << left << prefix;
 	out->width(40);	
 	*out << right << file->Name() << "[" ;
-	DumpInHex( const_cast<char *>(""), aRomImgEntry->iHardwareVariant, true) << "] ";
-	DumpInHex( const_cast<char *>(" DataSize="), (aRomImgEntry->iBssSize + aRomImgEntry->iDataSize), true) << endl;
+	DumpInHex("", aRomImgEntry->iHardwareVariant, true) << "] ";
+	DumpInHex(" DataSize=", (aRomImgEntry->iBssSize + aRomImgEntry->iDataSize), true) << endl;
 	
 }
 

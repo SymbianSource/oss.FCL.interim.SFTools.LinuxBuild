@@ -38,7 +38,7 @@ class Sis2Iby
 class Sis2Iby : public SisUtils
 {
 public:
-	Sis2Iby(char* aFile);
+	Sis2Iby(char const* aFile);
 	~Sis2Iby();
 
 	void ProcessSisFile();

@@ -36,9 +36,9 @@ class MessageHandler
     public:
 		static Message *GetInstance();
 		static void CleanUp();
-		static void StartLogging(char *filename);
-		static void CreateMessageFile(char *fileName);
-		static void ReportMessage(int aMsgType, int aMsgIndex,char* aName);
+		static void StartLogging(char const *filename);
+		static void CreateMessageFile(char const *fileName);
+		static void ReportMessage(int aMsgType, int aMsgIndex,char const* aName);
 
     private:
 		static Message* iInstance;

@@ -14,7 +14,7 @@
 use strict;
 use get_baseline;
 use perl_run;
-use set_epocroot;
+use places;
 use get_hostplatform_dir;
 use File::Spec;
 use Cwd 'abs_path';
@@ -42,13 +42,12 @@ print ">>> Testing for diff\n";
 my $diff_test = "diff --version";
 my $devnull = File::Spec->devnull();
 print ">>> Executing: $diff_test\n";
-my $rc = system($diff_test > $devnull);
-die "*** Error: can't execute the diff tool ***", if ($rc);
+my $rc = system("$diff_test > $devnull") >> 8;
+die "*** Error: can't execute the diff tool: $rc ***", if ($rc);
 $baseline_dir = abs_path($baseline_dir);
 perl_run("get_upstream.pl $baseline_dir") and die $!;
-set_epocroot();
-my $epocroot = $ENV{'EPOCROOT'};
-my $build_pkg_dir = File::Spec->catfile("$epocroot","build");
+my $epocroot = get_epocroot();
+my $build_pkg_dir = get_pkg_dir();
 $baseline_dir = File::Spec->catfile("$baseline_dir","build");
 my $host_platform_dir = get_hostplatform_dir();
 push(@excludes,"*$host_platform_dir*");
@@ -58,7 +57,7 @@ foreach my $exclude (@excludes) {
 my $diff_cmd;
 if (!$diff_out) {
 	my $baseline_rev = get_baseline();
-	$diff_out = File::Spec->catfile("$epocroot","build","cross-plat-dev-utils",
+	$diff_out = File::Spec->catfile("$build_pkg_dir","cross-plat-dev-utils",
 		"patch-files","diffs","patch-$baseline_rev.patch");
 }
 open DIFF,">$diff_out" or die $!;

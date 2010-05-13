@@ -36,8 +36,8 @@ Class for Error handling
 class ErrorHandler
 {
 	public:
-		ErrorHandler(int aMessageIndex,char* aSubMessage,char* aFileName, int aLineNumber);
-        ErrorHandler(int aMessageIndex, char* aFileName, int aLineNumber);
+		ErrorHandler(int aMessageIndex,char const * aSubMessage,char const * aFileName, int aLineNumber);
+        ErrorHandler(int aMessageIndex, char const* aFileName, int aLineNumber);
 		virtual ~ErrorHandler();
 		void Report();
 

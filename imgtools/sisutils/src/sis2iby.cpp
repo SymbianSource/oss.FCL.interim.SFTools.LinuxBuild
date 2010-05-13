@@ -28,7 +28,7 @@ Initilize the parameters to data members.
 
 @param aFile	- SIS file name
 */
-Sis2Iby::Sis2Iby(char* aFile) : SisUtils(aFile)
+Sis2Iby::Sis2Iby(char const* aFile) : SisUtils(aFile)
 {
 }
 
@@ -70,7 +70,7 @@ void Sis2Iby::ProcessSisFile()
 
 	if(IsVerboseMode())
 	{
-		std::cout << "Processing " << (char*)sisFile.data() << std::endl;
+		std::cout << "Processing " << sisFile.c_str() << std::endl;
 	}
 
 	if(IsFileExist(sisFile))
@@ -86,12 +86,12 @@ void Sis2Iby::ProcessSisFile()
 			break;
 		case STAT_FAILURE:
 			{
-				throw SisUtilsException((char*)sisFile.data(), const_cast<char *>("Failed to extract SIS file"));
+				throw SisUtilsException(sisFile.c_str(),"Failed to extract SIS file");
 			}
 		}
 	}
 	else
-		throw SisUtilsException((char*)sisFile.data(), const_cast<char *>("File not found"));
+		throw SisUtilsException(sisFile.c_str(),"File not found");
 }
 
 /**
@@ -128,18 +128,18 @@ void Sis2Iby::GenerateIby(String aPkgFile, PPKGPARSER aParser)
 	ibyFile.append(".iby");
 
 	if( !MakeDirectory(iOutputPath) )
-		throw SisUtilsException((char*)iOutputPath.data(), const_cast<char *>("Failed to create path"));
+		throw SisUtilsException(iOutputPath.c_str(),"Failed to create path");
 
 	if(IsVerboseMode())
 	{
-		std::cout << "Generating IBY file " << (char*)ibyFile.data() << std::endl;
+		std::cout << "Generating IBY file " << ibyFile.c_str() << std::endl;
 	}
 
 	ibyHandle.open((char*)ibyFile.data(),(std::ios::out));
 
 	if(!ibyHandle.good())
 	{
-		throw SisUtilsException((char*)ibyFile.data(), const_cast<char *>("Failed to create IBY file"));
+		throw SisUtilsException(ibyFile.c_str(),"Failed to create IBY file");
 	}
 
 	// Generating Header
@@ -239,11 +239,10 @@ void Sis2Iby::UpdatePkgFileMap(String aPath, String aFile)
 			}
 		}
 		else
-			throw SisUtilsException((char*)pkgFileName.data(), const_cast<char *>("Could not create parser object"));
+			throw SisUtilsException(pkgFileName.c_str(),"Could not create parser object");
 	}
 	else
-		throw SisUtilsException(const_cast<char *>(pkgFileName.data()),
-			const_cast<char *>("File not found"));
+		throw SisUtilsException(pkgFileName.c_str(),"File not found");
 }
 
 /**
@@ -658,8 +657,7 @@ TBool Sis2Iby::IsValidE32Image(String aFile)
 
 	if( !aIfs.is_open() )
 	{
-		throw SisUtilsException(const_cast<char *>(aFile.data()),
-			const_cast<char *>("Cannot open file"));
+		throw SisUtilsException(aFile.c_str(),"Cannot open file");
 	}
 
 	aIfs.seekg(0,std::ios::end);

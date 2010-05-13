@@ -62,9 +62,7 @@ FILESYSTEM_API int CFileSystemInterFace::CreateFilesystem(EntryList* aNodeList ,
 		iOutputStream.open(aImageFileName,ios::out|ios::binary);
 		if(iOutputStream.fail() == true )
 		{
-			throw ErrorHandler(FILEOPENERROR,
-				const_cast<char *>(aImageFileName),
-				const_cast<char *>(__FILE__), __LINE__);
+			throw ErrorHandler(FILEOPENERROR,aImageFileName,__FILE__,__LINE__);
 		}
 		switch(aFileSystem)
 		{

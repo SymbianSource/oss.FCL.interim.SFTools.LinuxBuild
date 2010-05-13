@@ -40,7 +40,7 @@ Initilize the parameters to data members.
 @param aFile	- Name of the file
 @param aErrMessage - Error message
 */
-SisUtilsException::SisUtilsException(char* aFile, char* aErrMessage) : \
+SisUtilsException::SisUtilsException(char const* aFile, char const* aErrMessage) : \
 	iSisFileName(aFile), iErrMessage(aErrMessage)
 {
 }
@@ -79,7 +79,7 @@ Initilize the parameters to data members.
 
 @param aFile	- Name of the SIS file
 */
-SisUtils::SisUtils(char* aFile) :  iVerboseMode(EFalse),iSisFile(aFile)
+SisUtils::SisUtils(char const* aFile) :  iVerboseMode(EFalse),iSisFile(aFile)
 {
 }
 

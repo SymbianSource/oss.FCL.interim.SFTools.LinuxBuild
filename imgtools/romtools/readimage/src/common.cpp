@@ -40,7 +40,7 @@ void ImageReaderUsageException::Report()
 	*out << "Usage Error:" << iErrMessage.c_str() << endl;
 }
 
-ostream& DumpInHex(char* aDesc, TUint32 aData, bool aContinue, TUint aDataWidth, \
+ostream& DumpInHex(char const* aDesc, TUint32 aData, bool aContinue, TUint aDataWidth, \
 				   char aFiller, TUint aMaxDescWidth)
 {
 	TUint aDescLen = strlen(aDesc);

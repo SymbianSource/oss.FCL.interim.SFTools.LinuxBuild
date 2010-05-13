@@ -647,7 +647,7 @@ void ParameterManager::ParameterAnalyser()
 			parser(this, "help", 0, 0);
 		}
 
-		parser(this, const_cast<char*>(aName.c_str()), optval, aDesc);
+		parser(this, aName.c_str(), optval, aDesc);
 	}
 }
 

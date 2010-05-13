@@ -12,7 +12,7 @@
 
 use strict;
 use File::Spec;
-use set_epocroot;
+use places;
 
 if (@ARGV) {
     if (grep(/$ARGV[0]/,("-h","--help"))) {
@@ -25,9 +25,8 @@ if (@ARGV) {
         exit 1;
     }
 }
-set_epocroot();
-my $epocroot = $ENV{'EPOCROOT'};
-my $sbs_home = File::Spec->catfile("$epocroot","build","sbsv2","raptor");
+my $epocroot = get_epocroot();
+my $sbs_home = File::Spec->catfile(get_pkg_dir(),"sbsv2","raptor");
 $ENV{'SBS_HOME'} = $sbs_home;
 my $cmd = "make -C $sbs_home/util @ARGV";
 print "Executing: $cmd\n";

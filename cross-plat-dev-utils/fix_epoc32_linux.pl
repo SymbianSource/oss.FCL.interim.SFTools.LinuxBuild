@@ -24,16 +24,15 @@ use check_os;
 require_os_linux();
 
 usage(\@ARGV,"This script makes required fixes to epoc32 tree in Linux");
-set_epocroot();
-my $epocroot = $ENV{'EPOCROOT'};
-my $wrong_product_variant_hrh = File::Spec->catfile("$epocroot","epoc32","include","ProductVariant.hrh");
-my $right_product_variant_hrh = File::Spec->catfile("$epocroot","epoc32","include","productvariant.hrh");
+my $epocroot = get_epocroot();
+my $wrong_product_variant_hrh = File::Spec->catfile(get_epoc32_dir(),"include","ProductVariant.hrh");
+my $right_product_variant_hrh = File::Spec->catfile(get_epoc32_dir(),"include","productvariant.hrh");
 if (! -f $right_product_variant_hrh and ! -l $right_product_variant_hrh) {
 	print ">>> Creating symlink \"$wrong_product_variant_hrh\" -> \"$right_product_variant_hrh\"\n";
 	print ">>> (workaround for bug #1399)\n";
 	symlink($wrong_product_variant_hrh,$right_product_variant_hrh) or die $!;
 }
-my $gcc_include_dir = File::Spec->catfile("$epocroot","epoc32","include","gcc");
+my $gcc_include_dir = File::Spec->catfile(get_epoc32_dir(),"include","gcc");
 if (! -d $gcc_include_dir) {
 	print ">>> Creating \"$gcc_include_dir\"\n";
 	mkdir $gcc_include_dir or die $!;

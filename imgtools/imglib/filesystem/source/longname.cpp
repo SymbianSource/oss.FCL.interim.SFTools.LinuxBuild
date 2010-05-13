@@ -49,7 +49,7 @@ ClongName::ClongName(CCluster* aClusterPtr,
 	iLongNameLength = iLongName.length();
 	if(iLongNameLength == 0)
 	{
-		throw ErrorHandler(EMPTYFILENAME, const_cast<char *>(__FILE__), __LINE__);
+		throw ErrorHandler(EMPTYFILENAME,__FILE__,__LINE__);
 	}
 	FormatLongFileName(iLongName);
 	iShortName = GetShortEntryName();

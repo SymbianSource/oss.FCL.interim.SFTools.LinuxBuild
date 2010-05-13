@@ -33,7 +33,7 @@ CP = cp
 
 EXEEXT = 
 
-prefix = /home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/linux-unknown-libc2_11
+prefix = /home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/linux-unknown-libc2_11
 
 srcdir = .
 VPATH = .
@@ -50,7 +50,7 @@ DESTDIR =
 
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
-BUILD_DIR = /home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/util/build/linux-unknown-libc2_11/bash-4.0
+BUILD_DIR = /home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/util/build/linux-unknown-libc2_11/bash-4.0
 
 LIBBUILD = ${BUILD_DIR}/lib
 

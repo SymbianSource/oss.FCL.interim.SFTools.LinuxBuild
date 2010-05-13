@@ -32,7 +32,7 @@ Class RomImageFSEntry, Base class ROM image file and directory entry structure
 class RomImageFSEntry 
 {
 public:
-	RomImageFSEntry (char* aName) 
+	RomImageFSEntry (char const* aName) 
 	: iName(aName), iSibling(0), iChildren(0)
 	{
 	}
@@ -117,7 +117,7 @@ Class RomImageDirEntry, ROM image Directory entry structure
 class RomImageDirEntry : public RomImageFSEntry
 {
 public:
-	RomImageDirEntry(char* aName) : RomImageFSEntry(aName)
+	RomImageDirEntry(char const* aName) : RomImageFSEntry(aName)
 	{
 	}
 	~RomImageDirEntry(void)

@@ -98,7 +98,7 @@ public:
 	void Report();
 };
 
-ostream& DumpInHex(char* aDesc, TUint32 aData, bool aContinue = false,TUint aDataWidth=8,\
-				   char aFiller='0', TUint aMaxDescWidth=28);
+ostream& DumpInHex(char const * aDesc, TUint32 aData, bool aContinue = false,
+			TUint aDataWidth=8, char aFiller='0', TUint aMaxDescWidth=28);
 
 #endif //__IMAGE_READER_COMMON_H_

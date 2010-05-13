@@ -49,9 +49,7 @@ CDirRegion::CDirRegion(EntryList aNodeList,
 	iClusterPtr = CCluster::Instance(iClusterSize,totalClusters);
 	if(iClusterPtr == NULL)
 	{
-		throw ErrorHandler(CLUSTERERROR,
-		const_cast<char *>("Instance creation error"),
-		const_cast<char *>( __FILE__), __LINE__);
+		throw ErrorHandler(CLUSTERERROR,"Instance creation error",__FILE__,__LINE__);
 	}
 	iClusterSize = iClusterPtr->GetClusterSize();
 }
@@ -119,7 +117,7 @@ void CDirRegion::WriteClustersIntoFile(OfStream& aOutPutStream)
 	aOutPutStream.flush();
 	if(aOutPutStream.bad())
 	{
-		throw ErrorHandler(FILEWRITEERROR, const_cast<char *>(__FILE__), __LINE__);
+		throw ErrorHandler(FILEWRITEERROR,__FILE__,__LINE__);
 
 	}
 }
@@ -178,7 +176,7 @@ void CDirRegion::FormatName(String& aString, char aAttrValue)
 	}
 	else
 	{
-		throw ErrorHandler(EMPTYFILENAME, const_cast<char *>(__FILE__), __LINE__);
+		throw ErrorHandler(EMPTYFILENAME,__FILE__,__LINE__);
 	}
 }
 
@@ -250,7 +248,7 @@ void CDirRegion::CreateLongEntries(CDirectory* aEntry,String& aDirString)
 	if(tempString.length() == 0)
 	{
 		tempString.erase();
-		throw ErrorHandler(EMPTYFILENAME, const_cast<char *>(__FILE__), __LINE__);
+		throw ErrorHandler(EMPTYFILENAME,__FILE__,__LINE__);
 	}
 	else
 	{
@@ -317,8 +315,8 @@ void CDirRegion::WriteFileDataInToCluster(CDirectory* aEntry)
 	iInputStream.open(aEntry->GetFilePath().c_str(),Ios::binary);
 	if(iInputStream.fail() == true )
 	{
-		throw ErrorHandler(FILEOPENERROR,const_cast<char *>(aEntry->GetFilePath().c_str()),
-			const_cast<char *>(__FILE__),__LINE__);
+		throw ErrorHandler(FILEOPENERROR,aEntry->GetFilePath().c_str(),
+			__FILE__,__LINE__);
 	}
 	else
 	{
@@ -328,8 +326,7 @@ void CDirRegion::WriteFileDataInToCluster(CDirectory* aEntry)
 		char* dataBuffer = (char*)malloc((unsigned int)fileSize);
 		if(dataBuffer == 0)
 		{
-			throw ErrorHandler(MEMORYALLOCATIONERROR,
-				const_cast<char *>(__FILE__), __LINE__);
+			throw ErrorHandler(MEMORYALLOCATIONERROR,__FILE__,__LINE__);
 		}
 		//Read the whole file in one short
 		iInputStream.read (dataBuffer,fileSize);
@@ -337,8 +334,8 @@ void CDirRegion::WriteFileDataInToCluster(CDirectory* aEntry)
 		Long64 bytesRead = (unsigned int)iInputStream.tellg();
 		if((iInputStream.bad()) || (bytesRead != fileSize))
 		{
-			throw ErrorHandler(FILEREADERROR,const_cast<char *>(aEntry->GetFilePath().c_str()),
-				const_cast<char *>(__FILE__), __LINE__);
+			throw ErrorHandler(FILEREADERROR,aEntry->GetFilePath().c_str(),
+				__FILE__, __LINE__);
 		}
 		String clusterData(dataBuffer,(unsigned int)bytesRead);
 		PushStringIntoClusterMap(iClusterPtr->GetCurrentClusterNumber(),clusterData,iClusterSize,aEntry->GetEntryAttribute());
@@ -550,12 +547,12 @@ void CDirRegion::CheckEntry(EntryList aNodeList)
 		}
 		if(aNodeList.front()->GetEntryList()->size() <= 0)
 		{
-			throw ErrorHandler(NOENTRIESFOUND, const_cast<char *>(__FILE__), __LINE__);
+			throw ErrorHandler(NOENTRIESFOUND,__FILE__,__LINE__);
 		}
 	}
 	else
 	{
-		throw ErrorHandler(ROOTNOTFOUND, const_cast<char *>(__FILE__), __LINE__);
+		throw ErrorHandler(ROOTNOTFOUND,__FILE__,__LINE__);
 	}
 }
 

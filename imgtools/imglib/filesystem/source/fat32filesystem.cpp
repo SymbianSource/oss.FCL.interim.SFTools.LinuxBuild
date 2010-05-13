@@ -160,7 +160,7 @@ void CFat32FileSystem::CreateBootSector(Long64 aPartitionSize,ConfigurableFatAtt
 	ComputeClusterSizeInBytes();
 	ComputeRootDirSectors();
 	ComputeBytesPerSector();
-	MessageHandler::ReportMessage (INFORMATION,BOOTSECTORCREATEMSG, const_cast<char *>("FAT32"));
+	MessageHandler::ReportMessage (INFORMATION,BOOTSECTORCREATEMSG,"FAT32");
 }
 
 /**
@@ -173,7 +173,7 @@ Writes the boot sector of a FAT 32 volume
 */
 void CFat32FileSystem::WriteBootSector(ofstream& aOutPutStream)
 {
-	MessageHandler::ReportMessage (INFORMATION,BOOTSECTORWRITEMSG, const_cast<char *>("FAT32"));
+	MessageHandler::ReportMessage (INFORMATION,BOOTSECTORWRITEMSG,"FAT32");
 	aOutPutStream.write(reinterpret_cast<char*>(&iData[0]),iFAT32BootSector.BytesPerSector());
 	aOutPutStream.flush();
 }
@@ -230,7 +230,7 @@ void CFat32FileSystem::CreateFatTable(ofstream& aOutPutStream)
 		aFatString.append((totalFatEntries - clusterCounter)*4, 0);
 	}
 
-	MessageHandler::ReportMessage (INFORMATION,FATTABLEWRITEMSG,const_cast<char *>("FAT32"));
+	MessageHandler::ReportMessage (INFORMATION,FATTABLEWRITEMSG,"FAT32");
 
 	//Write FAT table multiple times depending on the value of No of FATS set.
 	unsigned int noOfFats = iFAT32BootSector.NumberOfFats();
@@ -369,15 +369,11 @@ void CFat32FileSystem::ComputeTotalClusters(Long64 aPartitionSize)
  	iTotalClusters = totalDataSectors / iFAT32BootSector.SectorsPerCluster();
 	if(iTotalClusters < KMinimumFat32Clusters)
 	{
-		throw ErrorHandler(BOOTSECTORERROR,
-			const_cast<char *>("Low Partition Size"),
-			const_cast<char *>(__FILE__), __LINE__);
+		throw ErrorHandler(BOOTSECTORERROR,"Low Partition Size",__FILE__,__LINE__);
 	}
 	else if(iTotalClusters > KMaximumFat32Clusters)
 	{
-		throw ErrorHandler(BOOTSECTORERROR,
-			const_cast<char *>("high Partition Size"),
-			const_cast<char *>(__FILE__), __LINE__);
+		throw ErrorHandler(BOOTSECTORERROR,"high Partition Size",__FILE__,__LINE__);
 	}
 }
 /**
@@ -430,7 +426,7 @@ void CFat32FileSystem::Execute(Long64 aPartitionSize,EntryList aNodeList,
 	{
 		delete dirRegionPtr;
 		dirRegionPtr = NULL;
-		throw ErrorHandler(UNKNOWNERROR, const_cast<char *>(__FILE__), __LINE__);
+		throw ErrorHandler(UNKNOWNERROR,__FILE__,__LINE__);
 	}
 }
 

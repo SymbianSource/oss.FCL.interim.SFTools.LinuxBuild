@@ -81,7 +81,7 @@ public:
 	typedef std::map<string, const OptionDesc *, OptionCompare> OptionMap;
 	typedef vector<char *> LibSearchPaths;
 
-	typedef void (*ParserFn)(ParameterManager *, char *, char *, const OptionDesc *);
+	typedef void (*ParserFn)(ParameterManager *, char const *, char const *, const OptionDesc *);
 
 
 	#define DECLARE_PARAM_PARSER(name) \

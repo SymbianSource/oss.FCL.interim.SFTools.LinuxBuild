@@ -13,7 +13,7 @@
 
 use strict;
 use File::Spec;
-use set_epocroot;
+use places;
 
 sub trim($)
 {
@@ -25,9 +25,8 @@ sub trim($)
 
 sub get_baseline()
 {
-	set_epocroot();
-	my $epocroot = $ENV{'EPOCROOT'};
-	my $baseline_txt = File::Spec->catfile("$epocroot","build","baseline.txt");
+	my $epocroot = get_epocroot();
+	my $baseline_txt = File::Spec->catfile(get_pkg_dir(),"baseline.txt");
 	open IN,"<$baseline_txt" or die $!;
 	my @lines = <IN>;
 	close IN;

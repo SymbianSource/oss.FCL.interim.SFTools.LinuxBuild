@@ -22,10 +22,10 @@ SHELL = /bin/sh
 
 srcdir = .
 top_srcdir = ../..
-top_builddir = /home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/util/build/linux-unknown-libc2_11/bash-4.0
+top_builddir = /home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/util/build/linux-unknown-libc2_11/bash-4.0
 
 
-prefix = /home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/linux-unknown-libc2_11
+prefix = /home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/linux-unknown-libc2_11
 exec_prefix = ${prefix}
 transform = s,x,x,
 

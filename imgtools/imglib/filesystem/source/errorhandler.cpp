@@ -42,7 +42,7 @@ constructor used here.
 @param aFileName - File name from where the error is thrown
 @param aLineNumber - Line number from where the error is thrown
 */
-ErrorHandler::ErrorHandler(int aMessageIndex, char* aSubMessage, char* aFileName, int aLineNumber)
+ErrorHandler::ErrorHandler(int aMessageIndex, char const* aSubMessage, char const* aFileName, int aLineNumber)
                             :iSubMessage(aSubMessage), iFileName(aFileName), iLineNumber(aLineNumber)
 {
 	iMessageIndex = aMessageIndex;
@@ -61,7 +61,7 @@ class functions.
 @param aFileName - File name from where the error is thrown
 @param aLineNumber - Line number from where the error is thrown
 */
-ErrorHandler::ErrorHandler(int aMessageIndex, char* aFileName, int aLineNumber)
+ErrorHandler::ErrorHandler(int aMessageIndex, char const* aFileName, int aLineNumber)
                             : iFileName(aFileName), iLineNumber(aLineNumber)
 {
 	iMessageIndex = aMessageIndex;

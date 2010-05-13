@@ -14,7 +14,7 @@
 use strict;
 use get_baseline;
 use perl_run;
-use set_epocroot;
+use places;
 use get_hostplatform_dir;
 use check_os;
 use File::Spec;
@@ -49,11 +49,10 @@ my $rc = system($patch_test);
 die "*** Error: can't execute the patch tool ***", if ($rc);
 $baseline_dir = abs_path($baseline_dir);
 perl_run("get_upstream.pl $baseline_dir") and die $!;
-set_epocroot();
-my $epocroot = $ENV{'EPOCROOT'};
+my $epocroot = get_epocroot();
 if (!$patch_in) {
 	my $baseline_rev = get_baseline();
-	$patch_in = File::Spec->catfile("$epocroot","build","cross-plat-dev-utils",
+	$patch_in = File::Spec->catfile(get_pkg_dir(),"cross-plat-dev-utils",
 		"patch-files","diffs","patch-$baseline_rev.patch");
 }
 die "*** Error: can't find patch file \"$patch_in\" ***", unless ( -f $patch_in);

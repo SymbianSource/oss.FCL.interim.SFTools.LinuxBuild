@@ -51,7 +51,7 @@ Function to call StartLogging function of class Message Implementation.
 @param aFileName
 Name of the Log File
 */
-void MessageHandler::StartLogging(char *aFileName)
+void MessageHandler::StartLogging(char const *aFileName)
 {
     GetInstance()->StartLogging(aFileName);
 }
@@ -74,7 +74,7 @@ Function to report message to class MessageImplementation
 @internalComponent
 @released
 */
-void MessageHandler::ReportMessage(int aMsgType, int aMsgIndex,char* aName)
+void MessageHandler::ReportMessage(int aMsgType, int aMsgIndex,char const* aName)
 {
 	GetInstance()->ReportMessage(aMsgType,aMsgIndex,aName);
 }

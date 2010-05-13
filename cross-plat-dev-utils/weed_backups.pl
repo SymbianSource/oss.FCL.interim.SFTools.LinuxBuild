@@ -13,15 +13,14 @@
 use strict;
 use usage;
 use File::Spec;
-use set_epocroot;
+use places;
 
 sub delete_backups($);
 
 usage(\@ARGV,"This script deletes all files in the package directory " .
 	"with names ending in '~'\n");
-set_epocroot();
-my $epocroot = $ENV{'EPOCROOT'};
-my $build_pkg_dir = File::Spec->catfile("$epocroot","build");
+my $epocroot = get_epocroot();
+my $build_pkg_dir = get_pkg_dir();
 my $deletes = 0;
 delete_backups($build_pkg_dir);
 print ">>> $deletes files deleted\n"; 

@@ -68,7 +68,7 @@ public:
 	void SetSeek(streampos aOff, std::ios_base::seekdir aStartPos);
 	void ExtractImageContents();
 	void CheckFileExtension(char* aFileName,TRomBuilderEntry* aEntry,TRomNode* aNode,ofstream& aLogFile );
-	void GetCompleteNodePath(TRomNode* aNode,string& aName,char* aAppStr);
+	void GetCompleteNodePath(TRomNode* aNode,string& aName,char const* aAppStr);
 	void WriteEntryToFile(char* aFileName,TRomNode* aNode,ofstream& aLogFile);
 
 	void GetFileInfo(FILEINFOMAP &aFileMap);

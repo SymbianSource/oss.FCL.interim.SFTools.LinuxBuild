@@ -104,7 +104,7 @@ private:
 public:
 	TRomBuilderEntry* iFirstPagedCode; // For PagedRom only
 private:
-	const char* iName;
+	char* iName;
 	TLinAddr iDestBaseAddr;
 	TLinAddr iSrcBaseAddr;
 	TLinAddr iSrcLimitAddr;

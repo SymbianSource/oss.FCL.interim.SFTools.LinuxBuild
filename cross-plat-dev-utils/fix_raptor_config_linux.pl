@@ -17,11 +17,16 @@ use strict;
 use File::Spec;
 use apply_patch_file;
 use usage;
+use places;
 use check_os;
 
 require_os_linux();
 usage(\@ARGV,"This script makes required fixes to Raptor configuration for Linux");
-my $gcc_config_file = File::Spec->catfile("build","sbsv2","raptor","lib","config","gcc.xml");
+my $pkg_dir = get_pkg_dir();
+my ($vol,$dirs,$file) = File::Spec->splitpath($pkg_dir,1);
+my @dirs = File::Spec->splitdir($dirs);
+my $pkg_dir_leaf = pop(@dirs); 
+my $gcc_config_file = File::Spec->catfile("$pkg_dir_leaf","sbsv2","raptor","lib","config","gcc.xml");
 apply_patch_file($gcc_config_file);
 exit 0;
 

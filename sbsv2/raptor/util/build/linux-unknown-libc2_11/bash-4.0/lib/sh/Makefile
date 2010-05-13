@@ -28,7 +28,7 @@ PACKAGE_VERSION = 4.0-release
 srcdir = .
 VPATH = .
 topdir = ../..
-BUILD_DIR = /home/imk/symbian/epocroot-pdk-3.0.h/build/sbsv2/raptor/util/build/linux-unknown-libc2_11/bash-4.0
+BUILD_DIR = /home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/util/build/linux-unknown-libc2_11/bash-4.0
 
 LIBBUILD = ${BUILD_DIR}/lib
 

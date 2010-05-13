@@ -144,8 +144,8 @@ void CCluster::UpdateNextAvailableClusterNumber()
 	if(iCurrentClusterNumber >= iTotalNumberOfClusters)
 	{
     	throw ErrorHandler(IMAGESIZETOOBIG,
-			const_cast<char *>("Occupied number of clusters count exceeded than available clusters"),
-			const_cast<char *>(__FILE__),__LINE__);
+			"Occupied number of clusters count exceeded than available clusters",
+			__FILE__,__LINE__);
 	}
 	++iCurrentClusterNumber;
 }

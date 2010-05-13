@@ -15,7 +15,7 @@
 # $@ is shifted to get optional additional arguments to the sbs command
 
 use strict;
-use set_epocroot;
+use places;
 use File::Spec;
 use Cwd; 
 
@@ -30,15 +30,10 @@ if (@ARGV) {
         exit 0;
     }         
 }
-set_epocroot();
-my $epocroot = $ENV{'EPOCROOT'};
-my $sbs_home = $ENV{'SBS_HOME'};
-unless($sbs_home) {
-    $sbs_home = File::Spec->catfile("$epocroot","build","sbsv2","raptor");
-    $ENV{'SBS_HOME'} = $sbs_home;
-}
+my $epocroot = get_epocroot();
+my $sbs_home = get_sbs_home();
 my $build_dir = shift;
-$build_dir = File::Spec->catfile("$epocroot","build","$build_dir");
+$build_dir = File::Spec->catfile(get_pkg_dir(),"$build_dir");
 if (! -d $build_dir) {
     die "*** Error: \"$build_dir\" not found ***\n";
 }
@@ -57,9 +52,9 @@ if (! -f $bld_inf) {
 if (! -f $bld_inf) {
 	die "*** Error: No bld.inf in \"$build_dir\" ***";
 }
-my $log_stem = File::Spec->catfile("$epocroot","epoc32","build","Makefile");
+my $log_stem = File::Spec->catfile(get_epoc32_dir(),"build","Makefile");
 my $log_pattern = "$log_stem\.\*\.log"; 
-my $raptor = File::Spec->catfile("$sbs_home","bin","sbs");
+my $raptor = File::Spec->catfile(get_sbs_home(),"bin","sbs");
 my $cmd = "$raptor -c tools2 -b $bld_inf @ARGV";
 print ">>> Executing: $cmd\n";
 my $rc = system($cmd) >> 8;

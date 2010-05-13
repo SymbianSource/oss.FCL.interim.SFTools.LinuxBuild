@@ -28,8 +28,8 @@ ffi_platforms = {
     'PA_HPUX': ['src/pa/hpux32.S', 'src/pa/ffi.c'],
 }
 
-ffi_srcdir = '/home/imk/symbian/epocroot-pdk-3.0.h/build-mcl-0f5e3a7fb6af/sbsv2/raptor/util/build/linux-unknown-libc2_11/Python-2.6.2/Modules/_ctypes/libffi'
+ffi_srcdir = '/home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/util/build/linux-unknown-libc2_11/Python-2.6.2/Modules/_ctypes/libffi'
 ffi_sources += ffi_platforms['X86']
-ffi_sources = [os.path.join('/home/imk/symbian/epocroot-pdk-3.0.h/build-mcl-0f5e3a7fb6af/sbsv2/raptor/util/build/linux-unknown-libc2_11/Python-2.6.2/Modules/_ctypes/libffi', f) for f in ffi_sources]
+ffi_sources = [os.path.join('/home/imk/symbian/epocroot-pdk-3.0.h/linux_build/sbsv2/raptor/util/build/linux-unknown-libc2_11/Python-2.6.2/Modules/_ctypes/libffi', f) for f in ffi_sources]
 
 ffi_cflags = ''

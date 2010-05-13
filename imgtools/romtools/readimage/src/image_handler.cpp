@@ -392,8 +392,7 @@ void ImageHandler::HandleInputFiles()
 	{
 		if(iInputFileName.empty())
 		{
-			throw SisUtilsException(const_cast<char *>("Usage Error"),
-				const_cast<char *>("No SIS file passed"));
+			throw SisUtilsException("Usage Error","No SIS file passed");
 		}
 
 		iSisUtils = new Sis2Iby((char*)iInputFileName.c_str());
@@ -410,8 +409,7 @@ void ImageHandler::HandleInputFiles()
 		}
 		else
 		{
-			throw SisUtilsException(const_cast<char *>("Error:"),
-				const_cast<char *>("Cannot create Sis2Iby object"));
+			throw SisUtilsException("Error:","Cannot create Sis2Iby object");
 		}
 	}
 }

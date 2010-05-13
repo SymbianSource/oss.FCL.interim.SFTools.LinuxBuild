@@ -47,7 +47,7 @@ Area::Area(const char* aName, TLinAddr aDestBaseAddr, TUint aMaxSize, Area* aNex
 Area::~Area()
 	{
 	ReleaseAllFiles();
-	free(const_cast<char*>(iName));	// allocated with strdup()
+	free(iName);	// allocated with strdup()
 	}
 
 
