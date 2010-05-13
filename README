@@ -14,6 +14,7 @@
 - Strategy for building this package
 - Preparing to build this package on Linux
 - Preparing to build this package on Windows
+- Pushing changes to this package repo
 - Patch files for the upstream package
 
 == Intro ==
@@ -143,6 +144,17 @@ your EPOCROOT directory:
   - tools_epoc.zip
 * Consult the README-WINDOWS file in the subdirectory cross-plat-dev-utils.
 
+== Pushing changes to the package repo ==
+=============================================
+The Raptor build generates a very large volume of files that are not in the
+package repo (http://developer.symbian.org/oss/MCL/sftools/dev/linux_build).
+If you build Raptor, then you need to remove all of these files before
+pushing any other changes to the package repo. Use the script
+cross-plat-dev-utils/deepclean_raptor.pl to do this (clean_raptor.pl is not
+sufficient). Then remember that you will need to rebuilt Raptor after you
+have pushed. 
+
+
 == Patch files for the upstream package ==
 ==========================================
 
@@ -150,7 +162,7 @@ In the directory cross-plat-dev-utils/patch-files/diffs you will find one or
 more files with names like 'patch-dddddddddddd.patch', for digits 'd'.
 
 The patch file 'patch-dddddddddddd.patch' shows the diffs between the upstream
-package ((http://developer.symbian.org/oss/MCL/sftools/dev/build) at revision
+package (http://developer.symbian.org/oss/MCL/sftools/dev/build) at revision
 dddddddddddd and this package as baselined on that upstream revision. Only
 diffs relevant to changing the upstream package are included.
 

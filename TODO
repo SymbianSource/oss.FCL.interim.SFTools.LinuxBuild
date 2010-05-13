@@ -2,7 +2,7 @@
 Things that need done for this package (in no particular order)
 ===============================================================
 
-2010-05-10, mikek@symbian.org
+2010-05-13, mikek@symbian.org
 
 1.	Test the built tools. No testing has been done whatsoever.
 
@@ -17,16 +17,7 @@ Things that need done for this package (in no particular order)
 4.	Differentiate the exports so that .bat files are only exported by
 	Windows builds and .sh files are only exported by *nix builds
 
-5.	Numerous C++ warnings were fixed for constness violations. Where there
-	was a choice between changing the constness traits of an API and
-	using const_casts on pointers to cure the warning, const_casts were
-	always chosen, because changing the constness traits of APIs may spiral
-	into major refactoring. But changing the constness traits of the APIs is
-	the right thing.
-
-	Get rid of const_casts by fixing the APIs.
-
-6.	On Windows, the imgcheck target needs to link against libwsock32.a. This
+5.	On Windows, the imgcheck target needs to link against libwsock32.a. This
 	library exist in the gcc mingw lib directory in the PDT, but because
 	the library is specified with the STATICLIBRARY keyword, the linker looks
 	for it in the epoc32\release\tools2\{deb|rel} directory and doesn't find it.
@@ -37,7 +28,7 @@ Things that need done for this package (in no particular order)
 	Preferably, for all targets on Windows the gcc mingw libraries should be in
 	the linker's search path.
 
-7.	Add a toplevel GNU makefile to the package and scripting to support it which
+6.	Add a toplevel GNU makefile to the package and scripting to support it which
 	can generate a GNU tarball containing a "normalised Linux" simplification of
 	the package. The normalised Linux spin will strip out everything from the
 	package contents and build that is only required for Windows or would
