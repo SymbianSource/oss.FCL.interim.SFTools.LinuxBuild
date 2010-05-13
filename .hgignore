@@ -3,4 +3,6 @@ syntax: glob
 *.o
 *.so
 *.pyc
+*linux-*-libc*
+
 
