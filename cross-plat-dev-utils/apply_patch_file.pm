@@ -23,6 +23,7 @@ use File::Spec;
 use File::Copy;
 use places;
 use check_os;
+use get_wordsize;
 
 sub compare_files($$)
 {
@@ -41,6 +42,7 @@ sub compare_files($$)
 
 sub apply_patch_file($)
 {
+	my $patched = 0;
     my $patch_file = shift;
     my ($src_file, $dest_file);
     my $epocroot = get_epocroot();
@@ -54,7 +56,14 @@ sub apply_patch_file($)
 	} 
     $src_file = File::Spec->catfile($patch_files_dir,$patch_file);
     if (! -f $src_file) {
-        die("*** Error: not found \"$src_file\" ***");    
+		my $wordsize = get_host_wordsize();
+		$wordsize .= "bit";
+		if (-f "$src_file\.$wordsize") {
+			print ">>> Using $wordsize variant of \"$src_file\"\n";
+			$src_file .= "\.$wordsize";
+		} else {
+	        die("*** Error: not found \"$src_file\" ***");
+		}
     }    
     if ($patch_file =~ /^\$/) {
         my ($vol,$dir,$file) = File::Spec->splitpath($patch_file);
@@ -73,6 +82,7 @@ sub apply_patch_file($)
 		print ">>> Yes. \"$dest_file\" does not exist\n";
 		print ">>> Copying \"$src_file\" to \"$dest_file\"n";
 		copy($src_file,$dest_file) or die $!;
+		$patched = 1;
 	}
 	else {
 		my $dif = !compare_files($src_file,$dest_file);
@@ -87,9 +97,11 @@ sub apply_patch_file($)
 			print ">>> Backing up \"$dest_file\" as \"$backup\"\n";
 			copy($dest_file,$backup) or die $!;
 			print ">>> Copying \"$src_file\" to \"$dest_file\"\n";                     
-			copy($src_file,$dest_file) or die $!;       
+			copy($src_file,$dest_file) or die $!;
+			$patched = 1;
 		}
     }
+	return $patched;
 }
 
 1;

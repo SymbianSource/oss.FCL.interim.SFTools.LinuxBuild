@@ -18,11 +18,12 @@ use places;
 sub delete_backups($);
 
 usage(\@ARGV,"This script deletes all files in the package directory " .
-	"with names ending in '~'\n");
-my $epocroot = get_epocroot();
+	"and the epoc32 tree with names ending in '~'\n");
+my $epoc32_dir = get_epoc32_dir();
 my $build_pkg_dir = get_pkg_dir();
 my $deletes = 0;
 delete_backups($build_pkg_dir);
+delete_backups($epoc32_dir);
 print ">>> $deletes files deleted\n"; 
 exit 0;
 

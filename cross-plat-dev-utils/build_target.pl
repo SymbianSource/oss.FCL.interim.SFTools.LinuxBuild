@@ -58,12 +58,19 @@ my $raptor = File::Spec->catfile(get_sbs_home(),"bin","sbs");
 my $cmd = "$raptor -c tools2 -b $bld_inf @ARGV";
 print ">>> Executing: $cmd\n";
 my $rc = system($cmd) >> 8;
+my $warnings = 0;
 my @build_logs = glob($log_pattern);
 open BLDLOG, "<$build_logs[-1]" or die $!;
 while(<BLDLOG>) {
     print $_;
+	++$warnings, if (/<warning>/);
 }
 close BLDLOG;
+print "*** Build failed ***\n", if ($rc);
+if ($warnings) {
+	print "*** Build has warnings ***\n";
+	$rc = 1;
+}
 exit $rc;
 
 

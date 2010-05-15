@@ -134,8 +134,7 @@ Deletes all Raptor build logs from %EPOCROOT%\epoc32\build.
 
 * weed_backups.pl:
 -----------------
-Deletes all files in the package dir that end with '~'. Not useful on
-Windows.
+Deletes all files in the package dir and epoc32 tree that end with '~'.
 
 * get_upstream.pl CLONEDIR:
 ---------------------------
