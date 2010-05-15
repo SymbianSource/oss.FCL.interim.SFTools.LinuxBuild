@@ -18,6 +18,7 @@
 
 #include "sisutils.h"
 #include "sis2iby.h"
+#include <cstdlib>
 
 /**
 Constructor: Sis2Iby class

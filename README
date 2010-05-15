@@ -90,14 +90,14 @@ between Windows and Linux*
 
 * Install preqrequisities for building Raptor.
   - bison
-  - ncurses & its headers
+  - libncurses & its headers
   - libbz2 & its headers
 
 * Install the boost libraries and their headers. The upstream package bundles
 a defective copy of the boost libraries v1.39 for building the imgtools/imglib
 target. The headers of this copy compile for Windows (with one small fix)
 but are broken for Linux, so the Linux build is fixed to expect boost libraries
-from the system. v1.40 is OK.
+from the system. v1.40 is OK. (v1.35 is too old)
   
 * Install libxml2 and its headers. These are also bundled with the upstream
 package for building the imgtools/imgcheck target, but there is no target that

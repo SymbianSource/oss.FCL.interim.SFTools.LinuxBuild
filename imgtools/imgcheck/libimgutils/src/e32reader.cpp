@@ -24,6 +24,7 @@
 
 #include "e32reader.h"
 #include <f32image.h>
+#include <cstdlib>
 
 /** 
 Constructor.

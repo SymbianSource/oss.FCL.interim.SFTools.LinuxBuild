@@ -11,13 +11,15 @@ Things that need done for this package (in no particular order)
 		Windows XP 32bit
 		Ubuntu 10.4 32bit
 
-3.	Find all the perl scripts that are exported and ensure they run on
+3.	Fix the package to be 32/64 bit portable. *Not easy*
+
+4.	Find all the perl scripts that are exported and ensure they run on
 	Linux.
 
-4.	Differentiate the exports so that .bat files are only exported by
+5.	Differentiate the exports so that .bat files are only exported by
 	Windows builds and .sh files are only exported by *nix builds
 
-5.	On Windows, the imgcheck target needs to link against libwsock32.a. This
+6.	On Windows, the imgcheck target needs to link against libwsock32.a. This
 	library exist in the gcc mingw lib directory in the PDT, but because
 	the library is specified with the STATICLIBRARY keyword, the linker looks
 	for it in the epoc32\release\tools2\{deb|rel} directory and doesn't find it.
@@ -28,12 +30,13 @@ Things that need done for this package (in no particular order)
 	Preferably, for all targets on Windows the gcc mingw libraries should be in
 	the linker's search path.
 
-6.	Add a toplevel GNU makefile to the package and scripting to support it which
+7.	Add a toplevel GNU makefile to the package and scripting to support it which
 	can generate a GNU tarball containing a "normalised Linux" simplification of
 	the package. The normalised Linux spin will strip out everything from the
 	package contents and build that is only required for Windows or would
 	normally be provided by package prerequisities in a Linux setting, e.g. it
 	will not contain Windows binaries or build its own versions of make, bash,
 	cpp, python. A normalised Linux spin would be the right basis on which
-	to build .deb or .rpm packaging. 
+	to build .deb or .rpm packaging.
+	
 

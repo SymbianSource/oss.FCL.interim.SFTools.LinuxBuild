@@ -24,6 +24,7 @@
 
 #include "directory.h"
 #include <fstream>
+#include <cstdlib>
 
 typedef std::ofstream Ofstream;
 

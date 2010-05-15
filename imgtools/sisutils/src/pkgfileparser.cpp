@@ -20,6 +20,7 @@
 #include "pkgfileparser.h"
 #include <vector>
 #include <wchar.h>
+#include <cstdlib>
 
 // Parse options lookups
 #define MAXTOKENLEN	30

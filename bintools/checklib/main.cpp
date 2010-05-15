@@ -23,6 +23,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <cstring>
+#include <cstdlib>
 
 
 const char SELF_NAME[] = "checklib";

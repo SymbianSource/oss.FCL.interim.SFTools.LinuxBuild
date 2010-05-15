@@ -227,7 +227,7 @@ TUint32 SisUtils::RunCommand(String cmd)
 			args.push_back(token);
 		}  
 	}
-	args.push_back(NULL);
+	args.push_back((char *)NULL);
     pid_t pid = fork();
     if (pid == 0)
 	{

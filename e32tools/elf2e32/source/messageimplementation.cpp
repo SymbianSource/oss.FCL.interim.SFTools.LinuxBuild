@@ -24,6 +24,7 @@
 #include<stdarg.h>
 #include<string>
 #include <cstring>
+#include <cstdlib>
 
 
 using std::endl;

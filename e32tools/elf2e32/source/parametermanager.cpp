@@ -25,6 +25,7 @@
 #include "parametermanager.h"
 #include "errorhandler.h"
 #include <iostream>
+#include <cstdlib>
 
 #include "h_utl.h"
 #include "h_ver.h"
