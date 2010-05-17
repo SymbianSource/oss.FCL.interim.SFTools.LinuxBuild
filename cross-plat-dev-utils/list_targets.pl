@@ -53,6 +53,10 @@ sub list_targets($)
 				if ($targ eq File::Spec->catfile("sbsv2","pvmgmake")) {
 					print " *** Nothing to build. Don't bother ***";
 				}
+				my $raptor_test_targ_prefix = File::Spec->catfile("sbsv2","raptor","test");
+				if ($targ =~ /^$raptor_test_targ_prefix/) {
+					print " *** Skipping Raptor's test suite ***";
+				}
 				foreach my $broken_targ (@broken_targs) {
                     if ($targ eq $broken_targ) {
 					   print " *** Broken upstream. Don't bother ***";
