@@ -9,9 +9,7 @@ Things that need done for this package (in no particular order)
 2.	Build the package on platforms not listed here, and add them to the
 	list:
 		Windows XP 32bit
-		Ubuntu 10.4 32bit
-
-3.	Fix the package to be 32/64 bit portable. *Not easy*
+		Ubuntu 9.04,10.4 32/64bit
 
 4.	Find all the perl scripts that are exported and ensure they run on
 	Linux.
