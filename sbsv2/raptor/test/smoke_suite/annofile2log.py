@@ -19,14 +19,14 @@ from raptor_tests import SmokeTest
 def run():
 	t = SmokeTest()
 	t.id = "43563"
-	t.name = "annofile2log_canned"
+	t.name = "annofile2log"
 	t.description = "test workaround for log corruption from a make engine whose name begins with 'e'"
 	
 	t.usebash = True
 	t.errors = 0
 	t.returncode = 0
 	t.exceptions = 0
-	t.command = "cd smoke_suite/test_resources/annofile2log && ( diff -wB <(python testanno2log.py <(bzip2 -dc scrubbed_ncp_dfs_resource.anno.bz2)) <(bzip2 -dc scrubbed_ncp_dfs_resource.stdout.bz2))"
+	t.command = 'cd smoke_suite/test_resources/annofile2log && ( FROMANNO="`mktemp`" ; bzip2 -dc scrubbed_ncp_dfs_resource.anno.bz2 | python testanno2log.py  >"${FROMANNO}" && FROMSTDOUT="`mktemp`"; bzip2 -dc scrubbed_ncp_dfs_resource.stdout.bz2 > "${FROMSTDOUT}" && diff -wB "${FROMANNO}" "${FROMSTDOUT}"; RET=$? ; rm "${FROMANNO}" "${FROMSTDOUT}"; exit $RET )'
 	
 	t.mustmatch_multiline = [ 
 		"^ *.?"

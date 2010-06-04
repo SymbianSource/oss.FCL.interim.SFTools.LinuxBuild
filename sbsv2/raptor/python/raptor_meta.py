@@ -35,6 +35,7 @@ from xml.sax.saxutils import escape
 from mmpparser import *
 
 import time
+import generic_path
 
 
 PiggyBackedBuildPlatforms = {'ARMV5':['GCCXML']}
@@ -768,9 +769,13 @@ class ExtensionmakefileEntry(object):
 			biloc="." # Someone building with a relative raptor path
 
 		self.__StandardVariables = {}
-		# Relative step-down to the root - let's try ignoring this for now, as it
-		# should amount to the same thing in a world where absolute paths are king
-		self.__StandardVariables['TO_ROOT'] = ""
+		# The source root directory is SRCROOT if set in the environment
+		# Set TO_ROOT to SRCROOT in case SBS_BUILD_DIR is on a different drive
+		if 'SRCROOT' in os.environ:
+			self.__StandardVariables['TO_ROOT'] = str(generic_path.Path(os.environ['SRCROOT']))
+		else:
+			self.__StandardVariables['TO_ROOT'] = ""
+		
 		# Top-level bld.inf location
 		self.__StandardVariables['TO_BLDINF'] = biloc
 		self.__StandardVariables['EXTENSION_ROOT'] = eiloc
@@ -838,9 +843,12 @@ class Extension(object):
 			eiloc="." # Someone building with a relative raptor path
 
 		self.__StandardVariables = {}
-		# Relative step-down to the root - let's try ignoring this for now, as it
-		# should amount to the same thing in a world where absolute paths are king
-		self.__StandardVariables['TO_ROOT'] = ""
+		# The source root directory is SRCROOT if set in the environment	
+		# Set TO_ROOT to SRCROOT in case SBS_BUILD_DIR is on a different drive
+		if 'SRCROOT' in os.environ:
+			self.__StandardVariables['TO_ROOT'] = str(generic_path.Path(os.environ['SRCROOT']))
+		else:
+			self.__StandardVariables['TO_ROOT'] = ""
 		# Top-level bld.inf location
 		self.__StandardVariables['TO_BLDINF'] = biloc
 		# Location of bld.inf file containing the current EXTENSION block
@@ -1071,9 +1079,12 @@ class BldInfFile(MetaDataFile):
 			if (re.search(r'^\s*START ',extensionLine, re.I)):
 				start = extensionLine
 			elif re.search(r'^\s*END\s*$',extensionLine, re.I):
-				extensionObjects.append(Extension(self.filename, start, options, aBuildPlatform, self.__Raptor))
-				start = ""
-				options = []
+				if start == "":
+					self.log.Error("unmatched END statement in %s section", aType, bldinf=str(self.filename))
+				else:
+					extensionObjects.append(Extension(self.filename, start, options, aBuildPlatform, self.__Raptor))
+					start = ""
+					options = []
 			elif re.search(r'^\s*$',extensionLine, re.I):
 				continue
 			elif start:
@@ -1488,9 +1499,9 @@ class MMPRaptorBackend(MMPBackend):
 
 				self.__versionhex = "%04x%04x" % (major, minor)
 				self.BuildVariant.AddOperation(raptor_data.Set(varname, "%d.%d" %(major, minor)))
-				self.BuildVariant.AddOperation(raptor_data.Set(varname+"HEX", self.__versionhex))
+				self.BuildVariant.AddOperation(raptor_data.Set("VERSIONHEX", self.__versionhex))
 				self.__debug("Set "+toks[0]+"  OPTION to " + toks[1])
-				self.__debug("Set "+toks[0]+"HEX OPTION to " + "%04x%04x" % (major,minor))
+				self.__debug("Set VERSIONHEX OPTION to " + self.__versionhex)
 
 			else:
 				self.__Raptor.Warn("Invalid version supplied to VERSION (%s), using default value" % toks[1])
@@ -3079,7 +3090,6 @@ class MetaReader(object):
 				value = options[option].replace('$(EPOCROOT)', '$(EPOCROOT)/')
 				value = value.replace('$(', '$$$$(')
 				value = value.replace('$/', '/').replace('$;', ':')
-				value = value.replace('$/', '/').replace('$;', ':')
 
 				if customInterface:
 					var.AddOperation(raptor_data.Set(option, value))
@@ -3296,7 +3306,7 @@ class MetaReader(object):
 					self.__Raptor.Debug("Skipping %s", str(m.getMakefileName()))
 					continue
 				elif projectname in self.projectList:
-					projectList.remove(projectname)
+					self.projectList.remove(projectname)
 
 			self.__Raptor.Debug("%i makefile extension makefiles for %s",
 						len(makefileList), str(componentNode.component.bldinf.filename))

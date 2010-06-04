@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+# Copyright (c) 2007-2010 Nokia Corporation and/or its subsidiary(-ies).
 # All rights reserved.
 # This component and the accompanying materials are made available
 # under the terms of the License "Eclipse Public License v1.0"
@@ -494,15 +494,21 @@ class TestRaptorMeta(unittest.TestCase):
 				self.assertTrue(testOptions.has_key(testParameter))
 				self.assertEquals(testOptions.get(testParameter), aTestParameters.get(testParameter))
 
+
 	def testBldInfExtensions(self):
 		bldInfTestRoot = self.__testRoot.Append('metadata/project/bld.infs')
 		bldInfMakefilePathTestRoot = str(self.__makefilePathTestRoot)+'/metadata/project/bld.infs'			
+		if 'SRCROOT' in os.environ:
+			srcroot = os.environ['SRCROOT']
+		else:
+			srcroot = os.environ['SRCROOT'] = "x:/somesrcroot"
+		
 		depfiles = []
 		bldInfObject = raptor_meta.BldInfFile(bldInfTestRoot.Append('extensions.inf'),
 											  self.__gnucpp, depfiles=depfiles, log=self.raptor)
 		
 		extensions = bldInfObject.getExtensions(self.ARMV5)
-		
+				
 		self.__testExtension(extensions[0],
 							'test/dummyextension1.mk',
 							{'TARGET':'dummyoutput1.exe',
@@ -511,7 +517,7 @@ class TestRaptorMeta(unittest.TestCase):
 							'TOOL':'dummytool1.exe',
 							'OPTION11':'option11value',
 							'OPTION12':'$(MAKE_VAR)',
-							'STDVAR_TO_ROOT':"",
+							'STDVAR_TO_ROOT':srcroot,
 							'STDVAR_TO_BLDINF':bldInfMakefilePathTestRoot,
 							'STDVAR_EXTENSION_ROOT':bldInfMakefilePathTestRoot}		
 							)
@@ -524,7 +530,7 @@ class TestRaptorMeta(unittest.TestCase):
 							'TOOL':'dummytool2.exe',
 							'OPTION21':'option21value',
 							'OPTION22':'$(MAKE_VAR)',
-							'STDVAR_TO_ROOT':"",
+							'STDVAR_TO_ROOT':srcroot,
 							'STDVAR_TO_BLDINF':bldInfMakefilePathTestRoot,
 							'STDVAR_EXTENSION_ROOT':bldInfMakefilePathTestRoot}
 							)
@@ -537,7 +543,7 @@ class TestRaptorMeta(unittest.TestCase):
 							'TOOL':'dummytool3.exe',
 							'OPTION31':'option31value',
 							'OPTION32':'$(MAKE_VAR)',
-							'STDVAR_TO_ROOT':"",
+							'STDVAR_TO_ROOT':srcroot,
 							'STDVAR_TO_BLDINF':bldInfMakefilePathTestRoot,
 							'STDVAR_EXTENSION_ROOT':bldInfMakefilePathTestRoot}
 							)
@@ -552,7 +558,7 @@ class TestRaptorMeta(unittest.TestCase):
 							'TOOL':'dummytesttool1.exe',
 							'OPTIONTEST11':'optiontest11value',
 							'OPTIONTEST12':'$(MAKE_VAR)',
-							'STDVAR_TO_ROOT':"",
+							'STDVAR_TO_ROOT':srcroot,
 							'STDVAR_TO_BLDINF':bldInfMakefilePathTestRoot,
 							'STDVAR_EXTENSION_ROOT':bldInfMakefilePathTestRoot}		
 							)
@@ -565,11 +571,53 @@ class TestRaptorMeta(unittest.TestCase):
 							'TOOL':'dummytesttool2.exe',
 							'OPTIONTEST21':'optiontest21value',
 							'OPTIONTEST22':'$(MAKE_VAR)',
-							'STDVAR_TO_ROOT':"",
+							'STDVAR_TO_ROOT':srcroot,
 							'STDVAR_TO_BLDINF':bldInfMakefilePathTestRoot,
 							'STDVAR_EXTENSION_ROOT':bldInfMakefilePathTestRoot}		
 							)
+	
+	def testBadBldInfs(self):
+		bldInfTestRoot = self.__testRoot.Append('metadata/project/bld.infs')
+		depfiles=[]
 		
+		class BadBldInfLogger(object):
+			"mock logger to capture Error messages from the parser."
+			
+			def __init__(self):
+				self.errors = []
+				self.debugOutput = False
+				
+			def Error(self, format, *extras, **attributes):
+				self.errors.append( ((format % extras), attributes) )
+		
+			def Debug(self, format, *extras, **attributes):
+				pass
+				
+		logger = BadBldInfLogger()
+		
+		# this bld.inf has END lines with no matching START
+		bldInfObject = raptor_meta.BldInfFile(bldInfTestRoot.Append('bad_lone_end.inf'),
+											  self.__gnucpp, depfiles=depfiles, 
+											  log=logger)
+		
+		# the PRJ_EXTENSIONS section is bad for ARMV5
+		extensions = bldInfObject.getExtensions(self.ARMV5)
+		#
+		self.assertEquals(len(logger.errors), 1)
+		err = logger.errors[0]
+		self.assertEquals(err[0], "unmatched END statement in PRJ_EXTENSIONS section")
+		self.assertTrue("bldinf" in err[1])
+		self.assertTrue(err[1]["bldinf"].endswith("bad_lone_end.inf"))
+		
+		# the PRJ_TESTEXTENSIONS section is bad for WINSCW
+		testextensions = bldInfObject.getTestExtensions(self.WINSCW)
+		#
+		self.assertEquals(len(logger.errors), 2)
+		err = logger.errors[1]
+		self.assertEquals(err[0], "unmatched END statement in PRJ_TESTEXTENSIONS section")
+		self.assertTrue("bldinf" in err[1])
+		self.assertTrue(err[1]["bldinf"].endswith("bad_lone_end.inf"))
+			
 	def testBldInfIncludes(self):
 		bldInfTestRoot = self.__testRoot.Append('metadata/project/bld.infs/includes')
 		depfiles=[]
