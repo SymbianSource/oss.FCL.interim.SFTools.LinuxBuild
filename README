@@ -39,7 +39,8 @@ the GCC 4.4.x toolchain and Standard C++ Library.
 Mingw GCC 3.4.x toolchain Standard C++ Library, from a Symbian PDT 1.6
 installation.
 
-(There is one unimportant target that cannot be built. This is the sbsv2guide
+(The Raptor test-suite targets are skipped, and there is one unimportant
+target export target that cannot be built. This is the sbsv2guide
 target, which merely exports documentation for Raptor. It cannot be fixed
 because the documentation is not present in the upstream package at the branched
 revision, bug #2607.)
@@ -102,16 +103,20 @@ from the system. v1.40 is OK. (v1.35 is too old)
 * Install libxml2 and its headers. These are also bundled with the upstream
 package for building the imgtools/imgcheck target, but there is no target that
 exports them so they are not found by the imgcheck build.
+
+* N.B. On a 64-bit host, you must install the 32-bit variants of the boost and libxml2
+libraries. Raptor is built to the host's native wordsize, but all the targets
+that are built with Raptor must be 32-bit for compatibility with epoc32 APIs.
     
 * Clone, copy or extract this package into a directory that is going to be your
 EPOCROOT for Raptor builds.
 
 * Browse to the Symbian Developer website, http://developer.symbian.org
 * Navigate: Tools & Kits -> Download the Symbian^3 kits.
-* This package is built using Symbian headers from PDK 3.0.h. If that is not the
+* This package is built using Symbian headers from PDK 3.0.i. If that is not the
 current PDK listed under Downloads, then click "Previous releases" and navigate
-to the download page for PDK 3.0.h.
-* Download the following 3 zip archives from PDK 3.0.h and extract them into
+to the download page for PDK 3.0.i.
+* Download the following 3 zip archives from PDK 3.0.i and extract them into
 your EPOCROOT directory:
   - binaries_epoc.zip, 
   - binaries_epoc_sdk.zip 
@@ -134,10 +139,10 @@ EPOCROOT for Raptor builds.
 
 * Browse to the Symbian Developer website, http://developer.symbian.org
 * Navigate: Tools & Kits -> Download the Symbian^3 kits.
-* This package is built using Symbian headers from PDK 3.0.h. If that is not the
+* This package is built using Symbian headers from PDK 3.0.i. If that is not the
 current PDK listed under Downloads, then click "Previous releases" and navigate
-to the download page for PDK 3.0.h.
-* Download the following 3 zip archives from PDK 3.0.h and extract them into
+to the download page for PDK 3.0.i.
+* Download the following 3 zip archives from PDK 3.0.i and extract them into
 your EPOCROOT directory:
   - binaries_epoc.zip, 
   - binaries_epoc_sdk.zip 
