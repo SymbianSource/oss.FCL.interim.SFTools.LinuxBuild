@@ -9,6 +9,7 @@
 // Nokia Corporation - initial contribution.
 //
 // Contributors:
+// Mike Kinghan, mikek@symbian.org, for Symbian Foundation, 2010 
 //
 // Description:
 // FileDump Operations of elf2e32 tool to dump E32Image and generate ASM File.
@@ -23,7 +24,9 @@
 #include "h_utl.h"
 #include "deffile.h"
 #include "errorhandler.h"
-#include <stdio.h>
+#include <cstdio>
+#include <cassert>
+
 /**
 Constructor for class FileDump
 @param aParameterListInterface - Instance of class ParameterListInterface
@@ -63,7 +66,7 @@ int FileDump::Execute()
 		if(!iParameterListInterface->DefInput())
 			throw ParameterParserError(NOREQUIREDOPTIONERROR,"--definput");
 
-		GenerateAsmFile(iParameterListInterface->E32ImageOutput());
+		GenerateAsmFile();
 	}
 	else
 	{
@@ -71,7 +74,7 @@ int FileDump::Execute()
 			throw ParameterParserError(NOREQUIREDOPTIONERROR,"--e32input");
 		if(iParameterListInterface->DumpOptions() & EDumpAsm )
 			throw InvalidArgumentError(INVALIDARGUMENTERROR,iParameterListInterface->FileDumpSubOptions() ,"--dump");
-		DumpE32Image(iParameterListInterface->E32Input());
+		DumpE32Image();
 	}
 	return 0;
 }
@@ -83,11 +86,34 @@ Function to generate ASM File.
 @internalComponent
 @released
 */
-int FileDump::GenerateAsmFile(const char* afileName)//DumpAsm
+int FileDump::GenerateAsmFile() //DumpAsm
+{
+	EAsmDialect asmDialect = iParameterListInterface->AsmDialect();
+	switch(asmDialect)
+	{
+	case EGas:
+		return GenerateGasAsmFile();
+	case EArmas:
+		return GenerateArmasAsmFile();
+	default:
+		assert(false);
+	}
+	return 0;
+}
+
+/**
+Function to generate an RVCT armas ASM File.
+@param afileName - ASM File name
+@return 0 on success, otherwise throw error 
+@internalComponent
+@released
+*/
+int FileDump::GenerateArmasAsmFile()
 {
 	DefFile *iDefFile = new DefFile();
 	SymbolList *aSymList;
 	aSymList = iDefFile->ReadDefFile(iParameterListInterface->DefInput());
+	char const *afileName = iParameterListInterface->E32ImageOutput(); 
 
 	FILE *fptr;
 
@@ -155,14 +181,89 @@ int FileDump::GenerateAsmFile(const char* afileName)//DumpAsm
 }
 
 /**
+Function to generate a GNU as ASM File.
+@param afileName - ASM File name
+@return 0 on success, otherwise throw error 
+@internalComponent
+@released
+*/
+int FileDump::GenerateGasAsmFile()
+{
+	DefFile *iDefFile = new DefFile();
+	SymbolList *aSymList;
+	aSymList = iDefFile->ReadDefFile(iParameterListInterface->DefInput());
+	char const *afileName = iParameterListInterface->E32ImageOutput(); 
+
+	FILE *fptr;
+
+	if((fptr=fopen(afileName,"w"))==NULL)
+	{
+		throw FileError(FILEOPENERROR,(char*)afileName);
+	}
+	else
+	{
+		SymbolList::iterator aItr = aSymList->begin();
+		SymbolList::iterator last = aSymList->end();
+		Symbol *aSym;
+
+		while( aItr != last)
+		{
+			aSym = *aItr;
+
+			if(aSym->Absent())
+			{
+				aItr++;
+				continue;
+			}
+
+			fputs("\t.extern ",fptr);
+			fputs(aSym->SymbolName(),fptr);
+			fputs("\n",fptr);
+			aItr++;
+		}
+
+        // Create a directive section that instructs the linker to make all listed
+        // symbols visible.
+
+        fputs("\t.text\n\n",fptr);
+
+        fputs("\t.ascii \"#<SYMEDIT>#\\n\"\n", fptr);
+
+		aItr = aSymList->begin();
+		while (aItr != last)
+		{
+			aSym = *aItr;
+
+			if ( aSym->Absent() )
+			{
+				aItr++;
+				continue;
+			}
+
+            // Example:
+            //  DCB "EXPORT __ARM_ll_mlass\n"
+			fputs("\t.ascii \"EXPORT ",fptr);
+			fputs(aSym->SymbolName(),fptr);
+			fputs("\\n\"\n", fptr);
+
+			aItr++;
+		}
+		fclose(fptr);
+	}
+	return 0;
+}
+
+
+/**
 Function to Dump E32 Image.
 @param afileName - E32 Image File name
 @return 1 on success, otherwise throw error 
 @internalComponent
 @released
 */
-int FileDump::DumpE32Image(const char* afileName)
+int FileDump::DumpE32Image()
 {
+	char const *afileName = iParameterListInterface->E32Input(); 
 	E32ImageFile *aE32Imagefile=new E32ImageFile();
 	TInt result = aE32Imagefile->Open(afileName);
 	

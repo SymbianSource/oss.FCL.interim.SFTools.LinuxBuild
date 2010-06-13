@@ -9,6 +9,7 @@
 // Nokia Corporation - initial contribution.
 //
 // Contributors:
+// Mike Kinghan, mikek@symbian.org, for Symbian Foundation, 2010
 //
 // Description:
 // Implementation of the Class ParameterManager for the elf2e32 tool
@@ -111,7 +112,8 @@ ParameterManager::ParameterManager(int aArgc, char** aArgv) :
 	iCustomDllTarget(false),
 	iSymNamedLookup(false),
 	iDebuggable(false),
-	iSmpSafe(false)
+	iSmpSafe(false),
+	iAsmDialect(EGas)
 {
 	iArgumentCount = aArgc;
 	ParamList temp(aArgv, aArgv+aArgc);
@@ -429,6 +431,12 @@ const ParameterManager::OptionDesc ParameterManager::iOptions[] =
 		"smpsafe",
 		(void*)ParameterManager::ParseSmpSafe,
 		"SMP Safe",
+	},
+	{
+		"asm",
+		(void*)ParameterManager::ParseAsmDialect,
+		"Dialect of arm assembly to write for the --dump option. "
+		"Either \"gas\" (GNU as: default) or \"armas\" (RVCT as)",
 	},
 	{ 
 		"help", 
@@ -1506,6 +1514,21 @@ bool ParameterManager::IsDebuggable()
 bool ParameterManager::IsSmpSafe()
 {
 	return iSmpSafe;
+}
+
+/**
+This function indicates the asm assembly dialect that will be written for the
+--dump option, as determined by the specified or default value of the --asm
+option.
+
+@internalComponent
+@released
+
+@return EArmas if --asm=armas was passed, else EGas
+*/
+EAsmDialect ParameterManager::AsmDialect()
+{
+	return iAsmDialect;
 }
 
 /**
@@ -2847,6 +2870,23 @@ DEFINE_PARAM_PARSER(ParameterManager::ParseSmpSafe)
 	aPM->SetSmpSafe(true); 
 }
 
+DEFINE_PARAM_PARSER(ParameterManager::ParseAsmDialect)
+{
+	INITIALISE_PARAM_PARSER;
+	if (!strcmp(aValue,"gas"))
+	{
+		aPM->SetAsmDialect(EGas); 
+	}
+	else if (!strcmp(aValue,"armas"))
+	{
+		aPM->SetSmpSafe(EArmas); 
+	}
+	else
+	{
+		throw InvalidArgumentError(INVALIDARGUMENTERROR, aValue, "--asm");
+	} 
+}
+
 static const ParameterManager::TargetTypeDesc DefaultTargetTypes[] =
 {
 	{ "DLL", EDll },
@@ -3729,3 +3769,18 @@ void ParameterManager::SetSmpSafe(bool aVal)
 {
 	iSmpSafe = aVal;
 }
+
+/**
+This function sets iAsmDialect if --asm is passed in.
+
+@internalComponent
+@released
+
+@param aVal
+A member of enum EAsmDialect
+*/
+void ParameterManager::SetAsmDialect(EAsmDialect aAsmDialect)
+{
+	iAsmDialect = aAsmDialect;
+}
+

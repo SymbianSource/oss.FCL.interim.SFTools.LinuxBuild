@@ -9,6 +9,7 @@
 // Nokia Corporation - initial contribution.
 //
 // Contributors:
+// Mike Kinghan, mikek@symbian.org, for Symbian Foundation, 2010
 //
 // Description:
 // Implementation of the Header file for the ParameterListInterface of the elf2e32 tool
@@ -41,6 +42,12 @@ enum ETargetType
 	EPolyDll,
 	EExexp,
 	EStdExe
+};
+
+enum EAsmDialect // Which dialect of arm assembly to write for the --dump option
+{
+	EArmas, // RVCT armas
+	EGas	// GNU as
 };
 
 typedef unsigned int UINT;
@@ -278,6 +285,7 @@ input options.
 	virtual bool SymNamedLookup() = 0;
 	virtual bool IsDebuggable() = 0;
 	virtual bool IsSmpSafe() = 0;
+	virtual EAsmDialect AsmDialect() = 0;
 };
 
 

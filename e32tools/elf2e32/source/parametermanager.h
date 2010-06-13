@@ -9,6 +9,7 @@
 // Nokia Corporation - initial contribution.
 //
 // Contributors:
+// Mike Kinghan, mikek@symbian.org, for Symbian Foundation, 2010
 //
 // Description:
 // Implementation of the Header file for Class ParameterManager of the elf2e32 tool
@@ -144,6 +145,7 @@ public:
 	DECLARE_PARAM_PARSER(ParseSymNamedLookup);
 	DECLARE_PARAM_PARSER(ParseDebuggable);
 	DECLARE_PARAM_PARSER(ParseSmpSafe);
+	DECLARE_PARAM_PARSER(ParseAsmDialect);
 
 	ParameterManager(int aArgc, char** aArgv);
 	virtual ~ParameterManager();
@@ -195,6 +197,7 @@ public:
 	void SetSymNamedLookup(bool aVal);
 	void SetDebuggable(bool aVal);
 	void SetSmpSafe(bool aVal);
+	void SetAsmDialect(EAsmDialect aAsmDialect);
 
 	int NumOptions();
 	int NumShortOptions();
@@ -279,6 +282,7 @@ public:
 	bool SymNamedLookup();
 	bool IsDebuggable();
 	bool IsSmpSafe();
+	EAsmDialect AsmDialect();
 
 private:
 	/** The number of command line arguments passed into the program */
@@ -445,6 +449,7 @@ private:
 	bool iSymNamedLookup;
 	bool iDebuggable;
 	bool iSmpSafe;
+	EAsmDialect iAsmDialect;
 };
 
 
