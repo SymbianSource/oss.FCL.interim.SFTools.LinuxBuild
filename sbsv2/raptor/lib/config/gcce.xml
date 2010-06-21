@@ -17,7 +17,7 @@
 		<set name="ASM" value="$(GCCEASM)"/>
 		<set name="AR" value="$(GCCEAR)"/>
 		
-		<set name="AAPCS_OPTION" value="-mapcs -mthumb-interwork"/>
+		<set name="AAPCS_OPTION" value="-mapcs-frame -mthumb-interwork"/>
 		<set name="ARCHIVER_CREATE_OPTION" value="cr"/>
 		<set name="ARM_INSTRUCTION_SET" value="-marm"/>
 		<set name="ARMLIBS" value=""/>
