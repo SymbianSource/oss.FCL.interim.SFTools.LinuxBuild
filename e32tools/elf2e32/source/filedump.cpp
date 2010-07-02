@@ -215,39 +215,12 @@ int FileDump::GenerateGasAsmFile()
 				aItr++;
 				continue;
 			}
-
-			fputs("\t.extern ",fptr);
+			fputs("\t.common ",fptr);
 			fputs(aSym->SymbolName(),fptr);
-			fputs("\n",fptr);
+			fputs(" 4\n",fptr);
 			aItr++;
 		}
 
-        // Create a directive section that instructs the linker to make all listed
-        // symbols visible.
-
-        fputs("\t.text\n\n",fptr);
-
-        fputs("\t.ascii \"#<SYMEDIT>#\\n\"\n", fptr);
-
-		aItr = aSymList->begin();
-		while (aItr != last)
-		{
-			aSym = *aItr;
-
-			if ( aSym->Absent() )
-			{
-				aItr++;
-				continue;
-			}
-
-            // Example:
-            //  DCB "EXPORT __ARM_ll_mlass\n"
-			fputs("\t.ascii \"EXPORT ",fptr);
-			fputs(aSym->SymbolName(),fptr);
-			fputs("\\n\"\n", fptr);
-
-			aItr++;
-		}
 		fclose(fptr);
 	}
 	return 0;
