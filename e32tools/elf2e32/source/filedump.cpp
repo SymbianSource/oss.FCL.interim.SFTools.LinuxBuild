@@ -215,9 +215,9 @@ int FileDump::GenerateGasAsmFile()
 				aItr++;
 				continue;
 			}
-			fputs("\t.common ",fptr);
+			fputs("\t.extern ",fptr);
 			fputs(aSym->SymbolName(),fptr);
-			fputs(" 4\n",fptr);
+			fputs("\n",fptr);
 			aItr++;
 		}
 
