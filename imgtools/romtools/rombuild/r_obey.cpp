@@ -1169,7 +1169,7 @@ TBool CObeyFile::ProcessFile(TInt aAlign, enum EKeyword aKeyword)
 
 	if (!test.is_open())
 		{
-		Print(EError,"Cannot open file %s for input.\n",iReader.Word(1));
+		Print(EError,"Cannot open file %s for input.\n",nname);
 		if(EKeywordHardwareConfigRepositoryData == aKeyword)
 			{
 			free(nname);

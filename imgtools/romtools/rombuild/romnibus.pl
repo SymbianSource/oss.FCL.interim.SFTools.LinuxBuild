@@ -165,7 +165,8 @@ while(@path_parts[-1] ne "sf") {
 	pop(@path_parts);
 }
 $e32path = File::Spec->catdir((@path_parts,"os"));
-$base_path = $e32path; # ??
+$e32path .= ($on_windows ? '\\' : '/');
+$base_path = $e32path; # Can't be quite right.
 $rombuildpath = File::Spec->catfile($e32path,"kernelhwsrv","kernel","eka","rombuild");
 
 use E32Plat;
