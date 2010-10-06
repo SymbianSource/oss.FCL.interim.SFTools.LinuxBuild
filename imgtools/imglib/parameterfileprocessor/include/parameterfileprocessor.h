@@ -48,7 +48,7 @@ class CParameterFileProcessor
 						   // read from parameter-file.	 
 							   
 public:			
-	CParameterFileProcessor(String aParamFileName);	
+	CParameterFileProcessor(String const & aParamFileName);	
 	bool ParameterFileProcessor();	
 	unsigned int GetNoOfArguments() const;
 	char** GetParameters() const;

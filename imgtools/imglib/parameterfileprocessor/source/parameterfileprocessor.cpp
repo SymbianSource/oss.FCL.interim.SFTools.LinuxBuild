@@ -32,7 +32,7 @@ Constructor of CParameterFileProcessor class
 @internalComponent
 @released
 */
-CParameterFileProcessor::CParameterFileProcessor(String aParamFileName):
+CParameterFileProcessor::CParameterFileProcessor(String const & aParamFileName):
 												 iParamFileName(aParamFileName),iNoOfArguments(0),
 												 iParamFileArgs(NULL)
 {

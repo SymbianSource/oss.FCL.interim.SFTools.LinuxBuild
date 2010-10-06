@@ -16,7 +16,12 @@
 		<!-- tools and scripts -->
 		<env name='JAVATC' default='$(JAVA_HOME)/bin/java' type='tool'/> <!-- Java used by Trace Compiler -->
 
+		<!-- targettypes -->
+		<set name="TARGET_TYPES" value="exe lib"/>
+
 		<!-- interfaces -->
+		<append name="INTERFACE_TYPES" value="$(TARGET_TYPES)"/>
+
 		<set name="INTERFACE.exe" value="Tools.exe"/>
 		<set name="INTERFACE.lib" value="Tools.lib"/>
 
@@ -43,7 +48,7 @@
 		<set name='CDEFS.WIN32' value='$(CDEFS.DEFAULT) _WIN32 WIN32 _WINDOWS __TOOLS2_WINDOWS__'/>
 		<set name='CDEFS.LINUX' value='$(CDEFS.DEFAULT) __LINUX__ __TOOLS2_LINUX__'/>
 
-		<set name='INC.COMPILER' value='$(EPOCINCLUDE)/gcc/gcc.h'/>
+		<set name='PREINCLUDE' value='$(EPOCINCLUDE)/gcc/gcc.h'/>
 
 		<set name='OPT.D' value='-D'/>
 		<set name='OPT.L' value='-L'/>
@@ -74,10 +79,11 @@
 		<set name='BLDINF_OUTPUTPATH' value='$(SBS_BUILD_DIR)'/>
 
 		<set name='OUTPUTPATH' value='$(SBS_BUILD_DIR)'/>
-		<set name='RELEASEPATH' value='$(EPOCROOT)/epoc32/release/tools2$$(TOOLPLATFORMDIR)'/>
+		<set name='RELEASEPATH' value='$(EPOCROOT)/epoc32/release/tools2' host='win.*'/>
+		<set name='RELEASEPATH' value='$(EPOCROOT)/epoc32/release/tools2/$(HOSTPLATFORM_DIR)' host='lin.*'/>
 	</var>
 
-	<var name="tools2_deb" extends="tools2_base">
+	<var name="t_deb">
 		<set name='TOOLSPATH' value=''/> <!-- do not install -->
 		<set name='VARIANTTYPE' value='deb'/>
 
@@ -85,19 +91,21 @@
 		<append name='CDEFS' value='_DEBUG'/>
 		<append name='RELEASEPATH' value='/deb' separator=''/>
 	</var>
-
-	<var name="tools2_rel" extends="tools2_base">
-		<set name='TOOLSPATH' value='$(EPOCTOOLS)'/> <!-- install -->
+	<alias name="tools2_deb" meaning="tools2_base.t_deb"/>
+	
+	<var name="t_rel">
+		<set name='TOOLSPATH' value='$(EPOCROOT)/epoc32/tools'/> <!-- install -->
 		<set name='VARIANTTYPE' value='rel'/>
 
 		<append name='CFLAGS' value='-s'/>
 		<append name='CDEFS' value='NDEBUG'/>
 		<append name='RELEASEPATH' value='/rel' separator=''/>
 	</var>
-
+	<alias name="tools2_rel" meaning="tools2_base.t_rel"/>
+	
 	<group name="tools2">
-		<varRef ref='tools2_rel'/>
-		<varRef ref='tools2_deb'/>
+		<aliasRef ref='tools2_rel'/>
+		<aliasRef ref='tools2_deb'/>
 	</group>
 
 </build>

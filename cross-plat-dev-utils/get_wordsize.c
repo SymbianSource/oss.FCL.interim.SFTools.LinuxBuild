@@ -16,7 +16,7 @@ Program to return the wordsize in bits of the host machine
 
 int main(void)
 {
-	printf("%lu\n",sizeof(unsigned long));
+	printf("%lu\n",(unsigned long)sizeof(unsigned long));
 	exit(0);
 }
 

@@ -164,10 +164,10 @@ my @path_parts = File::Spec->splitdir($dirs);
 while(@path_parts[-1] ne "sf") {
 	pop(@path_parts);
 }
-$e32path = File::Spec->catdir((@path_parts,"os"));
-$e32path .= ($on_windows ? '\\' : '/');
-$base_path = $e32path; # Can't be quite right.
-$rombuildpath = File::Spec->catfile($e32path,"kernelhwsrv","kernel","eka","rombuild");
+$base_path = File::Spec->catdir((@path_parts,"os"));
+$rombuildpath = File::Spec->catfile($base_path,"kernelhwsrv","kernel","eka","rombuild");
+$base_path .= ($on_windows ? '\\' : '/');  
+$e32path = ($on_windows ? "\\sf\\os" : "/sf/os"); 
 
 use E32Plat;
 {
@@ -264,17 +264,18 @@ if ($single) {
 	$smain=$main;
 }
 
+unless ($on_windows) {
+	$main = lc($main);
+	$kmain = lc($kmain);
+}
+
+
 open(X, "$skel") || die "Can't open type file $skel, $!";
 open(OUT, "> rom1.tmp") || die "Can't open output file, $!";
 
 # First output the ROM name
 print OUT "\nromname=$romname\n";
 while(<X>) {
-	unless ($on_windows) {
-		if (m/#include/) {
-			s|\\|\/|g;
-		}
-	}
 	s/\#\#ASSP\#\#/$opts{'assp'}/;
 	s/\#\#VARIANT\#\#/$opts{'variant'}/;
 	s/\#\#BUILD\#\#/$opts{'build'}/;
@@ -285,6 +286,12 @@ while(<X>) {
 	s/\#\#EUSERDIR\#\#/$euserdir/;
 	s/\#\#ELOCLDIR\#\#/$elocldir/;
 	s/\#\#KBDIR\#\#/$kbdir/;
+	unless ($on_windows) {
+		if (m/#include/) {
+			s|\\|\/|g;
+			lc;
+		}
+	}
 	print OUT;
 }
 
@@ -348,7 +355,6 @@ die "ERROR EXECUTING CPP\n" if $ret;
 
 # Purge remarks and blank lines. Complete source filenames and adapt them to host filesystem.
 rectify("rom2.tmp", "rom3.tmp", $k);
-
 
 # scan tmp file and generate auxiliary files, if required
 open TMP, "rom3.tmp" or die("Can't open rom3.tmp\n");
@@ -624,69 +630,80 @@ sub rectify($$$) {
 		}
 		else {
 			# Not blank
+			my $epoc32_line = 0;
 			$lastblank = 0;
-			$line =~ s|##||g; # Delete "token-pasting" ops
+			$line =~ s|\#\#||g; # Delete "token-pasting" ops
 			$line =~ s|//.*$||g; # Delete trailing c++ comments
 			# prefix the epocroot dir to occurrences of 'epoc32' in all "KEYWORD=..." lines.
 			$line =~ s/(=\s*)[\\\/]epoc32/\1${epocroot}epoc32/i;
-			if (!defined($1)) { # Not a keyword line.	
+			$epoc32_line = defined($1);
+			if (!$epoc32_line) {
+				$line =~ /(=.*$epocroot)/i;
+				$epoc32_line = defined($1);
+			}
+			if (!$epoc32_line) {
 				if ($k and $line=~/^\s*kerneltrace/i) {
 					$line = "kerneltrace $k\n";
 				}
 			}
+			elsif ($on_windows) {
+				$line =~ s|\/|\\|g;
+			}
 			elsif ($line =~ /^(\s*\S+\s*=\s*)(\S+)(\s*\S*)/) {
-				if ($on_windows) {
-					$line =~ s|\/|\\|g;
+				my $keyword_part = $1;
+				my $src = $2;
+				my $dest = $3;
+				$dest =~ s/^\s+//;
+				$dest =~ s/\s+$//;
+				$src =~ s|\\|\/|g;
+				if ($dest) {
+					my ($vol,$dir,$leaf) = File::Spec->splitpath($src);
+					my $lc_leaf = lc($leaf);
+					my $lc_dir = lc($dir);
+					$lc_dir =~ s/\/$//;
+					my $fulldir = $lc_dir;
+					$fulldir =~ s|//|/|g;
+					$dest =~ s|\/|\\|g;
+					$dest = '\\' . $dest, unless ($dest =~ /^\\/);
+					unless ( -d $fulldir ) {
+						chomp $line;
+						# Lower-cased source directory doesn't exist. Give up.
+						die "Guessed source directory \"$fulldir\" does not exist for line $lineno: \"$line\"\n";
+					}
+					if (($leaf eq $lc_leaf) or (-f "$fulldir\/$leaf")) { 
+						# Using source directory lowercase and source filename as input.
+						$line = "${keyword_part}${lc_dir}\/${leaf}\t${dest}\n";
+					}
+					elsif ( -f "$fulldir\/$lc_leaf") {
+						# Using source directory source filename both lowercase.
+						$line = "${keyword_part}${lc_dir}\/${lc_leaf}\t${dest}\n";
+					}
+					else { # Harder.
+						my @dirlist;
+						my $found = 0;
+						if (!defined($dir_listings{$fulldir})) {
+							# Haven't got a cached dir listing for the source directory.
+							# Make one now.
+							@dirlist = glob("$fulldir.*");
+							$dir_listings{$fulldir} = \@dirlist;
+						}	
+						@dirlist = @{dir_listings{$fulldir}}; # Get listing of source directory from cache.
+						foreach my $file (@dirlist) {
+							# See if any file in the source directory case-insensitively matches the input source file.
+							if ( (-f "$fulldir\/$file") and (lc($file) eq $lc_leaf)) {
+								$line = "${keyword_part}${lc_dir}\/${file}\t${dest}\n";
+								$found = 1;
+								last;
+							}
+						}
+						unless ($found) {
+							die "Cannot find any file case-insensitively matching \"$fulldir\/$leaf\" at line $lineno: \"$line\"\n";
+						}
+					}
 				}
 				else {
-					my $keyword_part = $1;
-					my $src = $2;
-					my $dest = $3;
-					$src =~ s|\\|\/|g;
-					if ($dest) {
-						my ($vol,$dir,$leaf) = File::Spec->splitpath($src);
-						my $lc_leaf = lc($leaf);
-						my $lc_dir = lc($dir);
-						$lc_dir =~ s/\/$//;
-						my $fulldir = $lc_dir;
-						$fulldir =~ s|//|/|g;
-						unless ( -d $fulldir ) {
-							chomp $line;
-							# Lower-cased source directory doesn't exist. Give up.
-							die "Guessed source directory \"$fulldir\" does not exist for line $lineno: \"$line\"\n";
-						}
-						if (($leaf eq $lc_leaf) or (-f "$fulldir\/$leaf")) { 
-							# Using source directory lowercase and source filename as input.
-							$line = "${keyword_part}${lc_dir}\/${leaf}${dest}\n";
-						}
-						elsif ( -f "$fulldir\/$lc_leaf") {
-							# Using source directory source filename both lowercase.
-							$line = "${keyword_part}${lc_dir}\/${lc_leaf}${dest}\n";
-						}
-						else { # Harder.
-							my @dirlist;
-							my $found = 0;
-							if (!defined($dir_listings{$fulldir})) {
-								# Haven't got a cached dir listing for the source directory.
-								# Make one now.
-								@dirlist = glob("$fulldir.*");
-								$dir_listings{$fulldir} = \@dirlist;
-							}	
-							@dirlist = @{dir_listings{$fulldir}}; # Get listing of source directory from cache.
-							foreach my $file (@dirlist) {
-								# See if any file in the source directory case-insensitively matches the input source file.
-								if ( (-f "$fulldir\/$file") and (lc($file) eq $lc_leaf)) {
-									$line = "${keyword_part}${lc_dir}\/${file}${dest}\n";
-									$found = 1;
-									last;
-								}
-							}
-							unless ($found) {
-								die "Cannot find any file case-insensitively matching \"$fulldir\/$leaf\" at line $lineno: \"$line\"\n";
-							}
-						}
-					}						
-				} 
+					$line =~ s|\\|\/|g;
+				}								
 			}
 			print OUTPUT_FILE $line;
 		}
@@ -796,7 +813,6 @@ sub lookupFileInfo($$)
 sub lookupSymbolInfo($$)
 {
 	my ($file, $name) = @_;
-
 	open TMP, $file or die "Can't read $file\n";
 
 	# ignore local symbols.

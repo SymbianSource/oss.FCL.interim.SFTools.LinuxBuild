@@ -116,6 +116,16 @@
 		<set name="PLATMACROS.VAR" value="GCCE_4 GCCE_4_4"/>
 		<set name="ARMMACROS.VAR" value="__GCCE_4__ __GCCE_4_4__"/>
 	</var>
+
+	<var name="gcce4_4_3" extends="gcce_base">
+		<env name="SBS_GCCE443BIN" type="toolchainpath" />
+		<set name="GCCEBIN" value="$(SBS_GCCE443BIN)" />
+		<set name="GCCECC" value="$(GCCEBIN)/arm-none-symbianelf-g++$(DOTEXE)" type="tool" versionCommand="$(GCCECC) -dumpversion" versionResult="4.4.3"/>
+		<set name="RUNTIME_LIBS_LIST" value="drtaeabi.dso dfpaeabi.dso"/>
+		<set name="PLATMACROS.VAR" value="GCCE_4 GCCE_4_4"/>
+		<set name="ARMMACROS.VAR" value="__GCCE_4__ __GCCE_4_4__"/>
+	</var>
+
 	
 	<var name="rvct2_2" extends="rvct">
 		<env name="RVCT22BIN" type="toolchainpath"/>

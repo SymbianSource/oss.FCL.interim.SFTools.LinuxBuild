@@ -37,16 +37,16 @@ if (! -d $gcc_include_dir) {
 	mkdir $gcc_include_dir or die $!;
 	print ">>> Created \"$gcc_include_dir\"\n";
 }
-my $gcc_441_prelinclude_hdr_rel = File::Spec->catfile("epoc32","include","gcc","gcc_4_4_1.h");
-my $gcc_441_prelinclude_hdr_abs = File::Spec->catfile("$epocroot","$gcc_441_prelinclude_hdr_rel");
+my $gcc_443_prelinclude_hdr_rel = File::Spec->catfile("epoc32","include","gcc","gcc_4_4_3.h");
+my $gcc_443_prelinclude_hdr_abs = File::Spec->catfile("$epocroot","$gcc_443_prelinclude_hdr_rel");
 my $gcc_prelinclude_hdr = File::Spec->catfile("$epocroot","epoc32","include","gcc","gcc.h");
-if (apply_patch_file($gcc_441_prelinclude_hdr_rel)) {
-	print ">>> Created \"$gcc_441_prelinclude_hdr_abs\"\n";
+if (apply_patch_file($gcc_443_prelinclude_hdr_rel)) {
+	print ">>> Created \"$gcc_443_prelinclude_hdr_abs\"\n";
 	unlink($gcc_prelinclude_hdr)
 }
 if (! -l $gcc_prelinclude_hdr) {
-	symlink($gcc_441_prelinclude_hdr_abs,$gcc_prelinclude_hdr);
-	print ">>> Created symlink \"$gcc_441_prelinclude_hdr_abs\" -> \"$gcc_prelinclude_hdr\"\n";
+	symlink($gcc_443_prelinclude_hdr_abs,$gcc_prelinclude_hdr);
+	print ">>> Created symlink \"$gcc_443_prelinclude_hdr_abs\" -> \"$gcc_prelinclude_hdr\"\n";
 }
 exit 0;
 
