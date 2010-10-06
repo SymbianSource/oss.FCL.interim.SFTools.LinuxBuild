@@ -16,25 +16,32 @@
 		
 		<!-- tools and scripts -->
 		<env name="BMCONV" default="$(EPOCROOT)/epoc32/tools/bmconv$(DOTEXE)" type="tool"/>
-		<env name="CHECKLIB" default="$(EPOCROOT)/epoc32/tools/checklib$(DOTEXE)" type="tool"/>
-		<env name="EFREEZE" default="$(PERL) $(EPOCROOT)/epoc32/tools/efreeze.pl" type="script"/>
-		<env name="MAKEDEF" default="$(PERL) $(EPOCROOT)/epoc32/tools/makedef.pl" type="script"/>
-		<env name="PREPDEF" default="$(PERL) $(EPOCROOT)/epoc32/tools/prepdef.pl" type="script"/>
-		<env name="RCOMP" default="$(EPOCROOT)/epoc32/tools/rcomp$(DOTEXE)" type="tool"/>
+		<env name="SBS_CHECKLIB" default="$(EPOCTOOLS)/checklib$(DOTEXE)" type="tool"/>
+		<set name="CHECKLIB" value="$(SBS_CHECKLIB)"/>
+		<env name="SBS_EFREEZE" default="$(PERL) $(EPOCTOOLS)/efreeze.pl" type="script"/>
+		<set name="EFREEZE" value="$(SBS_EFREEZE)"/>
+		<env name='SBS_MAKEDEF' default='$(PERL) $(EPOCTOOLS)/makedef.pl' type='script'/>
+		<set name='MAKEDEF' value='$(SBS_MAKEDEF)'/>
+
+		<env name="SBS_PREPDEF" default="$(PERL) $(EPOCTOOLS)/prepdef.pl" type="script"/>
+		<set name="PREPDEF" value="$(SBS_PREPDEF)"/>
+		<env name="SBS_RCOMP" default="$(EPOCTOOLS)/rcomp$(DOTEXE)" type="tool"/>
+		<set name="RCOMP" value="$(SBS_RCOMP)"/>
 		<env name="SBSV1MAKE" default="$(EPOCROOT)/epoc32/tools/make$(DOTEXE)" type="tool"/>
 		<env name="STRINGTABLE" default="$(PERL) $(EPOCROOT)/epoc32/tools/stringtable.pl" type="script"/>	
-		
+	
 		<!-- link to bld.inf and mmp platform names -->
 		<set name="TRADITIONAL_PLATFORM" value="WINSCW"/>
 
+		<!-- targettypes -->
+		<set name="TARGET_TYPES" value="ani dll exe exexp fsy implib kdll kext klib ldd lib pdd pdl pdll plugin plugin3 stddll stdexe stdlib textnotifier2 var none"/>
+
 		<!-- interfaces -->
+		<append name="INTERFACE_TYPES" value="$(TARGET_TYPES)"/>
+
 		<set name="INTERFACE.ani" value="Emulator.ani"/>
-		<set name="INTERFACE.bitmap" value="Emulator.bitmap"/>
-		<set name="INTERFACE.exe" value="Emulator.exe"/>
-		<set name="INTERFACE.stdexe" value="Emulator.stdexe"/>
 		<set name="INTERFACE.dll" value="Emulator.dll"/>
-		<set name="INTERFACE.pdll" value="Emulator.pdll"/>
-		<set name="INTERFACE.stddll" value="Emulator.stddll"/>
+		<set name="INTERFACE.exe" value="Emulator.exe"/>
 		<set name="INTERFACE.exexp" value="Emulator.exexp"/>
 		<set name="INTERFACE.fsy" value="Emulator.fsy"/>
 		<set name="INTERFACE.implib" value="Emulator.implib"/>
@@ -43,15 +50,21 @@
 		<set name="INTERFACE.klib" value="Emulator.klib"/>
 		<set name="INTERFACE.ldd" value="Emulator.ldd"/>
 		<set name="INTERFACE.lib" value="Emulator.lib"/>
-		<set name="INTERFACE.stdlib" value="Emulator.stdlib"/>
-		<set name="INTERFACE.none" value="Emulator.none"/>
 		<set name="INTERFACE.pdd" value="Emulator.pdd"/>
 		<set name="INTERFACE.pdl" value="Emulator.pdl"/>
+		<set name="INTERFACE.pdll" value="Emulator.pdll"/>
 		<set name="INTERFACE.plugin" value="Emulator.plugin"/>
 		<set name="INTERFACE.plugin3" value="Emulator.plugin3"/>
-		<set name="INTERFACE.resource" value="Emulator.resource"/>
+		<set name="INTERFACE.stddll" value="Emulator.stddll"/>
+		<set name="INTERFACE.stdexe" value="Emulator.stdexe"/>
+		<set name="INTERFACE.stdlib" value="Emulator.stdlib"/>
 		<set name="INTERFACE.textnotifier2" value="Emulator.textnotifier2"/>
 		<set name="INTERFACE.var" value="Emulator.var"/>
+		<set name="INTERFACE.none" value="Emulator.none"/>
+
+		<!-- START block interfaces -->
+		<set name="INTERFACE.bitmap" value="Emulator.bitmap"/>
+		<set name="INTERFACE.resource" value="Emulator.resource"/>
 		
 		<set name="BLDINF_OUTPUTPATH" value="$(SBS_BUILD_DIR)"/>
 		<set name="CDEFS" value="__SYMBIAN32__ __CW32__ __WINS__ __WINSCW__ __SUPPORT_CPP_EXCEPTIONS__ _UNICODE $(MMPDEFS)"/>
@@ -63,7 +76,7 @@
 		<set name="DEFAULT_SYSTEM_NEWLIB" value="scppnwdl_kern.lib"/>
 		<set name="EPOCSTACKSIZE" value=""/>
 		<set name="EXPORT_TYPE" value="dllexport"/>
-		<set name="LFLAGS" value="-msgstyle gcc -stdlib -subsystem windows"/>
+		<set name="LFLAGS" value="-msgstyle gcc -stdlib -subsystem windows -stackreserve 512"/>
 		<set name="LFLAGS_INFGEN" value="-S -show only,names,unmangled,verbose "/>
 		<set name="LFLAGS_SYMGEN" value="-S -show only,names,verbose "/>
 		<set name="LINKPATH" value="winscw/udeb"/>
@@ -114,7 +127,8 @@
 		<set name="STDCPP_INCLUDE" value="$(EPOCINCLUDE)/stdapis"/>
 		<set name="STDCPP_WCHAR_DEF" value="__wchar_t_defined"/>
 		<set name="SYMLOOKUPARGS" value="--ignore_export_dir"/>
-		<set name="SYMLOOKUPUTIL" value="$(PERL) $(EPOCROOT)/epoc32/tools/sym_lkup_util.pl"/>
+		<env name="SBS_SYMLOOKUPUTIL" default="$(PERL) $(EPOCTOOLS)/sym_lkup_util.pl" type="tool"/>
+		<set name="SYMLOOKUPUTIL" value="$(SBS_SYMLOOKUPUTIL)"/>
 		<set name="SYSTEMINCLUDE" value=""/>
 		<set name="TARGET" value="TARGET_WAS_NOT_SET_PROPERLY"/>
 		<set name="TARGETPATH" value=""/>

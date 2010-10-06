@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+# Copyright (c) 2009-2010 Nokia Corporation and/or its subsidiary(-ies).
 # All rights reserved.
 # This component and the accompanying materials are made available
 # under the terms of the License "Eclipse Public License v1.0"
@@ -18,12 +18,14 @@
 # will be exported in response to the first configuration processed (this
 # example ensures it's armv5_udeb, so we can match against that config).
 from raptor_tests import CheckWhatSmokeTest, ReplaceEnvs
+from raptor_meta import MetaReader
+from raptor_utilities import sanitise
 import re
 import os
 
 def run():
-	markerfile = re.sub("(\\\\|\/|:|;| )", "_",
-			ReplaceEnvs("$(SBS_HOME)_test_smoke_suite_test_resources_simple_zip_export_archive.zip$(EPOCROOT)_epoc32_testunzip.unzipped"))
+	premarkerfile = sanitise(ReplaceEnvs("$(SBS_HOME)_test_smoke_suite_test_resources_simple_zip_export_archive.zip$(EPOCROOT)_epoc32_testunzip"))
+	markerfile = MetaReader.unzippedPathFragment(premarkerfile) + ".unzipped"
 	
 	t = CheckWhatSmokeTest()
 	t.id = "0069a"
@@ -41,6 +43,7 @@ def run():
 		"$(EPOCROOT)/epoc32/testunzip/archive/archivefile3.txt",
 		"$(EPOCROOT)/epoc32/testunzip/archive/archivefile4.txt",
 		"$(EPOCROOT)/epoc32/testunzip/archive/archivefilelinuxbin",
+		"$(EPOCROOT)/epoc32/testunzip/archive/archivefilereadonly.txt",
 		"$(EPOCROOT)/epoc32/build/" + markerfile
 		]
 	t.addbuildtargets('smoke_suite/test_resources/simple_stringtable/bld.inf', [
@@ -58,6 +61,7 @@ def run():
 		"<member>$(EPOCROOT)/epoc32/testunzip/archive/archivefile3.txt</member>",
 		"<member>$(EPOCROOT)/epoc32/testunzip/archive/archivefile4.txt</member>",
 		"<member>$(EPOCROOT)/epoc32/testunzip/archive/archivefilelinuxbin</member>",
+		"<member>$(EPOCROOT)/epoc32/testunzip/archive/archivefilereadonly.txt</member>",
 		"<zipmarker>$(EPOCROOT)/epoc32/build/" + markerfile + "</zipmarker>"
 	]
 	t.run()

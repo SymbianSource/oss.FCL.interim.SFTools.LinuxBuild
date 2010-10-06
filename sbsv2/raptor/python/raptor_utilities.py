@@ -207,7 +207,8 @@ def copyfile(_source, _destination):
 		destDir = destination.Dir()
 		if not destDir.isDir():
 			os.makedirs(str(destDir))
-			shutil.copyfile(source_str, dest_str)
+			# preserve permissions
+			shutil.copy(source_str, dest_str)
 			return 
 		# Destination file exists so we have to think about updating it
 		sourceMTime = 0
@@ -225,16 +226,69 @@ def copyfile(_source, _destination):
 			pass # destination doesn't have to exist
 
 		if destMTime == 0 or destMTime < sourceMTime:
+			# remove old version
+			#	- not having ownership prevents chmod
+			#	- avoid clobbering the original if it is a hard link
 			if os.path.exists(dest_str):
-				os.chmod(dest_str,stat.S_IREAD | stat.S_IWRITE)
-			shutil.copyfile(source_str, dest_str)
-
-			# Ensure that the destination file remains executable if the source was also:
-			os.chmod(dest_str,sourceStat[stat.ST_MODE] | stat.S_IREAD | stat.S_IWRITE | stat.S_IWGRP ) 
-
+				os.unlink(dest_str)
+			# preserve permissions
+			shutil.copy(source_str, dest_str)
 
 	except Exception,e:
 		message = "Could not update " + dest_str + " from " + source_str + " : " + str(e)
 		raise IOError(message)
 
 	return 
+
+
+
+## Commandline processing utilities ##
+
+fullCommandOption = "--command"
+miniCommandOption = "--co"  # update this if another "co" option is added
+
+def read_command_file(filename, used):
+	"""Read commandline options in from a file"""
+	if filename in used:
+		raise IOError("command file '%s' refers to itself" % filename)
+
+	args = []
+	try:
+		file = open(filename, "r")
+		for line in file.readlines():
+			args.extend(line.split())
+		file.close()
+	except:
+		raise IOError("couldn't read command file '%s'" % filename)
+
+	# expand any command files in the options we just read.
+	# making sure we don't get stuck in a loop.
+	usedPlusThis = used[:]
+	usedPlusThis.append(filename)
+	return expand_command_options(args, usedPlusThis)
+
+def expand_command_options(args, files = []):
+	"""process commandline options to recursively expand command files (--command options) into a full list of options."""
+	expanded = []
+	previousWasOpt = False
+
+	for a in args:
+		if previousWasOpt: # then this one is the filename
+			expanded.extend(read_command_file(a, files))
+			previousWasOpt = False
+			continue
+
+		if a.startswith(miniCommandOption):
+			if "=" in a: # then this is opt=filename
+				opt = a.split("=")
+				if fullCommandOption.startswith(opt[0]):
+					expanded.extend(read_command_file(opt[1], files))
+					continue
+			else: # the next one is the filename
+				if fullCommandOption.startswith(a):
+					previousWasOpt = True
+					continue
+
+		expanded.append(a) # an ordinary arg, nothing to do with command files
+
+	return expanded
