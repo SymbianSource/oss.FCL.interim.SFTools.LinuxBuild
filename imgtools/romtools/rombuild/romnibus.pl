@@ -51,7 +51,6 @@ my $smain;
 my $pagedCode;
 my $debug;
 my $quiet;
-my $drive;
 my $toolpath;
 my $epoc32path;
 my $epocroot;
@@ -114,6 +113,7 @@ BEGIN {
 	$epocroot = $ENV{EPOCROOT};
 	die "ERROR: Must set the EPOCROOT environment variable.\n" if (!defined($epocroot));
 	print "Environmental epocroot - >$epocroot<\n";
+	$epocroot =~ s/:$/:\//, if $on_windows;
 	$epocroot = abs_path($epocroot);
 	die "ERROR: EPOCROOT must specify an existing directory.\n" if (!-d $epocroot);
 	($epocroot_vol,$epocroot_dir,$epocroot_file) = File::Spec->splitpath($epocroot);
@@ -152,19 +152,15 @@ my $result = GetOptions (\%opts, "assp=s",
 $debug = $opts{debug};
 $quiet = $opts{quiet} unless $debug;
 
-if ($on_windows) {
-	#The cpp needed a drive apparently
-	$drive = $epocroot_vol;
-	$epoc32path = File::Spec->catpath($epocroot_vol,$epoc32path,undef);
-}
-
 my $cwd = Cwd::cwd();
 my ($vol,$dirs,$file) = File::Spec->splitpath($cwd);
+$drive = $vol, if ($on_windows);
 my @path_parts = File::Spec->splitdir($dirs);
 while(@path_parts[-1] ne "sf") {
 	pop(@path_parts);
 }
 $base_path = File::Spec->catdir((@path_parts,"os"));
+$base_path = "$drive$base_path", if ($on_windows);
 $rombuildpath = File::Spec->catfile($base_path,"kernelhwsrv","kernel","eka","rombuild");
 $base_path .= ($on_windows ? '\\' : '/');  
 $e32path = ($on_windows ? "\\sf\\os" : "/sf/os"); 
@@ -185,7 +181,8 @@ if ($debug) {
 	print "base_path = $base_path\n";
 }
 
-my $cppflags="-P -undef -Wno-endif-labels -traditional -lang-c++ -nostdinc -iwithprefixbefore $rombuildpath -I $rombuildpath -I $drive$epoc32path ";
+#my $cppflags="-P -undef -Wno-endif-labels -traditional -lang-c++ -nostdinc -iwithprefixbefore $rombuildpath -I $rombuildpath -I $drive$epoc32path ";
+my $cppflags="-P -undef -Wno-endif-labels -traditional -lang-c++ -nostdinc -I $rombuildpath -I $epoc32path ";
 
 # Include variant hrh file defines when processing oby and ibys with cpp
 # (Code copied from \\EPOC\master\cedar\generic\tools\romkit\tools\buildrom.pm -
@@ -610,6 +607,7 @@ sub rectify($$$) {
 	my ($in, $out, $k) = @_;
 	my $lastblank;
 	my $lineno = 0;
+	my $epocroot_pattern = $on_windows ? $epocroot . '\\' : $epocroot;
 
 	open(OUTPUT_FILE, "> $out") or die "Cannot open $out for output";
 	open(INPUT_FILE, "< $in") or die "Cannot open for $in input";
@@ -638,7 +636,7 @@ sub rectify($$$) {
 			$line =~ s/(=\s*)[\\\/]epoc32/\1${epocroot}epoc32/i;
 			$epoc32_line = defined($1);
 			if (!$epoc32_line) {
-				$line =~ /(=.*$epocroot)/i;
+				$line =~ /(=.*$epocroot_pattern)/i;
 				$epoc32_line = defined($1);
 			}
 			if (!$epoc32_line) {
@@ -1045,18 +1043,23 @@ sub Variant_GetMacroHRHFile {
 		$file =~ s/\s+//g;
 		$file =~ s|\\|\/|g, unless($on_windows);
 
-		if (File::Spec->file_name_is_absolute($file)) {
-			unless ( -f $file) {		
-			    $file = substr $file,1;                 
-				$file = File::Spec->catfile($epocroot,$file);
-			}	
-			my ($vol,$dir,$leaf) = File::Spec->splitpath($file);
-			die "\nERROR: Variant file specified in $cfgFile is not on the same volume as EPOCROOT\n", if (lc($vol) ne lc($cfg_vol));
-			#$file = File::Spec->catfile($dir,$file);
+		if ($on_windows) {
+			if (File::Spec->file_name_is_absolute($file)) {
+				my ($vol,$dir,$leaf) = File::Spec->splitpath($file);
+				unless ( $vol) {
+					$vol = substr $epocroot,0,2;
+					$file = substr $file,1;                 
+					$file = File::Spec->catfile($vol,$dir,$leaf);
+				}
+				die "\nERROR: Variant file specified in $cfgFile is not on the same volume as EPOCROOT\n", if (lc($vol) ne lc($cfg_vol));
+			}
+			else {
+				$file = File::Spec->catfile($epoc32path,$file);
+			}
 		}
-		else {
-			$file = File::Spec->catfile($epoc32path,$file);
-		}
+		elsif (File::Spec->file_name_is_absolute($file) && ! -e $file) {
+			$file = File::Spec->catfile($epocroot,$file);
+		} 
 
 		unless(-e $file) {
 			die "\nERROR: $cfgFile specifies $file which doesn't exist!\n";
