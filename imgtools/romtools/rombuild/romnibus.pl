@@ -15,8 +15,9 @@
 #
 # Description:
 #
-
-# romnibus.pl - Build a rom like rom_sbs.pl but without Windows dependencies.
+# romnibus.pl - Yet another rombuild wrapper. This one's claim to fame is that
+# it works in Linux and in Windows, works when invoked from sbsv2 and when
+# not invoked from sbsv2.
 #
 # Pre-processes the .oby/iby files then invokes rombuild.exe
 # (or other specified builder)
