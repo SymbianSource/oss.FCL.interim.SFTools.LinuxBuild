@@ -21,7 +21,6 @@ require_os_windows();
 usage(\@ARGV,"This script makes required fixes to epoc32 tree in Windows");
 my $epocroot = get_epocroot();
 my $gcc_mingw_include_dir = File::Spec->catfile(get_epoc32_dir(),"include","gcc_mingw");
-
 if (! -d $gcc_mingw_include_dir) { 
 	print ">>> Creating \"$gcc_mingw_include_dir\"\n";
 	mkdir $gcc_mingw_include_dir or die $!;
@@ -29,8 +28,10 @@ if (! -d $gcc_mingw_include_dir) {
 my $gcc_mingw_preinclude = File::Spec->catfile("epoc32","include","gcc_mingw","gcc_mingw_3_4_2.h");
 my $libwsock32_deb = File::Spec->catfile("epoc32","release","tools2","deb","libwsock32.a");
 my $libwsock32_rel = File::Spec->catfile("epoc32","release","tools2","rel","libwsock32.a");
+my $s60_sbs_config_xml = File::Spec->catfile("epoc32","sbs_config","s60_sbs_config.xml");
 apply_patch_file($gcc_mingw_preinclude);
 apply_patch_file($libwsock32_deb);
 apply_patch_file($libwsock32_rel);
+apply_patch_file($s60_sbs_config_xml);
 exit 0;
 

@@ -55,6 +55,7 @@ my $quiet;
 my $toolpath;
 my $epoc32path;
 my $epocroot;
+my $lc_epocroot;
 my $drive = "";
 my $base_path;
 my $line;
@@ -120,6 +121,7 @@ BEGIN {
 	($epocroot_vol,$epocroot_dir,$epocroot_file) = File::Spec->splitpath($epocroot);
 	$epocroot = File::Spec->catfile(($epocroot_vol,$epocroot_dir,$epocroot_file),undef);
 	print "EPOCROOT=$ENV{EPOCROOT} resolved as \"$epocroot\"\n";
+	$lc_epocroot = lc($epocroot);
 	$epoc32path = "${epocroot}epoc32";
 	$toolpath = File::Spec->catfile($epoc32path,"tools");
 	push @INC, $toolpath;
@@ -660,7 +662,8 @@ sub rectify($$$) {
 					my $lc_leaf = lc($leaf);
 					my $lc_dir = lc($dir);
 					$lc_dir =~ s/\/$//;
-					my $fulldir = $lc_dir;
+					$lc_dir =~ s|^$lc_epocroot|$epocroot|;
+					my $fulldir = $lc_dir;	
 					$fulldir =~ s|//|/|g;
 					$dest =~ s|\/|\\|g;
 					$dest = '\\' . $dest, unless ($dest =~ /^\\/);

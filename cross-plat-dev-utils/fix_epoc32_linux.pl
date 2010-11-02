@@ -48,5 +48,8 @@ if (! -l $gcc_prelinclude_hdr) {
 	symlink($gcc_443_prelinclude_hdr_abs,$gcc_prelinclude_hdr);
 	print ">>> Created symlink \"$gcc_443_prelinclude_hdr_abs\" -> \"$gcc_prelinclude_hdr\"\n";
 }
+my $s60_sbs_config_xml = File::Spec->catfile("epoc32","sbs_config","s60_sbs_config.xml");
+apply_patch_file($s60_sbs_config_xml);
+
 exit 0;
 
