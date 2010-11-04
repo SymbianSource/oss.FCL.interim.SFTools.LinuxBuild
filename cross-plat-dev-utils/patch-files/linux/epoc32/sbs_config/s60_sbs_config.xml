@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<build xmlns="http://symbian.com/xml/build"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://symbian.com/xml/build build/2_0.xsd">
+
+	<!-- End-user overrides for existing build configurations for SBSv2 (aka Raptor).-->
+
+	<!-- binding of FLM interfaces to certain build/makefile phase to ensure proper order of execution during build -->
+	<var name="make_changes">
+		<set name="bitmap.selector.iface" value="\.(bitmap|extension|mifconv|akniconinterfaces|removegtfiles|skingenerator|cryptoprep|builder|help_files|version_update)$"/>
+		<set name="resource.selector.iface" value="\.(resource|extension|mif2cdlindex|nativejava|genericcopy)$"/>
+		<set name="default.selector.iface" value="\.(?!export$|bitmap$|resource$|mifconv$|mif2cdlindex$|nativejava$|akniconinterfaces$|removegtfiles$|genericcopy$|skingenerator$|cryptoprep$|builder$|help_files$|version_update$).*$"/>
+		<!-- 4.5 min -->
+		<set name='TALON_TIMEOUT' value='540000'/> 
+	</var>
+
+	<!-- emake -->
+	<alias name="emake" meaning="emake_engine.make_changes"/>  
+
+	<!-- gnu make -->
+	<alias name="make" meaning="make_engine.make_changes"/>
+
+	<var name="surge">
+		<append name="CPP_LANG_OPTION" value="-fpermissive"/>   <!-- downgrade "extra qualification XXX on member YYY" errors to warnings -->
+		<append name="CPP_LANG_OPTION" value="-Wno-invalid-offsetof"/>    <!-- turn off "perhaps the 'offsetof' macro was used incorrectly" -->
+		<append name="CPP_LANG_OPTION" value="-Wno-psabi"/>		            <!-- turn off " mangling of 'va_list' has changedin GCC 4.4" -->
+		<append name="CC_WARNINGS_CONTROL_OPTION" value="-Wno-attributes"/>		<!-- turn off warnings where IMPORT_C and EXPORT_C are *correctly* matched -->
+
+		<set name="AAPCS_OPTION" value="-mapcs-frame -mthumb-interwork"/>   <!-- use -mapcs-frame instead of -mapcs - see Bug 1405 -->
+		<set name="USER_STATIC_RUNTIME_LIB" value="usrt4_0.lib"/>        <!-- use the RVCT 4.0 version of the runtime support -->
+		<set name="KERNEL_STATIC_RUNTIME_LIB" value="ksrt_gcce.lib"/>      <!-- use the GCCE kernel-side -->
+	</var>
+</build>
