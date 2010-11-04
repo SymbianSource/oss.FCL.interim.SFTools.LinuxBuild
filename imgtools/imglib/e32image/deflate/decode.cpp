@@ -198,7 +198,7 @@ void Huffman::InternalizeL(TBitInput& aInput,TUint32 aHuffman[],TInt aNumCodes)
 			--c;
 			list[0]=TUint8(last);
 			last=list[c];
-			HMem::Copy(&list[1],&list[0],c);
+			HMem::Move(&list[1],&list[0],c);
 			if (p>end)
 				{
 				Panic(EHuffmanCorruptFile);

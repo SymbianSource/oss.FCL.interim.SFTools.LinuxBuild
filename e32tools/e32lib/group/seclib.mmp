@@ -23,10 +23,10 @@ targettype		lib
 sourcepath		../seclib
 source			seclib.cpp
 
-sourcepath		../e32image
+sourcepath		../../../imgtools/imglib/e32image
 source			e32image.cpp
 
-sourcepath		../e32image/deflate
+sourcepath		../../../imgtools/imglib/e32image/deflate
 source			decode.cpp encode.cpp deflate.cpp inflate.cpp panic.cpp compress.cpp
 
 sourcepath      ../../../imgtools/imglib/compress
@@ -41,6 +41,7 @@ source			setcap.cpp
 sourcepath		../../../imgtools/imglib/host
 source			h_file.cpp h_mem.cpp h_utl.cpp
 
+userinclude     ../../../imgtools/imglib/inc
 userinclude     ../../../imgtools/imglib/compress
 userinclude     ../setcap 
 userinclude     ../../e32lib/e32image/inc
