@@ -650,7 +650,16 @@ sub rectify($$$) {
 			elsif ($on_windows) {
 				$line =~ s|\/|\\|g;
 			}
+			elsif ($line =~ /(^bootbinary\s*=\s*${epocroot}epoc32)(\S+)$/) {
+				# unixify the bootbinary line
+				my $tail = $2;
+				$line =~ s|\\|\/|g;
+				$tail =~ s|\\|\/|g;
+				my $lc_tail = lc($tail);
+				$line =~ s|$tail|$lc_tail|;
+			}
 			elsif ($line =~ /^(\s*\S+\s*=\s*)(\S+)(\s*\S*)/) {
+				#unixify the lefthand sides of rom-mapping lines.
 				my $keyword_part = $1;
 				my $src = $2;
 				my $dest = $3;
