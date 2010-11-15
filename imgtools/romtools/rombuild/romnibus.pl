@@ -122,7 +122,7 @@ BEGIN {
 	$epocroot = File::Spec->catfile(($epocroot_vol,$epocroot_dir,$epocroot_file),undef);
 	print "EPOCROOT=$ENV{EPOCROOT} resolved as \"$epocroot\"\n";
 	$lc_epocroot = lc($epocroot);
-	$epoc32path = "${epocroot}epoc32";
+	$epoc32path = File::Spec->catfile($epocroot,"epoc32");
 	$toolpath = File::Spec->catfile($epoc32path,"tools");
 	push @INC, $toolpath;
 	nix_fixes(), unless ($on_windows);
@@ -610,7 +610,7 @@ sub rectify($$$) {
 	my ($in, $out, $k) = @_;
 	my $lastblank;
 	my $lineno = 0;
-	my $epocroot_pattern = $on_windows ? $epocroot . '\\' : $epocroot;
+	my $epocroot_pattern = $on_windows ? $epocroot . '\\\\' : $epocroot;
 
 	open(OUTPUT_FILE, "> $out") or die "Cannot open $out for output";
 	open(INPUT_FILE, "< $in") or die "Cannot open for $in input";
@@ -636,7 +636,7 @@ sub rectify($$$) {
 			$line =~ s|\#\#||g; # Delete "token-pasting" ops
 			$line =~ s|//.*$||g; # Delete trailing c++ comments
 			# prefix the epocroot dir to occurrences of 'epoc32' in all "KEYWORD=..." lines.
-			$line =~ s/(=\s*)[\\\/]epoc32/\1${epocroot}epoc32/i;
+			$line =~ s/(=\s*)[\\\/]epoc32/\1$epoc32path/i;
 			$epoc32_line = defined($1);
 			if (!$epoc32_line) {
 				$line =~ /(=.*$epocroot_pattern)/i;
@@ -1062,7 +1062,7 @@ sub Variant_GetMacroHRHFile {
 				unless ( $vol) {
 					$vol = substr $epocroot,0,2;
 					$file = substr $file,1;                 
-					$file = File::Spec->catfile($vol,$dir,$leaf);
+					$file = File::Spec->catfile($epocroot,$dir,$leaf);
 				}
 				die "\nERROR: Variant file specified in $cfgFile is not on the same volume as EPOCROOT\n", if (lc($vol) ne lc($cfg_vol));
 			}
