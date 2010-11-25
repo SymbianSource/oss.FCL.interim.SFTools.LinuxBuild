@@ -549,15 +549,33 @@ if ($opts{zip} or $zip{$opts{assp}}) {
 	system("zip $zipname $romname");
 }
 if ($opts{symbol}) {
+	my $maksym = File::Spec->catfile($toolpath,"maksym.pl");
 	my $logname=$romname;
 	$logname =~ s/\.(\w+)$/\.log/i;
 	my $obyname=$romname;
 	$obyname =~ s/\.(\w+)$/\.oby/i;
 	unlink $logname;
 	unlink $obyname;
-	system("rename rombuild.log $logname");
-	system("rename rom.oby $obyname");
-	system("maksym $logname");
+	unless (rename("ROMBUILD.LOG",$logname)) {
+		print "\"rename ROMBUILD.LOG -> $logname\" failed: $!\n";
+		exit 1;
+	}
+	unless (rename("rom.oby",$obyname)) {
+		print "\"rename rom.oby -> $obyname\" failed: $!\n";
+		exit 1;
+	}
+	if (system("$maksym $logname")) {
+		print "\"maksym.pl $logname\" failed: $!\n";
+		exit 1;
+	}
+	unless (rename($logname,"ROMBUILD.LOG")) {
+		print "\"rename $logname -> ROMBUILD.LOG\" failed: $!\n";
+		exit 1;
+	}
+	unless (rename($obyname,"rom.oby")) {
+		print "rename $obyname -\. rom.oby\" failed: $!\n";
+		exit 1;
+	}
 }
 
 #IMK if ($nerrors || $nwarnings || $rerrors) {

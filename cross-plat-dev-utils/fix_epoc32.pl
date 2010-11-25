@@ -14,6 +14,8 @@ use strict;
 use check_os;
 use perl_run;
 
+my $rc = perl_run("fix_tool_exports.pl @ARGV");
+exit $rc, if $rc;
 if (os_is_windows()) {
 	exit perl_run("fix_epoc32_win.pl @ARGV");
 }

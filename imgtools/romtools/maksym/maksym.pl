@@ -1,3 +1,4 @@
+#!/usr/bin/perl
 #
 # Copyright (c) 1996-2009 Nokia Corporation and/or its subsidiary(-ies).
 # All rights reserved.
@@ -20,24 +21,39 @@ no strict 'vars';
 use English;
 use FindBin;		# for FindBin::Bin
 
-my $PerlLibPath;    # fully qualified pathname of the directory containing our Perl modules
-
-BEGIN {
-    # check user has a version of perl that will cope require 5.005_03;
-    # establish the path to the Perl libraries: currently the same directory as this script
-    $PerlLibPath = $FindBin::Bin; # X:/epoc32/tools
-    $PerlLibPath =~ s/\//\\/g;	# X:\epoc32\tools
-    $PerlLibPath .= "\\";
-}
-
-use lib $PerlLibPath;
-use Modload;
-Load_SetModulePath($PerlLibPath);
-
 # Globals
 my $maksym = "";
 my $rombuild;
 my $debug = 0;
+my $PerlLibPath;    # fully qualified pathname of the directory containing our Perl modules
+my $on_windows;
+my $toolpath;
+
+sub nix_fixes {
+#	Fix case-sensitivity offenders for unix/linux environment.
+	$toolpath = $PerlLibPath;
+	my $modload_pm = File::Spec->catfile($toolpath,"modload.pm");
+	my $ModLoad_pm = File::Spec->catfile($toolpath,"ModLoad.pm");
+	# Create symlinks for case-sensitively misnamed modules we need.
+	unless ( -f $ModLoad_pm or -l $ModLoad_pm) {
+		symlink($modload_pm,$ModLoad_pm);
+	}
+}
+
+BEGIN {
+	$on_windows = $^O =~ /^MSWin/ ? 1 : 0;
+    # check user has a version of perl that will cope require 5.005_03;
+    # establish the path to the Perl libraries: currently the same directory as this script
+    $PerlLibPath = $FindBin::Bin; # X:/epoc32/tools
+#    $PerlLibPath =~ s/\//\\/g;	# X:\epoc32\tools
+#    $PerlLibPath .= "\\";
+	nix_fixes(), unless ($on_windows);
+}
+
+use lib $PerlLibPath;
+use ModLoad;
+Load_SetModulePath($PerlLibPath);
+
 
 &args;
 &main;

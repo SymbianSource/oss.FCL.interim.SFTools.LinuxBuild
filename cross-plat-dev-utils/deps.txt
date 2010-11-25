@@ -3,4 +3,7 @@
 imgtools.imgcheck imgtools.imglib
 imgtools.romtools imgtools.imglib
 imgtools.romtools imgtools.sisutils
+sbsv1.abld.kif sbsv1.buildsystem
+
+
 

@@ -49,7 +49,7 @@ if (@ARGV) {
         print "This script cleans all TOOLS2 targets with Raptor, " .
 			"except Raptor itself and any that were broken upstream when last checked.\n";
         print "Valid arguments are -h, --help; -k, --keepgoing, or none.\n";
-		print "-k, --keepgoing makes the script carry on after a failed clean,\n";
+		print "-k, --keepgoing makes the script carry on after a failed build,\n";
 		exit 0;  
 	} elsif (grep(/$ARGV[0]/,("-k","--keepgoing"))) {
 		$keepgoing = 1;
