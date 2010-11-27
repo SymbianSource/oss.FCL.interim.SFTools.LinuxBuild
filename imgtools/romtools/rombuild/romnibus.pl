@@ -564,7 +564,7 @@ if ($opts{symbol}) {
 		print "\"rename rom.oby -> $obyname\" failed: $!\n";
 		exit 1;
 	}
-	if (system("$maksym $logname")) {
+	if (system("perl $maksym $logname")) {
 		print "\"maksym.pl $logname\" failed: $!\n";
 		exit 1;
 	}
@@ -628,8 +628,11 @@ sub rectify($$$) {
 	my ($in, $out, $k) = @_;
 	my $lastblank;
 	my $lineno = 0;
-	my $epocroot_pattern = $on_windows ? $epocroot . '\\\\' : $epocroot;
-
+	my $epocroot_pattern = $epocroot;
+	if ($on_windows) {
+	   $epocroot_pattern .= '\\';
+	   $epocroot_pattern = ~ s/\\/\\\\/g;
+    }
 	open(OUTPUT_FILE, "> $out") or die "Cannot open $out for output";
 	open(INPUT_FILE, "< $in") or die "Cannot open for $in input";
   

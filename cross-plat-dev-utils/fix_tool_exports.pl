@@ -14,12 +14,20 @@ use strict;
 use perl_run;
 use places;
 use check_os;
+use File::Spec;
 my $keepgoing = 0;
 my @exported = ();
 my @failed = ();
-my @skipped = ();
 # These are the targets that need exports performed.
-my @needed_exports = ("sbsv1/abld","sbsv1/buildsystem");
+my @needed_exports = (File::Spec->catfile("sbsv1","abld"),
+    File::Spec->catfile("sbsv1","buildsystem"),
+    File::Spec->catfile("imgtools","romtools"));
+    
+if (os_is_windows()) {
+    foreach (@needed_exports) {
+        s/\\/\//g;
+    }
+}
 
 sub export($)
 {
@@ -83,29 +91,14 @@ foreach my $dep (@deps) {
 }
 foreach my $line (@targ_lines) {
 	chomp $line;
-	next, unless ($line =~ /^sbsv1/); 
-	next, unless (grep(/$line/,@needed_exports));
-	next, if ($line =~ /^>>>/);
-	if ($line =~ /(\*\*\*.*\*\*\*)/) {
-		my $reason = $1;
-		my @words = split(/ /,$line);
-		print ">>> Skipping target $words[0]: \"$reason\"\n";
-		push (@skipped,[$words[0],$reason]);
-	} else {
-		foreach my $dep (@deps) {
-			my ($targ,$prereq) = split(/ /,$dep);
-			if (os_is_windows()) {
-                $targ =~ s/\./\\/g;
-                $prereq =~ s/\./\\/g;                
-            } else {
-                $targ =~ s/\./\//g;
-                $prereq =~ s/\./\//g;                            
-            }
-			next, unless ($targ eq $line);
-			export($prereq);
-		}
-		export($line);
-	}
+	my $re_line = $line;
+	if (os_is_windows()) {
+	   $re_line =~ s/\\/\//g;
+    } 
+    next, if ($line =~ /(\*\*\*.*\*\*\*)/);
+ 	next, if ($line =~ /^>>>/);   
+	next, unless (grep(/^$re_line$/,(@needed_exports)));	
+	export($line);
 }
 if (@exported) {
 	if (@failed == 0) {
@@ -123,11 +116,5 @@ if (@failed) {
 		print "+++ $targ\n";
 	}
 } 
-if (@skipped) {
-	print ">>> Skipped targets:-\n";
-	foreach my $skipped (@skipped) {
-		print "+++ " . $skipped->[0] . ' ' . $skipped->[1] . "\n";
-	}
-}
 exit 0;
 

@@ -14,6 +14,7 @@
 use strict;
 use places;
 use usage;
+use check_os;
 use File::Spec;
 sub list_targets($);
 
@@ -24,6 +25,7 @@ usage(\@ARGV,"This script lists the available Raptor targets in the build packag
 my $epocroot = get_epocroot();
 my $build_pkg_dir = get_pkg_dir();
 my $build_pkg_dir_parts = File::Spec->splitdir($build_pkg_dir);
+--$build_pkg_dir_parts, if (os_is_windows()); # Discount drive letter on Windows.
   
 list_targets($build_pkg_dir);
 exit 0;
