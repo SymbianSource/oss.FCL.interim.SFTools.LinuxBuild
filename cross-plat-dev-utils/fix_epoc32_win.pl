@@ -16,6 +16,7 @@ use apply_patch_file;
 use usage;
 use check_os;
 use File::Spec;
+use perl_run;
 
 require_os_windows();
 usage(\@ARGV,"This script makes required fixes to epoc32 tree in Windows");
@@ -33,5 +34,5 @@ apply_patch_file($gcc_mingw_preinclude);
 apply_patch_file($libwsock32_deb);
 apply_patch_file($libwsock32_rel);
 apply_patch_file($s60_sbs_config_xml);
-exit 0;
+exit perl_run("fix_tool_exports.pl @ARGV");
 

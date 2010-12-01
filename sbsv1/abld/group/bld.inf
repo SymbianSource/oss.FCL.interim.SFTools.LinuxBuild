@@ -53,7 +53,8 @@ PRJ_EXPORTS
 ../genutil/ecopyfile.pl        /epoc32/tools/ecopyfile.pl
 ../genutil/conv_khronos_hdr_to_cpp.pl        /epoc32/tools/conv_khronos_hdr_to_cpp.pl  
 ../e32util/armasm2as.pl        /epoc32/tools/armasm2as.pl
-../e32util/copyfeaturevariants.pl        /epoc32/tools/copyfeaturevariants.pl 
+../e32util/copyfeaturevariants.pl        /epoc32/tools/copyfeaturevariants.pl
+../genutil/modload.pm        /epoc32/tools/modload.pm 
 
 // BSF files
 ../platform/armv6.bsf        /epoc32/tools/armv6.bsf 
@@ -68,9 +69,7 @@ PRJ_EXPORTS
 
 #ifdef SBSV2
 #ifndef TOOLS2_LINUX
-// export Symbian Build System v1 in case of no confliction.
-
-../genutil/modload.pm        /epoc32/tools/modload.pm  
+// export Symbian Build System v1 in case of no confliction.  
 ../bldmake/linkdeps.pl        /epoc32/tools/linkdeps.pl  
 ../platform/cl_gccxml.pm        /epoc32/tools/cl_gccxml.pm 
 ../platform/ide_cw.pm        /epoc32/tools/ide_cw.pm 
